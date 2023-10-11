@@ -11,6 +11,7 @@ class VGAE(nn.Module):
         self.base_gcn = GraphConvSparse(dim_in, dim_h, adj)
         self.gcn_mean = GraphConvSparse(dim_h, dim_z, adj, activation=False)
         self.gcn_logstd = GraphConvSparse(dim_h, dim_z, adj, activation=False)
+        self.base_gcn2 = GraphConvSparse(dim_h, dim_in, adj)
 
     def encode(self, X):
         hidden = self.base_gcn(X)
@@ -28,11 +29,17 @@ class VGAE(nn.Module):
     def decode(self, Z):
         A_pred = Z @ Z.T
         return A_pred
+    
+    # add feature reconstruction
+    def attr_decode(self, Z):
+        X_hat = self.base_gcn2(Z)
+        return X_hat
 
     def forward(self, X):
         Z = self.encode(X)
         A_pred = self.decode(Z)
-        return A_pred
+        X_pred = self.base_gcn2(Z)
+        return A_pred, X_pred
 
 class GraphConvSparse(nn.Module):
     def __init__(self, input_dim, output_dim, adj, activation=True):
