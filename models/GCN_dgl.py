@@ -89,16 +89,16 @@ class GCN(object):
         self.G_eval.ndata['norm'] = norm_eval.unsqueeze(1)
 
     def dropEdge(self):
-        upper = sp.triu(self.adj, 1)
-        n_edge = upper.nnz
-        n_edge_left = int((1 - self.dropedge) * n_edge)
-        index_edge_left = np.random.choice(n_edge, n_edge_left, replace=False)
+        upper = sp.triu(self.adj, 1) # 将输入矩阵转换为上三角矩阵，即只保留矩阵的上三角部分（不包括对角线）
+        n_edge = upper.nnz # 计算上三角矩阵中非零元素的个数，即图中的边数
+        n_edge_left = int((1 - self.dropedge) * n_edge) #根据给定的参数计算需要保留的边数
+        index_edge_left = np.random.choice(n_edge, n_edge_left, replace=False) #从边的索引中随机选择n_edge_left个索引，用于保留这些边
         data = upper.data[index_edge_left]
         row = upper.row[index_edge_left]
         col = upper.col[index_edge_left]
         adj = sp.coo_matrix((data, (row, col)), shape=self.adj.shape)
-        adj = adj + adj.T
-        adj.setdiag(1)
+        adj = adj + adj.T # 将稀疏矩阵 adj 与其转置相加，得到对称的邻接矩阵
+        adj.setdiag(1) # 将邻接矩阵的对角线元素设置为 1，表示每个节点与自身存在连接
         self.G = DGLGraph(adj)
         # normalization (D^{-1/2})
         degs = self.G.in_degrees().float()
