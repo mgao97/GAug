@@ -351,7 +351,7 @@ class AMGAE(nn.Module):
         self.train_nid = tvt_nids[0]
         self.val_nid = tvt_nids[1]
         self.test_nid = tvt_nids[2]
-        
+
         # original adj_matrix for training vgae (torch.FloatTensor)
         assert sp.issparse(adj_matrix)
         if not isinstance(adj_matrix, sp.coo_matrix):
@@ -719,6 +719,7 @@ if __name__ == "__main__":
     # adj_orig = adj_orig.to(device)
     # features = features.to(device)
     # labels = labels.to(device)
+    # print(labels)
 
 
     # params_all = json.load(open('best_parameters.json', 'r'))
@@ -741,7 +742,7 @@ if __name__ == "__main__":
     if jk:
         n_layers = 3
 
-    model = AMGAE(adj_orig, features, tvt_nids, labels, in_feats=features.shape[1], n_hidden=128, n_layers=2, n_classes=len(list(torch.unique(labels))), activation=F.relu, feat_drop=0.3, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=1.0, beta_l=0.8, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3, feat_norm=feat_norm)
+    model = AMGAE(adj_orig, features, labels, tvt_nids, in_feats=features.shape[1], n_hidden=128, n_layers=2, n_classes=len(list(torch.unique(labels))), activation=F.relu, feat_drop=0.3, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=1.0, beta_l=0.8, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3, feat_norm=feat_norm)
     # model = model.to(device)
     print('*'*30)
     print(model)
