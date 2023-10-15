@@ -265,7 +265,7 @@ class GCNDecoder(nn.Module):
                  n_layers,
                  activation,
                  dropout):
-        super(GCNDecoder, self)
+        super(GCNDecoder, self).__init__()
         self.layers = nn.ModuleList()
         # self.gcn_base = GCNLayer(in_feats, n_hidden, None, dropout)
 
@@ -283,7 +283,7 @@ class GCNDecoder(nn.Module):
 
 class AMGAE(nn.Module):
     """ GAE/VGAE as edge prediction model """
-    def __init__(self, in_feats, n_hidden, n_classes, activation, feat_drop, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=2.0, beta_l=1, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3):
+    def __init__(self, in_feats, n_hidden, n_layers, n_classes, activation, feat_drop, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=2.0, beta_l=1, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3, dropedge=0):
         super(AMGAE, self).__init__()
         self.gamma=gamma
         self.alpha_l=alpha_l
@@ -295,6 +295,7 @@ class AMGAE(nn.Module):
         self.weight_decay=weight_decay
         self.epochs=epochs
         self.norm_w = norm_w
+        self.dropedge = dropedge
         self._mask_rate=mask_rate
         self._replace_rate=replace_rate
         self._mask_token_rate=1-self._replace_rate
@@ -470,6 +471,25 @@ class AMGAE(nn.Module):
             raise NotImplementedError
         return criterion
     
+    def dropEdge(self, adj):
+        upper = sp.triu(adj, 1) # 将输入矩阵转换为上三角矩阵，即只保留矩阵的上三角部分（不包括对角线）
+        n_edge = upper.nnz # 计算上三角矩阵中非零元素的个数，即图中的边数
+        n_edge_left = int((1 - self.dropedge) * n_edge) #根据给定的参数计算需要保留的边数
+        index_edge_left = np.random.choice(n_edge, n_edge_left, replace=False) #从边的索引中随机选择n_edge_left个索引，用于保留这些边
+        data = upper.data[index_edge_left]
+        row = upper.row[index_edge_left]
+        col = upper.col[index_edge_left]
+        adj = sp.coo_matrix((data, (row, col)), shape=adj.shape)
+        adj = adj + adj.T # 将稀疏矩阵 adj 与其转置相加，得到对称的邻接矩阵
+        adj.setdiag(1) # 将邻接矩阵的对角线元素设置为 1，表示每个节点与自身存在连接
+        self.G = DGLGraph(adj)
+        # normalization (D^{-1/2})
+        degs = self.G.in_degrees().float()
+        norm = torch.pow(degs, -0.5)
+        norm[torch.isinf(norm)] = 0
+        norm = norm.to(self.device)
+        self.G.ndata['norm'] = norm.unsqueeze(1)
+
     def encoding_mask_noise(self, g, x, mask_rate=0.3):
         num_nodes = g.num_nodes()
         perm = torch.randperm(num_nodes, device=x.device)
@@ -500,7 +520,7 @@ class AMGAE(nn.Module):
 
         return use_g, out_x, (mask_nodes, keep_nodes)
             
-    def train(self, model, adj_orig, features, tvt_nids, labels):
+    def train_nc(self, model, adj_orig, features, tvt_nids, labels):
         optimizer = torch.optim.Adam(model.parameters(),
                                      lr=self.lr,
                                      weight_decay=self.weight_decay)
@@ -567,7 +587,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='single')
     parser.add_argument('--dataset', type=str, default='cora')
     parser.add_argument('--gnn', type=str, default='gcn')
-    parser.add_argument('--device', type=str, default='0')
+    parser.add_argument('--gpu', type=str, default='0')
     args = parser.parse_args()
 
     if args.gpu == '-1':
@@ -583,16 +603,16 @@ if __name__ == "__main__":
     if sp.issparse(features):
         features = torch.FloatTensor(features.toarray())
 
-    device = args.device
-    txt_nids = tvt_nids.to(device)
-    adj_orig = adj_orig.to(device)
-    features = features.to(device)
-    labels = labels.to(device)
+    device = args.gpu
+    # txt_nids = tvt_nids.to(device)
+    # adj_orig = adj_orig.to(device)
+    # features = features.to(device)
+    # labels = labels.to(device)
 
 
-    params_all = json.load(open('best_parameters.json', 'r'))
-    params = params_all['GAugO'][args.dataset][args.gnn]
-    print(params)
+    # params_all = json.load(open('best_parameters.json', 'r'))
+    # params = params_all['GAugO'][args.dataset][args.gnn]
+    # print(params)
 
     gnn = args.gnn
     layer_type = args.gnn
@@ -610,10 +630,13 @@ if __name__ == "__main__":
     if jk:
         n_layers = 3
 
-    model = AMGAE()
-    model = model.to(device)
+    model = AMGAE(in_feats=features.shape[1], n_hidden=128, n_layers=2, n_classes=len(list(torch.unique(labels))), activation=F.relu, feat_drop=0.3, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=1.0, beta_l=0.8, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3)
+    # model = model.to(device)
+    print('*'*30)
+    print(model)
+    print('*'*30)
 
     accs = []
     for _ in range(3):
-        model = GAugMAE(adj_orig, features, labels, tvt_nids, alpha=1, gae=True, cuda='gpu', hidden_size=128, n_layers=1, epochs=200, seed=-1, lr=1e-2, weight_decay=5e-4, dropout=0.5, print_progress=True, dropedge=0, pos_weight=0.3, norm_w=1)
-        print(model)
+        test_acc, best_vali_acc, best_logits = model.train_nc(model, adj_orig, features, tvt_nids, labels)
+
