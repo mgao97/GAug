@@ -66,190 +66,8 @@ class GCNLayer(nn.Module):
             h = self.activation(h)
         return h
 
-
-
-
-# class SAGELayer(nn.Module):
-#     """ one layer of GraphSAGE with gcn aggregator """
-#     def __init__(self, input_dim, output_dim, n_heads, activation, dropout, bias=True):
-#         super(SAGELayer, self).__init__()
-#         self.linear_neigh = nn.Linear(input_dim, output_dim, bias=False)
-#         # self.linear_self = nn.Linear(input_dim, output_dim, bias=False)
-#         self.activation = activation
-#         if dropout:
-#             self.dropout = nn.Dropout(p=dropout)
-#         else:
-#             self.dropout = 0
-#         self.init_params()
-
-#     def init_params(self):
-#         """ Initialize weights with xavier uniform and biases with all zeros """
-#         for param in self.parameters():
-#             if len(param.size()) == 2:
-#                 nn.init.xavier_uniform_(param)
-#             else:
-#                 nn.init.constant_(param, 0.0)
-
-#     def forward(self, adj, h):
-#         # using GCN aggregator
-#         if self.dropout:
-#             h = self.dropout(h)
-#         x = adj @ h
-#         x = self.linear_neigh(x)
-#         # x_neigh = self.linear_neigh(x)
-#         # x_self = self.linear_self(h)
-#         # x = x_neigh + x_self
-#         if self.activation:
-#             x = self.activation(x)
-#         # x = F.normalize(x, dim=1, p=2)
-#         return x
-
-
-# class GATLayer(nn.Module):
-#     """ one layer of GAT """
-#     def __init__(self, input_dim, output_dim, n_heads, activation, dropout, bias=True):
-#         super(GATLayer, self).__init__()
-#         self.W = nn.Parameter(torch.FloatTensor(input_dim, output_dim))
-#         self.activation = activation
-#         self.n_heads = n_heads
-#         self.attn_l = nn.Linear(output_dim, self.n_heads, bias=False)
-#         self.attn_r = nn.Linear(output_dim, self.n_heads, bias=False)
-#         self.attn_drop = nn.Dropout(p=0.6)
-#         if dropout:
-#             self.dropout = nn.Dropout(p=dropout)
-#         else:
-#             self.dropout = 0
-#         if bias:
-#             self.b = nn.Parameter(torch.FloatTensor(output_dim))
-#         else:
-#             self.b = None
-#         self.init_params()
-
-#     def init_params(self):
-#         """ Initialize weights with xavier uniform and biases with all zeros """
-#         for param in self.parameters():
-#             if len(param.size()) == 2:
-#                 nn.init.xavier_uniform_(param)
-#             else:
-#                 nn.init.constant_(param, 0.0)
-
-#     def forward(self, adj, h):
-#         if self.dropout:
-#             h = self.dropout(h)
-#         x = h @ self.W # torch.Size([2708, 128])
-#         # calculate attentions, both el and er are n_nodes by n_heads
-#         el = self.attn_l(x)
-#         er = self.attn_r(x) # torch.Size([2708, 8])
-#         if isinstance(adj, torch.sparse.FloatTensor):
-#             nz_indices = adj._indices()
-#         else:
-#             nz_indices = adj.nonzero().T
-#         attn = el[nz_indices[0]] + er[nz_indices[1]] # torch.Size([13264, 8])
-#         attn = F.leaky_relu(attn, negative_slope=0.2).squeeze()
-#         # reconstruct adj with attentions, exp for softmax next
-#         attn = torch.exp(attn) # torch.Size([13264, 8]) NOTE: torch.Size([13264]) when n_heads=1
-#         if self.n_heads == 1:
-#             adj_attn = torch.zeros(size=(adj.size(0), adj.size(1)), device=adj.device)
-#             adj_attn.index_put_((nz_indices[0], nz_indices[1]), attn)
-#         else:
-#             adj_attn = torch.zeros(size=(adj.size(0), adj.size(1), self.n_heads), device=adj.device)
-#             adj_attn.index_put_((nz_indices[0], nz_indices[1]), attn) # torch.Size([2708, 2708, 8])
-#             adj_attn.transpose_(1, 2) # torch.Size([2708, 8, 2708])
-#         # edge softmax (only softmax with non-zero entries)
-#         adj_attn = F.normalize(adj_attn, p=1, dim=-1)
-#         adj_attn = self.attn_drop(adj_attn)
-#         # message passing
-#         x = adj_attn @ x # torch.Size([2708, 8, 128])
-#         if self.b is not None:
-#             x = x + self.b
-#         if self.activation:
-#             x = self.activation(x)
-#         if self.n_heads > 1:
-#             x = x.flatten(start_dim=1)
-#         return x # torch.Size([2708, 1024])
-
-
-class MultipleOptimizer():
-    """ a class that wraps multiple optimizers """
-    def __init__(self, *op):
-        self.optimizers = op
-
-    def zero_grad(self):
-        for op in self.optimizers:
-            op.zero_grad()
-
-    def step(self):
-        for op in self.optimizers:
-            op.step()
-
-    def update_lr(self, op_index, new_lr):
-        """ update the learning rate of one optimizer
-        Parameters: op_index: the index of the optimizer to update
-                    new_lr:   new learning rate for that optimizer """
-        for param_group in self.optimizers[op_index].param_groups:
-            param_group['lr'] = new_lr
-
-
-class RoundNoGradient(torch.autograd.Function):
-    @staticmethod
-    def forward(ctx, x):
-        return x.round()
-
-    @staticmethod
-    def backward(ctx, g):
-        return g
-
-
-class CeilNoGradient(torch.autograd.Function):
-    @staticmethod
-    def forward(ctx, x):
-        return x.ceil()
-
-    @staticmethod
-    def backward(ctx, g):
-        return g
-
-
-def scipysp_to_pytorchsp(sp_mx):
-    """ converts scipy sparse matrix to pytorch sparse matrix """
-    if not sp.isspmatrix_coo(sp_mx):
-        sp_mx = sp_mx.tocoo()
-    coords = np.vstack((sp_mx.row, sp_mx.col)).transpose()
-    values = sp_mx.data
-    shape = sp_mx.shape
-    pyt_sp_mx = torch.sparse.FloatTensor(torch.LongTensor(coords.T),
-                                         torch.FloatTensor(values),
-                                         torch.Size(shape))
-    return pyt_sp_mx
-
-class VGAE(nn.Module):
-    """ GAE/VGAE as edge prediction model """
-    def __init__(self, in_feats, n_hidden, dim_z, activation, gae=False):
-        super(VGAE, self).__init__()
-        self.gae = gae
-        self.gcn_base = GCNLayer(in_feats, n_hidden, 1, None, 0, bias=False)
-        self.gcn_mean = GCNLayer(n_hidden, dim_z, 1, activation, 0, bias=False)
-        self.gcn_logstd = GCNLayer(n_hidden, dim_z, 1, activation, 0, bias=False)
-
-    def forward(self, adj, features):
-        # GCN encoder
-        hidden = self.gcn_base(adj, features)
-        self.mean = self.gcn_mean(adj, hidden)
-        if self.gae:
-            # GAE (no sampling at bottleneck)
-            Z = self.mean
-        else:
-            # VGAE
-            self.logstd = self.gcn_logstd(adj, hidden)
-            gaussian_noise = torch.randn_like(self.mean)
-            sampled_Z = gaussian_noise*torch.exp(self.logstd) + self.mean
-            Z = sampled_Z
-        # inner product decoder
-        adj_logits = Z @ Z.T
-        return adj_logits
-    
-class GCN_model(nn.Module):
-    """ GNN as node classification model """
+class GCN(nn.Module):
+    'model for node classification'
     def __init__(self,
                  in_feats,
                  n_hidden,
@@ -257,7 +75,7 @@ class GCN_model(nn.Module):
                  n_layers,
                  activation,
                  dropout):
-        super(GCN_model, self).__init__()
+        super(GCN, self).__init__()
         self.layers = nn.ModuleList()
         # input layer
         self.layers.append(GCNLayer(in_feats, n_hidden, activation, 0.))
@@ -273,40 +91,39 @@ class GCN_model(nn.Module):
             h = layer(g, h)
         return h
 
+class VGAE(nn.Module):
+    """ GAE/VGAE as edge prediction model """
+    def __init__(self, in_feats, n_hidden, dim_z, activation, gae=False):
+        super(VGAE, self).__init__()
+        self.gae = gae
+        self.gcn_base = GCNLayer(in_feats, n_hidden, None, 0, bias=False)
+        self.gcn_mean = GCNLayer(n_hidden, dim_z, activation, 0, bias=False)
+        self.gcn_logstd = GCNLayer(n_hidden, dim_z, activation, 0, bias=False)
 
-class GNN(nn.Module):
-    """ GNN as node classification model """
-    def __init__(self, in_feats, n_hidden, n_classes, n_layers, activation, dropout, gnnlayer_type='gcn'):
-        super(GNN, self).__init__()
-        heads = [1] * (n_layers + 1)
-        if gnnlayer_type == 'gcn':
-            gnnlayer = GCNLayer
-        # elif gnnlayer_type == 'gsage':
-        #     gnnlayer = SAGELayer
-        # elif gnnlayer_type == 'gat':
-        #     gnnlayer = GATLayer
-        #     if dim_feats in (50, 745, 12047): # hard coding n_heads for large graphs
-        #         heads = [2] * n_layers + [1]
-        #     else:
-        #         heads = [8] * n_layers + [1]
-        #     dim_h = int(dim_h / 8)
-        #     dropout = 0.6
-        #     activation = F.elu
-        self.layers = nn.ModuleList()
-        # input layer
-        self.layers.append(gnnlayer(in_feats, n_hidden, heads[0], activation, 0))
-        # hidden layers
-        for i in range(n_layers - 1):
-            self.layers.append(gnnlayer(n_hidden*heads[i], n_hidden, activation, dropout))
-        # output layer
-        self.layers.append(gnnlayer(n_hidden*heads[-2], n_classes, None, dropout))
+    def forward(self, g, features):
+        # GCN encoder
+        hidden = self.gcn_base(g, features)
+        self.mean = self.gcn_mean(g, hidden)
+        if self.gae:
+            # GAE (no sampling at bottleneck)
+            Z = self.mean
+        else:
+            # VGAE
+            self.logstd = self.gcn_logstd(g, hidden)
+            gaussian_noise = torch.randn_like(self.mean)
+            sampled_Z = gaussian_noise*torch.exp(self.logstd) + self.mean
+            Z = sampled_Z
+        # inner product decoder
+        adj_logits = Z @ Z.T
+        return adj_logits
 
-    def forward(self, adj, features):
-        h = features
-        for layer in self.layers:
-            h = layer(adj, h)
-        return h
-    
+class MaskGAE(nn.Module):
+    def __init__(self,
+                 )
+
+
+
+
 class GAugMAE_model(nn.Module):
     def __init__(self, 
                  in_feats,
@@ -331,7 +148,7 @@ class GAugMAE_model(nn.Module):
         self.ep_net = VGAE(in_feats, n_hidden, dim_z, activation, gae=gae)
 
         # node classification network
-        self.nc_net = GNN(in_feats, n_hidden, n_classes, n_layers, activation, dropout, gnnlayer_type=gnnlayer_type)
+        self.nc_net = GCN(in_feats, n_hidden, n_classes, n_layers, activation, dropout, gnnlayer_type=gnnlayer_type)
 
     def sample_adj(self, adj_logits):
         """ sample an adj from the predicted edge probabilities of ep_net """
