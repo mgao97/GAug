@@ -28,6 +28,8 @@ import yaml
 from tensorboardX import SummaryWriter
 from tqdm import tqdm
 
+from graphmae.utils import create_norm, drop_edge
+
 # scaled cosine similarity loss
 def sce_loss(x, y, alpha=3):
     x = F.normalize(x, p=2, dim=-1)
@@ -283,7 +285,7 @@ class GCNDecoder(nn.Module):
 
 class AMGAE(nn.Module):
     """ GAE/VGAE as edge prediction model """
-    def __init__(self, in_feats, n_hidden, n_layers, n_classes, activation, feat_drop, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=2.0, beta_l=1, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3, dropedge=0):
+    def __init__(self, adj_matrix, features, labels, tvt_nids, in_feats, n_hidden, n_layers, n_classes, activation, feat_drop, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=2.0, beta_l=1, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3, dropedge=0, drop_edge_rate=0.0, seed=-1, feat_norm='row'):
         super(AMGAE, self).__init__()
         self.gamma=gamma
         self.alpha_l=alpha_l
@@ -296,6 +298,8 @@ class AMGAE(nn.Module):
         self.epochs=epochs
         self.norm_w = norm_w
         self.dropedge = dropedge
+        self.feat_norm=feat_norm
+        self._drop_edge_rate = drop_edge_rate
         self._mask_rate=mask_rate
         self._replace_rate=replace_rate
         self._mask_token_rate=1-self._replace_rate
@@ -313,9 +317,116 @@ class AMGAE(nn.Module):
         # setup loss function
         self.criterion = self.setup_loss_fn(loss_fn, alpha_l)
 
-    def forward(self, g, x):
+        # fix random seeds if needed
+        if seed > 0:
+            np.random.seed(seed)
+            torch.manual_seed(seed)
+            torch.cuda.manual_seed_all(seed)
+
+        self.load_data(adj_matrix, features, labels, tvt_nids)
+
+    def load_data(self, adj_matrix, features, labels, tvt_nids):
+        # prepare data
+        # features (torch.FloatTensor)
+        if isinstance(features, torch.FloatTensor):
+            self.features = features
+        else:
+            self.features = torch.FloatTensor(features)
+
+        # normalize feature matrix if needed
+        if self.feat_norm == 'row':
+            self.features = F.normalize(self.features, p=1, dim=1)
+        elif self.feat_norm == 'col':
+            self.features = self.col_normalization(self.features)
+
+        if len(labels.shape) == 2:
+            labels = torch.FloatTensor(labels)
+        else:
+            labels = torch.LongTensor(labels)
+        self.labels = labels
+        if len(self.labels.size()) == 1:
+            self.n_class = len(torch.unique(self.labels))
+        else:
+            self.n_class = labels.size(1)
+        self.train_nid = tvt_nids[0]
+        self.val_nid = tvt_nids[1]
+        self.test_nid = tvt_nids[2]
+        
+        # original adj_matrix for training vgae (torch.FloatTensor)
+        assert sp.issparse(adj_matrix)
+        if not isinstance(adj_matrix, sp.coo_matrix):
+            adj_matrix = sp.coo_matrix(adj_matrix)
+        adj_matrix.setdiag(1)
+        self.adj = adj_matrix
+        adj = sp.csr_matrix(adj_matrix)
+        self.G = DGLGraph(self.adj)
+
+        # self.adj_orig = scipysp_to_pytorchsp(adj_matrix).to_dense()
+
+        # # normalized adj_matrix used as input for ep_net (torch.sparse.FloatTensor)
+        # degrees = np.array(adj_matrix.sum(1))
+        # degree_mat_inv_sqrt = sp.diags(np.power(degrees, -0.5).flatten())
+        # adj_norm = degree_mat_inv_sqrt @ adj_matrix @ degree_mat_inv_sqrt
+        # self.adj_norm = scipysp_to_pytorchsp(adj_norm)
+        # self.adj = scipysp_to_pytorchsp(adj_norm)
+        # self.G = DGLGraph(self.adj)
+        # normalization (D^{-1/2})
+        degs = self.G.in_degrees().float()
+        norm = torch.pow(degs, -0.5)
+        norm[torch.isinf(norm)] = 0
+        
+        self.G.ndata['norm'] = norm.unsqueeze(1)
+
+        # labels (torch.LongTensor) and train/validation/test nids (np.ndarray)
+        if len(labels.shape) == 2:
+            labels = torch.FloatTensor(labels)
+        else:
+            labels = torch.LongTensor(labels)
+        self.labels = labels
+        self.train_nid = tvt_nids[0]
+        self.val_nid = tvt_nids[1]
+        self.test_nid = tvt_nids[2]
+        # number of classes
+        if len(self.labels.size()) == 1:
+            self.out_size = len(torch.unique(self.labels))
+        else:
+            self.out_size = labels.size(1)
+        # sample the edges to evaluate edge prediction results
+        # sample 10% (1% for large graph) of the edges and the same number of no-edges
+        if labels.size(0) > 5000:
+            edge_frac = 0.01
+        else:
+            edge_frac = 0.1
+        adj_matrix = sp.csr_matrix(adj_matrix)
+        n_edges_sample = int(edge_frac * adj_matrix.nnz / 2)
+        # sample negative edges
+        neg_edges = []
+        added_edges = set()
+        while len(neg_edges) < n_edges_sample:
+            i = np.random.randint(0, adj_matrix.shape[0])
+            j = np.random.randint(0, adj_matrix.shape[0])
+            if i == j:
+                continue
+            if adj_matrix[i, j] > 0:
+                continue
+            if (i, j) in added_edges:
+                continue
+            neg_edges.append([i, j])
+            added_edges.add((i, j))
+            added_edges.add((j, i))
+        neg_edges = np.asarray(neg_edges)
+        # sample positive edges
+        nz_upper = np.array(sp.triu(adj_matrix, k=1).nonzero()).T
+        np.random.shuffle(nz_upper)
+        pos_edges = nz_upper[:n_edges_sample]
+        self.val_edges = np.concatenate((pos_edges, neg_edges), axis=0)
+        self.edge_labels = np.array([1]*n_edges_sample + [0]*n_edges_sample)
+
+
+    def forward(self, adj, x):
         # ---- attribute reconstruction ----
-        pre_use_g, use_x, (mask_nodes, keep_nodes) = self.encoding_mask_noise(g, x, self._mask_rate)
+
+        pre_use_g, use_x, (mask_nodes, keep_nodes) = self.encoding_mask_noise(self.G, x, self._mask_rate)
 
         if self._drop_edge_rate > 0:
             use_g, masked_edges = drop_edge(pre_use_g, self._drop_edge_rate, return_edges=True)
@@ -630,7 +741,7 @@ if __name__ == "__main__":
     if jk:
         n_layers = 3
 
-    model = AMGAE(in_feats=features.shape[1], n_hidden=128, n_layers=2, n_classes=len(list(torch.unique(labels))), activation=F.relu, feat_drop=0.3, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=1.0, beta_l=0.8, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3)
+    model = AMGAE(adj_orig, features, tvt_nids, labels, in_feats=features.shape[1], n_hidden=128, n_layers=2, n_classes=len(list(torch.unique(labels))), activation=F.relu, feat_drop=0.3, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=1.0, beta_l=0.8, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3, feat_norm=feat_norm)
     # model = model.to(device)
     print('*'*30)
     print(model)
