@@ -162,8 +162,8 @@ class CeilNoGradient(torch.autograd.Function):
     def backward(ctx, g):
         return g
 
-
-
+# GCN Layer的实现：通过图的消息传递操作，更新节点的特征
+# 定义参数包括：输入特征数、输出特征数、激活函数、丢弃概率、是否使用偏执项
 class GCNLayer(nn.Module):
     def __init__(self,
                  in_feats,
@@ -190,14 +190,14 @@ class GCNLayer(nn.Module):
         if self.bias is not None:
             self.bias.data.uniform_(-stdv, stdv)
 
-    def forward(self, g, h):
+    def forward(self, g, h): # 输入是DGL图对象g和输入节点特征h
         if self.dropout:
             h = self.dropout(h)
         h = torch.mm(h, self.weight)
         # normalization by square root of src degree
         h = h * g.ndata['norm']
         g.ndata['h'] = h
-        g.update_all(fn.copy_src(src='h', out='m'),
+        g.update_all(fn.copy_u('h', 'm'),
                      fn.sum(msg='m', out='h'))
         h = g.ndata.pop('h')
         # normalization by square root of dst degree
@@ -209,6 +209,8 @@ class GCNLayer(nn.Module):
             h = self.activation(h)
         return h
 
+# 多层GCN模型用于节点分类：
+# 定义参数包括：输入特征数量、隐藏层特征数量、输出类别数、GCN模型层数、激活函数、丢弃率
 class GCN(nn.Module):
     'model for node classification'
     def __init__(self,
@@ -233,6 +235,7 @@ class GCN(nn.Module):
         for layer in self.layers:
             h = layer(g, h)
         return h
+
 
 class GCNEncoder(nn.Module):
     def __init__(self,
@@ -285,7 +288,7 @@ class GCNDecoder(nn.Module):
 
 class AMGAE(nn.Module):
     """ GAE/VGAE as edge prediction model """
-    def __init__(self, adj_matrix, features, labels, tvt_nids, in_feats, n_hidden, n_layers, n_classes, activation, feat_drop, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=2.0, beta_l=1, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3, dropedge=0, drop_edge_rate=0.0, seed=-1, feat_norm='row'):
+    def __init__(self, adj_matrix, features, labels, tvt_nids, in_feats, n_hidden, n_layers, n_classes, activation, feat_drop, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=2.0, beta_l=1, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500,dropedge=0, drop_edge_rate=0.0, seed=-1, feat_norm='row',temperature=0.2,gnnlayer_type='gcn'):
         super(AMGAE, self).__init__()
         self.gamma=gamma
         self.alpha_l=alpha_l
@@ -296,9 +299,11 @@ class AMGAE(nn.Module):
         self.lr=lr
         self.weight_decay=weight_decay
         self.epochs=epochs
-        self.norm_w = norm_w
+        # self.norm_w = norm_w
         self.dropedge = dropedge
         self.feat_norm=feat_norm
+        self.temperature=temperature
+        self.gnnlayer_type=gnnlayer_type
         self._drop_edge_rate = drop_edge_rate
         self._mask_rate=mask_rate
         self._replace_rate=replace_rate
@@ -312,6 +317,9 @@ class AMGAE(nn.Module):
                  activation,
                  dropout=0)
 
+        self.gcn_base = GCNLayer(in_feats, n_hidden, None, 0, bias=False)
+        self.gcn_mean = GCNLayer(n_hidden, n_hidden, activation, 0, bias=False)
+        self.gcn_logstd = GCNLayer(n_hidden, n_hidden, activation, 0, bias=False)
 
         self.enc_mask_token = nn.Parameter(torch.zeros(1, in_feats))
         # setup loss function
@@ -360,6 +368,13 @@ class AMGAE(nn.Module):
         self.adj = adj_matrix
         adj = sp.csr_matrix(adj_matrix)
         self.G = DGLGraph(self.adj)
+
+        # weights for log_lik loss when training EP net
+        adj_t = self.adj
+        norm_w = adj_t.shape[0]**2 / float((adj_t.shape[0]**2 - adj_t.sum()) * 2)
+        pos_weight = torch.FloatTensor([float(adj_t.shape[0]**2 - adj_t.sum()) / adj_t.sum()])
+        self.pos_weight=pos_weight
+        self.norm_w=norm_w
 
         # self.adj_orig = scipysp_to_pytorchsp(adj_matrix).to_dense()
 
@@ -424,6 +439,15 @@ class AMGAE(nn.Module):
 
 
     def forward(self, adj, x):
+
+        assert sp.issparse(adj)
+        if not isinstance(adj, sp.coo_matrix):
+            adj = sp.coo_matrix(adj)
+        adj.setdiag(1)
+        self.adj = adj
+        adj = sp.csr_matrix(adj)
+        self.G = DGLGraph(self.adj)
+
         # ---- attribute reconstruction ----
 
         pre_use_g, use_x, (mask_nodes, keep_nodes) = self.encoding_mask_noise(self.G, x, self._mask_rate)
@@ -448,7 +472,7 @@ class AMGAE(nn.Module):
             Z = sampled_Z
         # remask
         Z[mask_nodes] = 0
-        feats_logits = self.GCNDecoder(use_g, Z)
+        feats_logits = self.decoder(use_g, Z)
         # inner product decoder
         adj_logits = Z @ Z.T
 
@@ -459,22 +483,45 @@ class AMGAE(nn.Module):
         elif self.sample_type == 'rand':
             adj_new = self.sample_adj_random(adj_logits)
         elif self.sample_type == 'add_sample':
-            if self.alpha == 1:
+            if self.alpha_l == 1:
                 adj_new = self.sample_adj(adj_logits)
             else:
                 adj_new = self.sample_adj_add_bernoulli(adj_logits, adj_orig, self.alpha)
 
         adj_new_normed = self.normalize_adj(adj_new)
 
-        x_init = x[mask_nodes]
-        x_rec = feats_logits[mask_nodes]
+        # adj_new_normed = adj_new_normed[mask_nodes]
+        # print(adj_new_normed.shape)
+        # print('-'*10)
+        # assert sp.issparse(adj_new_normed)
+        if not isinstance(adj_new_normed, sp.coo_matrix):
+            adj_new_normed = sp.coo_matrix(adj_new_normed.long().detach().numpy())
+        adj_new_normed.setdiag(1.0)
+        self.new_G = DGLGraph(adj_new_normed)
+        # normalization (D^{-1/2})
+        degs = self.new_G.in_degrees().float()
+        norm = torch.pow(degs, -0.5)
+        norm[torch.isinf(norm)] = 0
+        self.new_G.ndata['norm'] = norm.unsqueeze(1)
+
+
+        x_init = x
+        x_rec = feats_logits
+        # x_init = x[mask_nodes]
+        # x_rec = feats_logits[mask_nodes]
+
+        # print(x_rec.shape, x_init.shape)
 
         if self.gamma:
             x_new = self.sample_feats(x_init, x_rec)
 
         x_new_normed = self.normalize_feats(x_new)
+        
+        # print(x_new_normed, x_new_normed.shape)
+        # print('+'*10)
+        
 
-        nc_logits = GCN(adj_new_normed, x_new_normed)
+        nc_logits = self.nc(self.new_G, x_new_normed)
 
         return x_init, x_rec, adj_logits, nc_logits
 
@@ -556,7 +603,7 @@ class AMGAE(nn.Module):
             # adj = adj + torch.diag(torch.ones(adj.size(0))).to(self.device)
             adj.fill_diagonal_(1)
             # normalize adj with A = D^{-1/2} @ A @ D^{-1/2}
-            D_norm = torch.diag(torch.pow(adj.sum(1), -0.5)).to(self.device)
+            D_norm = torch.diag(torch.pow(adj.sum(1), -0.5))
             adj = D_norm @ adj @ D_norm
         elif self.gnnlayer_type == 'gat':
             # adj = adj + torch.diag(torch.ones(adj.size(0))).to(self.device)
@@ -652,7 +699,9 @@ class AMGAE(nn.Module):
             # node classification losses
             nc_l = nc_criterion(nc_logits[tvt_nids[0]], labels[tvt_nids[0]])
             # adj reconstruct losses
-            adj_l = self.norm_w * F.binary_cross_entropy_with_logits(adj_logits, self.adj_orig, pos_weight=self.pos_weight)
+            print('*'*50)
+            print(adj_logits.shape, adj_orig.shape, self.pos_weight.shape)
+            adj_l = self.norm_w * F.binary_cross_entropy_with_logits(adj_logits, adj_orig, pos_weight=self.pos_weight)
             if not self.gae:
                 mu = self.model.ep_net.mean
                 lgstd = self.model.ep_net.logstd
@@ -742,7 +791,7 @@ if __name__ == "__main__":
     if jk:
         n_layers = 3
 
-    model = AMGAE(adj_orig, features, labels, tvt_nids, in_feats=features.shape[1], n_hidden=128, n_layers=2, n_classes=len(list(torch.unique(labels))), activation=F.relu, feat_drop=0.3, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=1.0, beta_l=0.8, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, norm_w=0.3, feat_norm=feat_norm)
+    model = AMGAE(adj_orig, features, labels, tvt_nids, in_feats=features.shape[1], n_hidden=128, n_layers=2, n_classes=len(list(torch.unique(labels))), activation=F.relu, feat_drop=0.3, gamma=0.5, gae=True, mask_rate=0.3, replace_rate=0.1, loss_fn='sce', alpha_l=1.0, beta_l=0.8, theta_l=2, sample_type='add_sample',lr=1e-2, weight_decay=5e-4, epochs=500, feat_norm=feat_norm)
     # model = model.to(device)
     print('*'*30)
     print(model)
