@@ -520,15 +520,27 @@ def setup_module(m_type, enc_dec, in_dim, num_hidden, out_dim, num_layers, dropo
     
     return mod
 
-def relabel_tensor(tensor, index_map):
-            # Create a new tensor with the same data type and device
-            new_tensor = torch.empty_like(tensor)
-            
-            # Map old indices to new indices
-            for new_index, old_index in index_map.items():
-                new_tensor[tensor == old_index] = new_index
-            
-            return new_tensor
+# def relabel_tensor(tensor, index_map):
+#         # Create a new tensor with the same data type and device
+#         new_tensor = torch.empty_like(tensor)
+        
+#         # Map old indices to new indices
+#         for new_index, old_index in index_map.items():
+#             new_tensor[tensor == old_index] = new_index
+        
+#         return new_tensor
+
+def relabel_tensor(tensor):
+    # 获取原始张量中的唯一值（去重）
+    unique_values = torch.unique(tensor)
+
+    # 创建一个从0到N-1的映射关系，其中N是唯一值的数量
+    mapping = {value.item(): index for index, value in enumerate(unique_values)}
+
+    # 使用映射将原始张量中的值替换为新的映射值
+    remapped_tensor = torch.tensor([mapping[value.item()] for value in tensor])
+
+    return remapped_tensor
 
 
 class MGAE(nn.Module):
@@ -718,55 +730,122 @@ class MGAE(nn.Module):
         mask_edges = perm[:num_mask_edges]
         keep_edges = perm[num_mask_edges:]
 
-        print(mask_edges.shape)
+        # print('-'*20)
+        # print(mask_edges, mask_edges.shape)
 
-        edge_map = dict(zip([i for i in range(len(mask_edges.tolist()))],mask_edges.tolist()))
-        new_mask_edges = torch.empty_like(mask_edges)
+        pos_mask_g = g.edge_subgraph(mask_edges)
 
-        new_mask_edges = relabel_tensor(mask_edges, edge_map)
-
-
+        num_nodes = pos_mask_g.num_nodes()
         
+        # 生成负样本的连边，节点对存在但没有实际边
+        neg_mask_edges = []
+        while len(neg_mask_edges) < num_mask_edges:
+            # 随机选择两个节点
+            node1 = torch.randint(0, num_nodes, (num_mask_edges,))
+            node2 = torch.randint(0, num_nodes, (num_mask_edges,))
+            
+            # 确保所选节点不在正样本连边中
+            is_duplicate = torch.any(torch.eq(node1, node2))
+            
+            if not is_duplicate:
+                neg_mask_edges.append((node1, node2))
 
-        print('-'*20)
-        print(new_mask_edges.shape)
+        # 将 neg_mask_edges 转换为合适的张量，以便创建子图
+        # print(neg_mask_edges[0], len(neg_mask_edges))
+        # neg_mask_edges = (torch.cat(neg_mask_edges), torch.cat(neg_mask_edges))
+        neg_mask_g = DGLGraph()
+        # neg_mask_edges_list = [[neg_mask_edges[0][0].tolist()[i], neg_mask_edges[0][1].tolist()[i]] for i in range(len(neg_mask_edges[0][0].tolist()))]
+        # neg_mask_edges[0][0].tolist()
+        
+        neg_mask_g.add_edges(neg_mask_edges[0][0].tolist(), neg_mask_edges[0][1].tolist())
+        # neg_mask_g = neg_mask_g.edge_subgraph(neg_mask_edges)
 
-        mask_g = g.edge_subgraph(new_mask_edges)
+        # neg_mask_edges = perm[num_mask_edges:2*num_mask_edges]  # Use the next set of permuted indices
+        # neg_mask_g = g.edge_subgraph(neg_mask_edges)
 
-        print(mask_g.edges())
+        # print('*'*20)
+        # print(mask_g.edges())
+
+        # new_mask_edges = relabel_tensor(mask_edges)
+        # print('='*20)
+        # print(new_mask_edges, new_mask_edges.shape)
+
+
+        # new_mask_g = DGLGraph()
+        # new_mask_edges_list = [(mask_g.edges[0].tolist()[i], mask_g.edges[1].tolist()[i]) for i in range(len(mask_g.edges[0].tolist()))]
+        # new_mask_g.add_edges(new_mask_edges_list)
 
         # mask_g, mask_edges, keep_edges = self.mask_edges(g, mask_rate)
-        num_mask_edges = len(new_mask_edges)
+        # num_mask_edges = len(new_mask_edges)
         # mask_features, mask_nodes, keep_nodes = self.add_noise(x, mask_rate)
 
         if self._drop_edge_rate > 0:
-            use_g, masked_edges = drop_edge(mask_g, self._drop_edge_rate, return_edges=True)
+            use_g, masked_edges = drop_edge(pos_mask_g, self._drop_edge_rate, return_edges=True)
         else:
-            use_g = mask_g
+            use_g = pos_mask_g
 
         use_nodes = use_g.nodes()
         use_x = x[use_nodes]
 
-        print(use_x.shape)
+
+        if self._drop_edge_rate > 0:
+            neg_use_g, neg_masked_edges = drop_edge(neg_mask_g, self._drop_edge_rate, return_edges=True)
+        else:
+            neg_use_g = neg_mask_g
+
+        neg_use_nodes = neg_use_g.nodes()
+        neg_use_x = x[neg_use_nodes]
+
+        # mask_g = g.edge_subgraph(mask_edges)
+        # print('*'*20)
+        # print(mask_g.edges(), mask_g.edges()[0].shape)
+
+        # print('='*20)
+        # print(use_nodes, use_nodes.shape)
+
+        # print(use_x.shape)
         
+        use_g = dgl.add_self_loop(use_g)
         enc_rep, all_hidden = self.encoder(use_g, use_x, return_hidden=True)
         if self._concat_hidden:
             enc_rep = torch.cat(all_hidden, dim=1)
 
+        neg_use_g = dgl.add_self_loop(neg_use_g)
+        neg_enc_rep, neg_all_hidden = self.encoder(neg_use_g, neg_use_x, return_hidden=True)
+        if self._concat_hidden:
+            neg_enc_rep = torch.cat(neg_all_hidden, dim=1)
+
         # ---- structure reconstruction ----
         rep = self.encoder_to_decoder(enc_rep)
+        neg_rep = self.encoder_to_decoder(neg_enc_rep)
 
-        print(rep.shape)
+        # print(rep.shape)
 
         
-        recon = self.decoder(mask_g, rep)
+        pos_recon = self.decoder(pos_mask_g, rep)
+        neg_recon = self.decoder(neg_mask_g, neg_rep)
 
-        print(recon.shape)
+        
+
+        cos = nn.CosineSimilarity(dim=1, eps=1e-6)
+        edges_recon_pos = cos(pos_recon[pos_mask_g.edges()[0]], pos_recon[pos_mask_g.edges()[1]])
+        edges_recon_neg = cos(neg_recon[neg_mask_g.edges()[0]], neg_recon[neg_mask_g.edges()[1]])
+        # edges_recon = nn.Sigmoid()(edges_recon)
+        # print('-'*20)
+        # print(edges_recon_pos, edges_recon_pos.shape)
+        # print(edges_recon_neg, edges_recon_neg.shape)
+
+        # Concatenate positive and negative edge predictions
+        edges_recon = torch.cat((edges_recon_pos, edges_recon_neg))
+
+        # print(edges_recon, edges_recon.shape)
+        edges_recon = edges_recon.requires_grad_()
 
         # calculate loss
         criterion = nn.BCEWithLogitsLoss()
 
-        loss = criterion(recon[new_mask_edges], torch.ones(num_mask_edges))
+        loss = criterion(edges_recon.float(), torch.cat((torch.ones_like(edges_recon_pos), torch.zeros_like(edges_recon_neg))))
+        # loss = criterion(edges_recon, torch.ones_like(edges_recon))
         return loss
 
 
@@ -921,10 +1000,10 @@ def main(args):
 
         if load_model:
             logging.info("Loading Model ... ")
-            model.load_state_dict(torch.load("checkpoint.pt"))
+            model.load_state_dict(torch.load("checkpoint_struct.pt"))
         if save_model:
             logging.info("Saveing Model ...")
-            torch.save(model.state_dict(), "checkpoint.pt")
+            torch.save(model.state_dict(), "checkpoint_struct.pt")
         
         model = model.to(device)
         model.eval()

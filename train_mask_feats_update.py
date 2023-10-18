@@ -129,6 +129,11 @@ class LogisticRegression(nn.Module):
         logits = self.linear(x)
         return logits
 
+class AugGraph(nn.Module):
+    def __init__(self, num_dim, num_classes) -> None:
+        super(AugGraph, self).__init__()
+        self.
+        self.linear = nn.Linear(num_dim, num_classes)
 
 def accuracy(y_pred, y_true):
     y_true = y_true.squeeze().long()
@@ -335,7 +340,7 @@ def pretrain(model, graph, feat, optimizer, max_epoch, device, scheduler, num_cl
     for epoch in epoch_iter:
         model.train()
 
-        loss, loss_dict = model(graph, x)
+        loss, loss_dict, x_rec = model(graph, x)
 
         optimizer.zero_grad()
         loss.backward()
@@ -664,9 +669,9 @@ class MGAE(nn.Module):
 
     def forward(self, g, x):
         # ---- attribute reconstruction ----
-        loss = self.mask_attr_prediction(g, x)
+        loss, x_rec = self.mask_attr_prediction(g, x)
         loss_item = {"loss": loss.item()}
-        return loss, loss_item
+        return loss, loss_item, x_rec
     
 
     @property
@@ -738,7 +743,7 @@ class MGAE(nn.Module):
         x_rec = recon[mask_nodes]
 
         loss = self.criterion(x_rec, x_init)
-        return loss
+        return loss, x_rec
 
     def embed(self, g, x):
         rep = self.encoder(g, x)
