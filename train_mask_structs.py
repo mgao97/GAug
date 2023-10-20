@@ -238,6 +238,8 @@ def sce_loss(x, y, alpha=3):
     loss = loss.mean()
     return loss 
 
+
+
 def load_dataset(dataset_name):
     assert dataset_name in GRAPH_DICT, f"Unknow dataset: {dataset_name}."
     if dataset_name.startswith("ogbn"):
@@ -880,6 +882,10 @@ class MGAE(nn.Module):
         rep = self.encoder(g, x)
         return rep
 
+    def decode(self, rep):
+        adj_rec = torch.sigmoid(torch.matmul(rep, rep.t()))
+        return adj_rec
+    
     @property
     def enc_params(self):
         return self.encoder.parameters()

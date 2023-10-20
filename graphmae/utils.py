@@ -92,10 +92,18 @@ def build_args():
     parser.add_argument("--scheduler", action="store_true", default=False)
     parser.add_argument("--concat_hidden", action="store_true", default=False)
 
+    parser.add_argument("--alpha", type=float, default=1, help="add edge samples")
+    parser.add_argument("--sample_type", type=str, default="add_sample", help="add edge sample type")
+    parser.add_argument("--num_classes", type=int, default=7, help="num of classes")
+    parser.add_argument("--temperature", type=float, default=0.2, help="parameter for add edges sampling")
+    parser.add_argument("--gnnlayer_type", type=str, default="gcn", help="gnn layer type")
+
     # for graph classification
     parser.add_argument("--pooling", type=str, default="mean")
     parser.add_argument("--deg4feat", action="store_true", default=False, help="use node degree as input feature")
     parser.add_argument("--batch_size", type=int, default=32)
+
+    
     args = parser.parse_args()
     return args
 

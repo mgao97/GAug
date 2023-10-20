@@ -73,52 +73,6 @@ GRAPH_DICT = {
     "ogbn-arxiv": DglNodePropPredDataset
 }
 
-def build_model(args):
-    num_heads = args.num_heads
-    num_out_heads = args.num_out_heads
-    num_hidden = args.num_hidden
-    num_layers = args.num_layers
-    residual = args.residual
-    attn_drop = args.attn_drop
-    in_drop = args.in_drop
-    norm = args.norm
-    negative_slope = args.negative_slope
-    encoder_type = args.encoder
-    decoder_type = args.decoder
-    mask_rate = args.mask_rate
-    drop_edge_rate = args.drop_edge_rate
-    replace_rate = args.replace_rate
-
-
-    activation = args.activation
-    loss_fn = args.loss_fn
-    alpha_l = args.alpha_l
-    concat_hidden = args.concat_hidden
-    num_features = args.num_features
-
-
-    model = MGAE(
-        in_dim=num_features,
-        num_hidden=num_hidden,
-        num_layers=num_layers,
-        nhead=num_heads,
-        nhead_out=num_out_heads,
-        activation=activation,
-        feat_drop=in_drop,
-        attn_drop=attn_drop,
-        negative_slope=negative_slope,
-        residual=residual,
-        encoder_type=encoder_type,
-        decoder_type=decoder_type,
-        mask_rate=mask_rate,
-        norm=norm,
-        loss_fn=loss_fn,
-        drop_edge_rate=drop_edge_rate,
-        replace_rate=replace_rate,
-        alpha_l=alpha_l,
-        concat_hidden=concat_hidden,
-    )
-    return model
 
 class LogisticRegression(nn.Module):
     def __init__(self, num_dim, num_class):
@@ -163,14 +117,30 @@ def create_optimizer(opt, model, lr, weight_decay, get_num_layer=None, get_layer
 
 def node_classification_evaluation(model, graph, x, num_classes, lr_f, weight_decay_f, max_epoch_f, device, linear_prob=True, mute=False):
     model.eval()
-    if linear_prob:
-        with torch.no_grad():
-            x = model.embed(graph.to(device), x.to(device))
-            in_feat = x.shape[1]
-        encoder = LogisticRegression(in_feat, num_classes)
-    else:
-        encoder = model.encoder
-        encoder.reset_classifier(num_classes)
+    # if linear_prob:
+    with torch.no_grad():
+        model.load_state_dict(torch.load("checkpoint_struct.pt"))
+        loss, loss_item, adj_new_normed = model(graph.to(device), x.to(device))
+        # print(adj_new_normed.shape[0])
+        sparse_adj = sp.csr_matrix(adj_new_normed)
+
+        # 创建 DGL 图对象
+        new_g = dgl.from_scipy(sparse_adj)
+        x = x[new_g.nodes()]
+        new_g.ndata["train_mask"] = graph.ndata["train_mask"]
+        new_g.ndata["val_mask"] = graph.ndata["val_mask"]
+        new_g.ndata["test_mask"] = graph.ndata["test_mask"]
+        new_g.ndata["label"] = graph.ndata["label"]
+        new_g.ndata["feats"] = graph.ndata["feats"]
+
+        # new_g = dgl.graph(adj_new_normed)
+        # new_g.ndata['feats'] = model.encoder.embed(new_g, x[new_g.nodes()])
+        # logits = model.linear(new_g, new_g.ndata['feats'])
+        in_feat = x.shape[1]
+    encoder = LogisticRegression(in_feat, num_classes)
+    # else:
+    # encoder = model.encoder.encoder
+    # graph = encoder.reset_classifier(new_g, x, num_classes)
 
     num_finetune_params = [p.numel() for p in encoder.parameters() if  p.requires_grad]
     if not mute:
@@ -178,7 +148,7 @@ def node_classification_evaluation(model, graph, x, num_classes, lr_f, weight_de
     
     encoder.to(device)
     optimizer_f = create_optimizer("adam", encoder, lr_f, weight_decay_f)
-    final_acc, estp_acc = linear_probing_for_transductive_node_classiifcation(encoder, graph, x, optimizer_f, max_epoch_f, device, mute)
+    final_acc, estp_acc = linear_probing_for_transductive_node_classiifcation(encoder, new_g, x, optimizer_f, max_epoch_f, device, mute)
     return final_acc, estp_acc
 
 
@@ -284,6 +254,61 @@ def sce_loss(x, y, alpha=3):
     loss = loss.mean()
     return loss 
 
+
+class MultipleOptimizer():
+    """ a class that wraps multiple optimizers """
+    def __init__(self, *op):
+        self.optimizers = op
+
+    def zero_grad(self):
+        for op in self.optimizers:
+            op.zero_grad()
+
+    def step(self):
+        for op in self.optimizers:
+            op.step()
+
+    def update_lr(self, op_index, new_lr):
+        """ update the learning rate of one optimizer
+        Parameters: op_index: the index of the optimizer to update
+                    new_lr:   new learning rate for that optimizer """
+        for param_group in self.optimizers[op_index].param_groups:
+            param_group['lr'] = new_lr
+
+
+class RoundNoGradient(torch.autograd.Function):
+    @staticmethod
+    def forward(ctx, x):
+        return x.round()
+
+    @staticmethod
+    def backward(ctx, g):
+        return g
+
+
+class CeilNoGradient(torch.autograd.Function):
+    @staticmethod
+    def forward(ctx, x):
+        return x.ceil()
+
+    @staticmethod
+    def backward(ctx, g):
+        return g
+
+
+def scipysp_to_pytorchsp(sp_mx):
+    """ converts scipy sparse matrix to pytorch sparse matrix """
+    if not sp.isspmatrix_coo(sp_mx):
+        sp_mx = sp_mx.tocoo()
+    coords = np.vstack((sp_mx.row, sp_mx.col)).transpose()
+    values = sp_mx.data
+    shape = sp_mx.shape
+    pyt_sp_mx = torch.sparse.FloatTensor(torch.LongTensor(coords.T),
+                                         torch.FloatTensor(values),
+                                         torch.Size(shape))
+    return pyt_sp_mx
+
+
 def load_dataset(dataset_name):
     assert dataset_name in GRAPH_DICT, f"Unknow dataset: {dataset_name}."
     if dataset_name.startswith("ogbn"):
@@ -335,7 +360,7 @@ def pretrain(model, graph, feat, optimizer, max_epoch, device, scheduler, num_cl
     for epoch in epoch_iter:
         model.train()
 
-        loss, loss_dict = model(graph, x)
+        loss, loss_dict, nc_logits = model(graph, x)
 
         optimizer.zero_grad()
         loss.backward()
@@ -441,7 +466,8 @@ class GCN(nn.Module):
                  activation,
                  residual,
                  norm,
-                 encoding=False
+                 encoding=False,
+                 sample_type='add_sample'
                  ):
         super(GCN, self).__init__()
         self.out_dim = out_dim
@@ -472,6 +498,8 @@ class GCN(nn.Module):
 
         self.norms = None
         self.head = nn.Identity()
+        # self.linear = LogisticRegression(out_dim, out_dim)
+        self.sample_type=sample_type
 
     def forward(self, g, inputs, return_hidden=False):
         h = inputs
@@ -490,8 +518,30 @@ class GCN(nn.Module):
         else:
             return self.head(h)
 
-    def reset_classifier(self, num_classes):
-        self.head = nn.Linear(self.out_dim, num_classes)
+    def reset_classifier(self, x_rec, x, num_classes):
+        if self.sample_type == 'edge':
+            adj_new = self.sample_adj_edge(x_rec, x, self.alpha)
+        elif self.sample_type == 'add_round':
+            adj_new = self.sample_adj_add_round(x_rec, x, self.alpha)
+        elif self.sample_type == 'rand':
+            adj_new = self.sample_adj_random(x_rec)
+        elif self.sample_type == 'add_sample':
+            if self.alpha == 1:
+                adj_new = self.sample_adj(x_rec)
+            else:
+                adj_new = self.sample_adj_add_bernoulli(x_rec, x, self.alpha)
+        adj_new_normed = self.normalize_adj(adj_new)
+        sparse_adj = sp.csr_matrix(adj_new_normed)
+
+        new_graph = dgl.from_scipy(sparse_adj)
+        return new_graph
+        
+        # logits = self.linear(adj_new_normed, x)
+        # self.head = nn.LogisticRegression(self.out_dim, num_classes)
+        # self.head = nn.Linear(self.out_dim, num_classes)
+
+    
+
 
 def setup_module(m_type, enc_dec, in_dim, num_hidden, out_dim, num_layers, dropout, activation, residual, norm, nhead, nhead_out, attn_drop, negative_slope=0.2, concat_out=True) -> nn.Module:
     if m_type == "gat":
@@ -566,7 +616,27 @@ def setup_module(m_type, enc_dec, in_dim, num_hidden, out_dim, num_layers, dropo
     
     return mod
 
- 
+# def relabel_tensor(tensor, index_map):
+#         # Create a new tensor with the same data type and device
+#         new_tensor = torch.empty_like(tensor)
+        
+#         # Map old indices to new indices
+#         for new_index, old_index in index_map.items():
+#             new_tensor[tensor == old_index] = new_index
+        
+#         return new_tensor
+
+def relabel_tensor(tensor):
+    # 获取原始张量中的唯一值（去重）
+    unique_values = torch.unique(tensor)
+
+    # 创建一个从0到N-1的映射关系，其中N是唯一值的数量
+    mapping = {value.item(): index for index, value in enumerate(unique_values)}
+
+    # 使用映射将原始张量中的值替换为新的映射值
+    remapped_tensor = torch.tensor([mapping[value.item()] for value in tensor])
+
+    return remapped_tensor
 
 
 class MGAE(nn.Module):
@@ -574,6 +644,7 @@ class MGAE(nn.Module):
                  in_dim: int,
                 num_hidden: int,
                 num_layers: int,
+                
                 nhead: int,
                 nhead_out: int,
                 activation: str,
@@ -640,8 +711,8 @@ class MGAE(nn.Module):
             enc_dec="decoding",
             in_dim=dec_in_dim,
             num_hidden=dec_num_hidden,
-            out_dim=in_dim,
-            num_layers=1,
+            out_dim=dec_num_hidden,
+            num_layers=2,
             nhead=nhead,
             nhead_out=nhead_out,
             activation=activation,
@@ -664,7 +735,7 @@ class MGAE(nn.Module):
 
     def forward(self, g, x):
         # ---- attribute reconstruction ----
-        loss = self.mask_attr_prediction(g, x)
+        loss = self.mask_edge_prediction(g, x)
         loss_item = {"loss": loss.item()}
         return loss, loss_item
     
@@ -683,68 +754,253 @@ class MGAE(nn.Module):
         return criterion
     
 
-    def encoding_mask_noise(self, g, x, mask_rate=0.3):
-        num_nodes = g.num_nodes()
-        perm = torch.randperm(num_nodes, device=x.device)
-        num_mask_nodes = int(mask_rate * num_nodes)
+    # def mask_edges(self, g, mask_rate=0.3):
+    #     # num_nodes = g.num_nodes()
+    #     num_edges = g.num_edges()
+    #     num_mask_edges = int(mask_rate * num_edges)
 
-        # random masking
-        num_mask_nodes = int(mask_rate * num_nodes)
-        mask_nodes = perm[: num_mask_nodes]
-        keep_nodes = perm[num_mask_nodes: ]
+    #     perm = torch.randperm(num_edges)
+    #     mask_edges = perm[:num_mask_edges]
+    #     keep_edges = perm[num_mask_edges:]
 
-        if self._replace_rate > 0:
-            num_noise_nodes = int(self._replace_rate * num_mask_nodes)
-            perm_mask = torch.randperm(num_mask_nodes, device=x.device)
-            token_nodes = mask_nodes[perm_mask[: int(self._mask_token_rate * num_mask_nodes)]]
-            noise_nodes = mask_nodes[perm_mask[-int(self._replace_rate * num_mask_nodes):]]
-            noise_to_be_chosen = torch.randperm(num_nodes, device=x.device)[:num_noise_nodes]
-
-            out_x = x.clone()
-            out_x[token_nodes] = 0.0
-            out_x[noise_nodes] = x[noise_to_be_chosen]
-        else:
-            out_x = x.clone()
-            token_nodes = mask_nodes
-            out_x[mask_nodes] = 0.0
-
-        out_x[token_nodes] += self.enc_mask_token
-        use_g = g.clone()
-
-        return use_g, out_x, (mask_nodes, keep_nodes)
+    #     mask_g = g.edge_subgraph(mask_edges)
+    #     return mask_g, mask_edges, keep_edges
     
+    def add_noise(self, x, mask_nodes, mask_rate=0.3):
+        num_nodes = x.shape[0]
+        num_mask_nodes = int(mask_rate * num_nodes)
+        perm = torch.randperm(num_nodes)
+        mask_nodes = perm[:num_mask_nodes]
+        keep_nodes = perm[num_mask_nodes:]
 
-    def mask_attr_prediction(self, g, x):
-        pre_use_g, use_x, (mask_nodes, keep_nodes) = self.encoding_mask_noise(g, x, self._mask_rate)
+        noise = torch.randn(num_mask_nodes, x.shape[1])
+        x[mask_nodes] = noise
+        return x, mask_nodes, keep_nodes
+
+
+    # def encoding_mask_noise(self, g, x, mask_rate=0.3):
+    #     num_nodes = g.num_nodes()
+    #     perm = torch.randperm(num_nodes, device=x.device)
+    #     num_mask_nodes = int(mask_rate * num_nodes)
+
+    #     # random masking
+    #     num_mask_nodes = int(mask_rate * num_nodes)
+    #     mask_nodes = perm[: num_mask_nodes]
+    #     keep_nodes = perm[num_mask_nodes: ]
+
+    #     if self._replace_rate > 0:
+    #         num_noise_nodes = int(self._replace_rate * num_mask_nodes)
+    #         perm_mask = torch.randperm(num_mask_nodes, device=x.device)
+    #         token_nodes = mask_nodes[perm_mask[: int(self._mask_token_rate * num_mask_nodes)]]
+    #         noise_nodes = mask_nodes[perm_mask[-int(self._replace_rate * num_mask_nodes):]]
+    #         noise_to_be_chosen = torch.randperm(num_nodes, device=x.device)[:num_noise_nodes]
+
+    #         out_x = x.clone()
+    #         out_x[token_nodes] = 0.0
+    #         out_x[noise_nodes] = x[noise_to_be_chosen]
+    #     else:
+    #         out_x = x.clone()
+    #         token_nodes = mask_nodes
+    #         out_x[mask_nodes] = 0.0
+
+    #     out_x[token_nodes] += self.enc_mask_token
+    #     use_g = g.clone()
+
+    #     return use_g, out_x, (mask_nodes, keep_nodes)
+    
+    def mask_edge_prediction(self, g, x, mask_rate=0.3):
+        num_edges = g.num_edges()
+        num_mask_edges = int(mask_rate * num_edges)
+
+        # # 采样边，确保生成的索引不会超出范围
+        # mask_edges = []
+        # while len(mask_edges) < num_mask_edges:
+        #     edge_index = torch.randint(0, num_edges, (1,))
+        #     if edge_index not in mask_edges:
+        #         mask_edges.append(edge_index)
+
+        # keep_edges = [i for i in range(num_edges) if i not in mask_edges]
+
+        # mask_g = g.edge_subgraph(mask_edges)
+        perm = torch.randperm(num_edges)
+        mask_edges = perm[:num_mask_edges]
+        keep_edges = perm[num_mask_edges:]
+
+        # print('-'*20)
+        # print(mask_edges, mask_edges.shape)
+
+        pos_mask_g = g.edge_subgraph(mask_edges)
+
+        num_nodes = pos_mask_g.num_nodes()
+        
+        # 生成负样本的连边，节点对存在但没有实际边
+        neg_mask_edges = []
+        while len(neg_mask_edges) < num_mask_edges:
+            # 随机选择两个节点
+            node1 = torch.randint(0, num_nodes, (num_mask_edges,))
+            node2 = torch.randint(0, num_nodes, (num_mask_edges,))
+            
+            # 确保所选节点不在正样本连边中
+            is_duplicate = torch.any(torch.eq(node1, node2))
+            
+            if not is_duplicate:
+                neg_mask_edges.append((node1, node2))
+
+        # 将 neg_mask_edges 转换为合适的张量，以便创建子图
+        # print(neg_mask_edges[0], len(neg_mask_edges))
+        # neg_mask_edges = (torch.cat(neg_mask_edges), torch.cat(neg_mask_edges))
+        neg_mask_g = DGLGraph()
+        # neg_mask_edges_list = [[neg_mask_edges[0][0].tolist()[i], neg_mask_edges[0][1].tolist()[i]] for i in range(len(neg_mask_edges[0][0].tolist()))]
+        # neg_mask_edges[0][0].tolist()
+        
+        neg_mask_g.add_edges(neg_mask_edges[0][0].tolist(), neg_mask_edges[0][1].tolist())
+        # neg_mask_g = neg_mask_g.edge_subgraph(neg_mask_edges)
+
+        # neg_mask_edges = perm[num_mask_edges:2*num_mask_edges]  # Use the next set of permuted indices
+        # neg_mask_g = g.edge_subgraph(neg_mask_edges)
+
+        # print('*'*20)
+        # print(mask_g.edges())
+
+        # new_mask_edges = relabel_tensor(mask_edges)
+        # print('='*20)
+        # print(new_mask_edges, new_mask_edges.shape)
+
+
+        # new_mask_g = DGLGraph()
+        # new_mask_edges_list = [(mask_g.edges[0].tolist()[i], mask_g.edges[1].tolist()[i]) for i in range(len(mask_g.edges[0].tolist()))]
+        # new_mask_g.add_edges(new_mask_edges_list)
+
+        # mask_g, mask_edges, keep_edges = self.mask_edges(g, mask_rate)
+        # num_mask_edges = len(new_mask_edges)
+        # mask_features, mask_nodes, keep_nodes = self.add_noise(x, mask_rate)
 
         if self._drop_edge_rate > 0:
-            use_g, masked_edges = drop_edge(pre_use_g, self._drop_edge_rate, return_edges=True)
+            use_g, masked_edges = drop_edge(pos_mask_g, self._drop_edge_rate, return_edges=True)
         else:
-            use_g = pre_use_g
+            use_g = pos_mask_g
 
+        use_nodes = use_g.nodes()
+        use_x = x[use_nodes]
+
+
+        if self._drop_edge_rate > 0:
+            neg_use_g, neg_masked_edges = drop_edge(neg_mask_g, self._drop_edge_rate, return_edges=True)
+        else:
+            neg_use_g = neg_mask_g
+
+        neg_use_nodes = neg_use_g.nodes()
+        neg_use_x = x[neg_use_nodes]
+
+        # mask_g = g.edge_subgraph(mask_edges)
+        # print('*'*20)
+        # print(mask_g.edges(), mask_g.edges()[0].shape)
+
+        # print('='*20)
+        # print(use_nodes, use_nodes.shape)
+
+        # print(use_x.shape)
+        
+        use_g = dgl.add_self_loop(use_g)
         enc_rep, all_hidden = self.encoder(use_g, use_x, return_hidden=True)
         if self._concat_hidden:
             enc_rep = torch.cat(all_hidden, dim=1)
 
-        # ---- attribute reconstruction ----
+        neg_use_g = dgl.add_self_loop(neg_use_g)
+        neg_enc_rep, neg_all_hidden = self.encoder(neg_use_g, neg_use_x, return_hidden=True)
+        if self._concat_hidden:
+            neg_enc_rep = torch.cat(neg_all_hidden, dim=1)
+
+        # ---- structure reconstruction ----
         rep = self.encoder_to_decoder(enc_rep)
+        neg_rep = self.encoder_to_decoder(neg_enc_rep)
+
+        # print(rep.shape)
+
+        
+        pos_recon = self.decoder(pos_mask_g, rep)
+        neg_recon = self.decoder(neg_mask_g, neg_rep)
+
+        
+
+        cos = nn.CosineSimilarity(dim=1, eps=1e-6)
+        edges_recon_pos = cos(pos_recon[pos_mask_g.edges()[0]], pos_recon[pos_mask_g.edges()[1]])
+        edges_recon_neg = cos(neg_recon[neg_mask_g.edges()[0]], neg_recon[neg_mask_g.edges()[1]])
+        # edges_recon = nn.Sigmoid()(edges_recon)
+        # print('-'*20)
+        # print(edges_recon_pos, edges_recon_pos.shape)
+        # print(edges_recon_neg, edges_recon_neg.shape)
+
+        # Concatenate positive and negative edge predictions
+        edges_recon = torch.cat((edges_recon_pos, edges_recon_neg))
+
+        # print(edges_recon, edges_recon.shape)
+        edges_recon = edges_recon.requires_grad_()
+
+        # calculate loss
+        criterion = nn.BCEWithLogitsLoss()
+
+        loss = criterion(edges_recon.float(), torch.cat((torch.ones_like(edges_recon_pos), torch.zeros_like(edges_recon_neg))))
+        
+        # loss = criterion(edges_recon, torch.ones_like(edges_recon))
+        # 根据阈值确定哪些连边被重构
+        reconstructed_adj = torch.zeros(pos_mask_g.num_nodes(), pos_mask_g.num_nodes())
+        # 将正边的预测值映射到邻接矩阵中
+        # 设置相似度大于等于阈值的连边为1，否则为0
+        threshold = 0.5
+        for edge_index, prediction in zip(pos_mask_g.edges()[0], edges_recon_pos):
+            src = pos_mask_g.find_edges(edge_index)[0].item()
+            dst = pos_mask_g.find_edges(edge_index)[1].item()
+            if prediction >= threshold:
+                reconstructed_adj[src][dst] = 1
+            else:
+                reconstructed_adj[src][dst] = 0
+            # reconstructed_adj[src][dst] = prediction
+
+        # 将负边的预测值映射到邻接矩阵中，如果有需要的话
+        for edge_index, prediction in zip(neg_mask_g.edges()[0], edges_recon_neg):
+            src = neg_mask_g.find_edges(edge_index)[0].item()
+            dst = neg_mask_g.find_edges(edge_index)[1].item()
+            if prediction >= threshold:
+                reconstructed_adj[src][dst] = 1
+            else:
+                reconstructed_adj[src][dst] = 0
+            # reconstructed_adj[src][dst] = prediction
+        
+        
+        return loss, reconstructed_adj
+
+
+
+    # def mask_attr_prediction(self, g, x):
+    #     pre_use_g, use_x, (mask_nodes, keep_nodes) = self.encoding_mask_noise(g, x, self._mask_rate)
+
+    #     if self._drop_edge_rate > 0:
+    #         use_g, masked_edges = drop_edge(pre_use_g, self._drop_edge_rate, return_edges=True)
+    #     else:
+    #         use_g = pre_use_g
+
+    #     enc_rep, all_hidden = self.encoder(use_g, use_x, return_hidden=True)
+    #     if self._concat_hidden:
+    #         enc_rep = torch.cat(all_hidden, dim=1)
+
+    #     # ---- attribute reconstruction ----
+    #     rep = self.encoder_to_decoder(enc_rep)
 
     
-        # * remask, re-mask
-        rep[mask_nodes] = 0
-        recon = self.decoder(pre_use_g, rep)
+    #     # * remask, re-mask
+    #     rep[mask_nodes] = 0
+    #     recon = self.decoder(pre_use_g, rep)
 
-        x_init = x[mask_nodes]
-        x_rec = recon[mask_nodes]
+    #     x_init = x[mask_nodes]
+    #     x_rec = recon[mask_nodes]
 
-        loss = self.criterion(x_rec, x_init)
-        return loss
+    #     loss = self.criterion(x_rec, x_init)
+    #     return loss
 
     def embed(self, g, x):
         rep = self.encoder(g, x)
         return rep
-
-    
 
     @property
     def enc_params(self):
@@ -754,6 +1010,234 @@ class MGAE(nn.Module):
     def dec_params(self):
         return chain(*[self.encoder_to_decoder.parameters(), self.decoder.parameters()])
     
+
+class AugGraph(nn.Module):
+    def __init__(self, 
+        # num_dim, 
+        in_dim: int,
+        num_hidden: int,
+        num_layers: int,
+        nhead: int,
+        nhead_out: int,
+        activation: str,
+        feat_drop: float,
+        attn_drop: float,
+        negative_slope: float,
+        residual: bool,
+        norm: Optional[str],
+        num_classes: int, 
+        mask_rate: float = 0.3,
+        encoder_type: str = "gcn",
+        decoder_type: str = "gcn",
+        loss_fn: str = "sce",
+        drop_edge_rate: float = 0.0,
+        replace_rate: float = 0.1,
+        alpha_l: float = 2,
+        concat_hidden: bool = False,
+        alpha: float=1,
+        sample_type: str="add_sample",
+        temperature=0.2,
+        gnnlayer_type="gcn",
+        ):
+        super(AugGraph, self).__init__()
+        self.encoder = MGAE(in_dim,
+        num_hidden,
+        num_layers,
+        nhead,
+        nhead_out,
+        activation,
+        feat_drop,
+        attn_drop,
+        negative_slope,
+        residual,
+        norm,
+        mask_rate,
+        encoder_type,
+        decoder_type,
+        loss_fn,
+        drop_edge_rate,
+        replace_rate,
+        alpha_l,
+        concat_hidden)
+        self.linear = LogisticRegression(num_hidden, num_classes)
+        self.sample_type=sample_type
+        self.alpha=alpha
+        self.temperature = temperature
+        self.gnnlayer_type = gnnlayer_type
+
+        # self.gcn=GCN(in_dim=in_dim,
+        #              num_hidden=num_hidden,
+        #          num_classes=num_classes,
+        #          num_layers=num_layers,
+        #          dropout=feat_drop,
+        #          activation=activation,
+        #          residual=residual,
+        #          norm=norm,
+        #          encoding=False,
+        #          sample_type='add_sample')
+
+    def forward(self, g, x):
+        loss, adj_rec = self.encoder.mask_edge_prediction(g, x, mask_rate=0.3)
+        loss_item = {"loss": loss.item()}
+        # adj_recon, g->adj
+        adj = g.adjacency_matrix()
+
+        if self.sample_type == 'edge':
+            adj_new = self.sample_adj_edge(adj_rec, adj, self.alpha)
+        elif self.sample_type == 'add_round':
+            adj_new = self.sample_adj_add_round(adj_rec, adj, self.alpha)
+        elif self.sample_type == 'rand':
+            adj_new = self.sample_adj_random(adj_rec)
+        elif self.sample_type == 'add_sample':
+            if self.alpha == 1:
+                adj_new = self.sample_adj(adj_rec)
+            else:
+                adj_new = self.sample_adj_add_bernoulli(adj_rec, adj, self.alpha)
+        adj_new_normed = self.normalize_adj(adj_new)
+        
+        return loss, loss_item, adj_new_normed
+
+    
+    def sample_adj(self, adj_logits):
+        """ sample an adj from the predicted edge probabilities of ep_net """
+        edge_probs = adj_logits / torch.max(adj_logits)
+        # sampling
+        adj_sampled = pyro.distributions.RelaxedBernoulliStraightThrough(temperature=self.temperature, probs=edge_probs).rsample()
+        # making adj_sampled symmetric
+        adj_sampled = adj_sampled.triu(1)
+        adj_sampled = adj_sampled + adj_sampled.T
+        return adj_sampled
+
+    def sample_adj_add_bernoulli(self, adj_logits, adj_orig, alpha):
+        edge_probs = adj_logits / torch.max(adj_logits)
+        edge_probs = alpha*edge_probs + (1-alpha)*adj_orig
+        # sampling
+        adj_sampled = pyro.distributions.RelaxedBernoulliStraightThrough(temperature=self.temperature, probs=edge_probs).rsample()
+        # making adj_sampled symmetric
+        adj_sampled = adj_sampled.triu(1)
+        adj_sampled = adj_sampled + adj_sampled.T
+        return adj_sampled
+
+    def sample_adj_add_round(self, adj_logits, adj_orig, alpha):
+        edge_probs = adj_logits / torch.max(adj_logits)
+        edge_probs = alpha*edge_probs + (1-alpha)*adj_orig
+        # sampling
+        adj_sampled = RoundNoGradient.apply(edge_probs)
+        # making adj_sampled symmetric
+        adj_sampled = adj_sampled.triu(1)
+        adj_sampled = adj_sampled + adj_sampled.T
+        return adj_sampled
+
+    def sample_adj_random(self, adj_logits):
+        adj_rand = torch.rand(adj_logits.size())
+        adj_rand = adj_rand.triu(1)
+        adj_rand = torch.round(adj_rand)
+        adj_rand = adj_rand + adj_rand.T
+        return adj_rand
+
+    def sample_adj_edge(self, adj_logits, adj_orig, change_frac):
+        adj = adj_orig.to_dense() if adj_orig.is_sparse else adj_orig
+        n_edges = adj.nonzero().size(0)
+        n_change = int(n_edges * change_frac / 2)
+        # take only the upper triangle
+        edge_probs = adj_logits.triu(1)
+        edge_probs = edge_probs - torch.min(edge_probs)
+        edge_probs = edge_probs / torch.max(edge_probs)
+        adj_inverse = 1 - adj
+        # get edges to be removed
+        mask_rm = edge_probs * adj
+        nz_mask_rm = mask_rm[mask_rm>0]
+        if len(nz_mask_rm) > 0:
+            n_rm = len(nz_mask_rm) if len(nz_mask_rm) < n_change else n_change
+            thresh_rm = torch.topk(mask_rm[mask_rm>0], n_rm, largest=False)[0][-1]
+            mask_rm[mask_rm > thresh_rm] = 0
+            mask_rm = CeilNoGradient.apply(mask_rm)
+            mask_rm = mask_rm + mask_rm.T
+        # remove edges
+        adj_new = adj - mask_rm
+        # get edges to be added
+        mask_add = edge_probs * adj_inverse
+        nz_mask_add = mask_add[mask_add>0]
+        if len(nz_mask_add) > 0:
+            n_add = len(nz_mask_add) if len(nz_mask_add) < n_change else n_change
+            thresh_add = torch.topk(mask_add[mask_add>0], n_add, largest=True)[0][-1]
+            mask_add[mask_add < thresh_add] = 0
+            mask_add = CeilNoGradient.apply(mask_add)
+            mask_add = mask_add + mask_add.T
+        # add edges
+        adj_new = adj_new + mask_add
+        return adj_new
+
+    def normalize_adj(self, adj):
+        if self.gnnlayer_type == 'gcn':
+            # adj = adj + torch.diag(torch.ones(adj.size(0))).to(self.device)
+            adj.fill_diagonal_(1)
+            # normalize adj with A = D^{-1/2} @ A @ D^{-1/2}
+            D_norm = torch.diag(torch.pow(adj.sum(1), -0.5))
+            adj = D_norm @ adj @ D_norm
+        elif self.gnnlayer_type == 'gat':
+            # adj = adj + torch.diag(torch.ones(adj.size(0))).to(self.device)
+            adj.fill_diagonal_(1)
+        elif self.gnnlayer_type == 'gsage':
+            # adj = adj + torch.diag(torch.ones(adj.size(0))).to(self.device)
+            adj.fill_diagonal_(1)
+            adj = F.normalize(adj, p=1, dim=1)
+        return adj
+
+        
+
+
+def build_model(args):
+    num_heads = args.num_heads
+    num_out_heads = args.num_out_heads
+    num_hidden = args.num_hidden
+    num_layers = args.num_layers
+    residual = args.residual
+    attn_drop = args.attn_drop
+    in_drop = args.in_drop
+    norm = args.norm
+    negative_slope = args.negative_slope
+    encoder_type = args.encoder
+    decoder_type = args.decoder
+    mask_rate = args.mask_rate
+    drop_edge_rate = args.drop_edge_rate
+    replace_rate = args.replace_rate
+    num_classes=args.num_classes
+
+    activation = args.activation
+    loss_fn = args.loss_fn
+    alpha_l = args.alpha_l
+    alpha = args.alpha
+    sample_type = args.sample_type
+    concat_hidden = args.concat_hidden
+    num_features = args.num_features
+
+
+    model = AugGraph(
+        in_dim=num_features,
+        num_hidden=num_hidden,
+        num_layers=num_layers,
+        nhead=num_heads,
+        nhead_out=num_out_heads,
+        activation=activation,
+        feat_drop=in_drop,
+        attn_drop=attn_drop,
+        negative_slope=negative_slope,
+        residual=residual,
+        encoder_type=encoder_type,
+        decoder_type=decoder_type,
+        mask_rate=mask_rate,
+        norm=norm,
+        num_classes=num_classes,
+        loss_fn=loss_fn,
+        drop_edge_rate=drop_edge_rate,
+        replace_rate=replace_rate,
+        alpha_l=alpha_l,
+        concat_hidden=concat_hidden,
+        alpha=alpha,
+        sample_type=sample_type
+    )
+    return model
 
 
 def main(args):
@@ -819,15 +1303,14 @@ def main(args):
 
         if load_model:
             logging.info("Loading Model ... ")
-            model.load_state_dict(torch.load("checkpoint_feats.pt"))
+            model.load_state_dict(torch.load("checkpoint_struct.pt"))
         if save_model:
             logging.info("Saveing Model ...")
-            torch.save(model.state_dict(), "checkpoint_feats.pt")
+            torch.save(model.state_dict(), "checkpoint_struct.pt")
         
         model = model.to(device)
         model.eval()
 
-        final_acc, estp_acc = node_classification_evaluation(model, graph, x, num_classes, lr_f, weight_decay_f, max_epoch_f, device, linear_prob)
         acc_list.append(final_acc)
         estp_acc_list.append(estp_acc)
 

@@ -130,10 +130,58 @@ class LogisticRegression(nn.Module):
         return logits
 
 class AugGraph(nn.Module):
-    def __init__(self, num_dim, num_classes) -> None:
+    def __init__(self, 
+        num_dim, 
+        in_dim: int,
+        num_hidden: int,
+        num_layers: int,
+        nhead: int,
+        nhead_out: int,
+        activation: str,
+        feat_drop: float,
+        attn_drop: float,
+        negative_slope: float,
+        residual: bool,
+        norm: Optional[str],
+        num_classes, 
+        sample_type,
+        mask_rate: float = 0.3,
+        encoder_type: str = "gcn",
+        decoder_type: str = "gcn",
+        loss_fn: str = "sce",
+        drop_edge_rate: float = 0.0,
+        replace_rate: float = 0.1,
+        alpha_l: float = 2,
+        concat_hidden: bool = False,
+        ):
         super(AugGraph, self).__init__()
-        self.
+        self.encoder = MGAE(in_dim: int,
+        num_hidden: int,
+        num_layers: int,
+        nhead: int,
+        nhead_out: int,
+        activation: str,
+        feat_drop: float,
+        attn_drop: float,
+        negative_slope: float,
+        residual: bool,
+        norm: Optional[str],
+        
+        mask_rate: float = 0.3,
+        encoder_type: str = "gcn",
+        decoder_type: str = "gcn",
+        loss_fn: str = "sce",
+        drop_edge_rate: float = 0.0,
+        replace_rate: float = 0.1,
+        alpha_l: float = 2,
+        concat_hidden: bool = False,)
         self.linear = nn.Linear(num_dim, num_classes)
+
+    def forward(self, g, x):
+        loss, x_rec = self.encoder.mask_attr_prediction(g, x)
+
+
+
 
 def accuracy(y_pred, y_true):
     y_true = y_true.squeeze().long()

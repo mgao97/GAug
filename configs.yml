@@ -22,6 +22,11 @@ cora:
   replace_rate: 0.05 
   alpha_l: 3
   scheduler: True
+  alpha: 1
+  sample_type: add_sample
+  num_classes: 7
+  temperature: 0.2
+  gnnlayer_type: gcn
 citeseer:
   lr: 0.001
   lr_f: 0.01
