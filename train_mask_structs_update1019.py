@@ -191,8 +191,9 @@ def node_classification_evaluation(model, graph, x, num_classes, lr_f, weight_de
 def linear_probing_for_transductive_node_classiifcation(model, graph, feat, optimizer, max_epoch, device, mute=False):
     criterion = torch.nn.CrossEntropyLoss()
 
-    graph = graph.to(device)
-    x = feat.to(device)
+    # graph = graph.to(device)
+    # x = feat.to(device)
+    x = feat
 
     train_mask = graph.ndata["train_mask"]
     val_mask = graph.ndata["val_mask"]
@@ -847,7 +848,7 @@ class MGAE(nn.Module):
         return chain(*[self.encoder_to_decoder.parameters(), self.decoder.parameters()])
     
 class GAug(nn.Module):
-    def __init__(self, hidden_dim, num_classes, num_layers, feat_drop, sample_type="add_sample", alpha=1.0, temperature=0.2, gnnlayer_type="gcn"):
+    def __init__(self, in_dim, hidden_dim, num_classes, num_layers, feat_drop, activation, residual, norm, encoding=False, sample_type="add_sample", alpha=1.0, temperature=0.2, gnnlayer_type="gcn"):
         super(GAug, self).__init__()
         self.sample_type=sample_type
         self.alpha=alpha
@@ -856,10 +857,32 @@ class GAug(nn.Module):
 
         self.norms = None
         self.head = nn.Identity()
-        self.linear = LogisticRegression(hidden_dim, num_classes)
+        self.linear = LogisticRegression(in_dim, hidden_dim)
         self.sample_type=sample_type
         self.num_layers = num_layers
         self.dropout=feat_drop
+        self.gcn_layers = nn.ModuleList()
+        self.activation = activation
+
+        last_activation = create_activation(activation) if encoding else None
+        last_residual = encoding and residual
+        last_norm = norm if encoding else None
+        
+        if num_layers == 1:
+            self.gcn_layers.append(GraphConv(
+                in_dim, num_classes, residual=last_residual, norm=last_norm, activation=last_activation))
+        else:
+            # input projection (no residual)
+            self.gcn_layers.append(GraphConv(
+                in_dim, hidden_dim, residual=residual, norm=norm, activation=create_activation(activation)))
+            # hidden layers
+            for l in range(1, num_layers - 1):
+                # due to multi-head, the in_dim = num_hidden * num_heads
+                self.gcn_layers.append(GraphConv(
+                    hidden_dim, hidden_dim, residual=residual, norm=norm, activation=create_activation(activation)))
+            # output projection
+            self.gcn_layers.append(GraphConv(
+                hidden_dim, num_classes, residual=last_residual, activation=last_activation, norm=last_norm))
 
 
     def forward(self, adj_rec, graph, x, lr_f, weight_decay_f, max_epoch_f,return_hidden=False, linear_prob=True, mute=False):
@@ -891,6 +914,7 @@ class GAug(nn.Module):
         h = x
         hidden_list = []
         for l in range(self.num_layers):
+            print(l)
             h = F.dropout(h, p=self.dropout, training=self.training)
             h = self.gcn_layers[l](new_graph, h)
             if self.norms is not None and l != self.num_layers - 1:
@@ -1193,7 +1217,9 @@ def main(args):
 
         # model2 = GAug(args.in_dim, args.hidden_dim, args.num_classes,lr_f, weight_decay_f, max_epoch_f, device, linear_prob=True, mute=False)
 
-        model2 = GAug(args.num_hidden, num_classes, args.num_layers, args.in_drop, sample_type="add_sample", alpha=1.0, temperature=0.2, gnnlayer_type="gcn")
+        model2 = GAug(args.num_features, args.num_hidden, num_classes, args.num_layers, args.in_drop, args.activation, args.residual, create_norm(args.norm), encoding=False, sample_type="add_sample", alpha=1.0, temperature=0.2, gnnlayer_type="gcn")
+        print('8'*50)
+        print(model2)
         
 
         final_acc, estp_acc = model2(derep, graph, x, lr_f, weight_decay_f, max_epoch_f,return_hidden=False, linear_prob=True, mute=False)
