@@ -93,8 +93,8 @@ class VHGAE_model(nn.Module):
 
     def encode(self, features, A):
         out = self.hgconv1(features, A)
-        mu, logvar = self.hgconv2(out, A), self.hgconv2(out, A)
-        z = self.reparameterize(mu, logvar)
+        self.mean, self.logstd = self.hgconv2(out, A), self.hgconv2(out, A)
+        z = self.reparameterize(self.mean, self.logstd)
         return z
 
 

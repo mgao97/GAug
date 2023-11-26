@@ -154,20 +154,21 @@ class HyperGAug(object):
         pos_edges = nz_upper[:n_edges_sample]
         self.val_edges = np.concatenate((pos_edges, neg_edges), axis=0)
         self.edge_labels = np.array([1]*n_edges_sample + [0]*n_edges_sample)
+        self.hg = hg
 
-    def pretrain_ep_net(self, model, adj, features, adj_orig, norm_w, pos_weight, n_epochs):
+    def pretrain_ep_net(self, model, hg, features, adj_orig, norm_w, pos_weight, n_epochs):
         """ pretrain the edge prediction network """
         optimizer = torch.optim.Adam(model.ep_net.parameters(),
                                     lr=self.lr)
         model.train()
         for epoch in range(n_epochs):
-            adj_logits = model.ep_net(adj, features)
+            adj_logits = model.ep_net(features, hg)
             loss = norm_w * F.binary_cross_entropy_with_logits(adj_logits, adj_orig, pos_weight=pos_weight)
-            if not self.gae:
-                mu = model.ep_net.mean
-                lgstd = model.ep_net.logstd
-                kl_divergence = 0.5/adj_logits.size(0) * (1 + 2*lgstd - mu**2 - torch.exp(2*lgstd)).sum(1).mean()
-                loss -= kl_divergence
+            # if not self.gae:
+            mu = model.ep_net.mean
+            lgstd = model.ep_net.logstd
+            kl_divergence = 0.5/adj_logits.size(0) * (1 + 2*lgstd - mu**2 - torch.exp(2*lgstd)).sum(1).mean()
+            loss -= kl_divergence
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -176,7 +177,7 @@ class HyperGAug(object):
             self.logger.info('EPNet pretrain, Epoch [{:3}/{}]: loss {:.4f}, auc {:.4f}, ap {:.4f}'
                         .format(epoch+1, n_epochs, loss.item(), ep_auc, ep_ap))
 
-    def pretrain_nc_net(self, model, adj, features, labels, n_epochs):
+    def pretrain_nc_net(self, model, hg, features, labels, n_epochs):
         """ pretrain the node classification network """
         optimizer = torch.optim.Adam(model.nc_net.parameters(),
                                     lr=self.lr,
@@ -189,7 +190,7 @@ class HyperGAug(object):
         best_val_acc = 0.
         for epoch in range(n_epochs):
             model.train()
-            nc_logits = model.nc_net(adj, features)
+            nc_logits = model.nc_net(features, hg)
             # losses
             loss = nc_criterion(nc_logits[self.train_nid], labels[self.train_nid])
             optimizer.zero_grad()
@@ -197,7 +198,7 @@ class HyperGAug(object):
             optimizer.step()
             model.eval()
             with torch.no_grad():
-                nc_logits_eval = model.nc_net(adj, features)
+                nc_logits_eval = model.nc_net(features, hg)
             val_acc = self.eval_node_cls(nc_logits_eval[self.val_nid], labels[self.val_nid])
             if val_acc > best_val_acc:
                 best_val_acc = val_acc
@@ -211,6 +212,7 @@ class HyperGAug(object):
     def fit(self, pretrain_ep=200, pretrain_nc=20):
         """ train the model """
         # move data to device
+        hg = self.hg.to(self.device)
         adj_norm = self.adj_norm.to(self.device)
         adj = self.adj.to(self.device)
         features = self.features.to(self.device)
@@ -223,10 +225,10 @@ class HyperGAug(object):
         pos_weight = torch.FloatTensor([float(adj_t.shape[0]**2 - adj_t.sum()) / adj_t.sum()]).to(self.device)
         # pretrain VGAE if needed
         if pretrain_ep:
-            self.pretrain_ep_net(model, adj_norm, features, adj_orig, norm_w, pos_weight, pretrain_ep)
+            self.pretrain_ep_net(model, hg, features, adj_orig, norm_w, pos_weight, pretrain_ep)
         # pretrain GCN if needed
         if pretrain_nc:
-            self.pretrain_nc_net(model, adj, features, labels, pretrain_nc)
+            self.pretrain_nc_net(model, hg, features, labels, pretrain_nc)
         # optimizers
         optims = MultipleOptimizer(torch.optim.Adam(model.ep_net.parameters(),
                                                     lr=self.lr),
@@ -251,7 +253,7 @@ class HyperGAug(object):
                 optims.update_lr(0, ep_lr_schedule[epoch])
 
             model.train()
-            nc_logits, adj_logits = model(adj_norm, adj_orig, features)
+            nc_logits, adj_logits = model(hg, features)
 
             # losses
             loss = nc_loss = nc_criterion(nc_logits[self.train_nid], labels[self.train_nid])
@@ -263,7 +265,7 @@ class HyperGAug(object):
             # validate (without dropout)
             model.eval()
             with torch.no_grad():
-                nc_logits_eval = model.nc_net(adj, features)
+                nc_logits_eval = model.nc_net(features, hg)
             val_acc = self.eval_node_cls(nc_logits_eval[self.val_nid], labels[self.val_nid])
             adj_pred = torch.sigmoid(adj_logits.detach()).cpu()
             ep_auc, ep_ap = self.eval_edge_pred(adj_pred, self.val_edges, self.edge_labels)
@@ -282,7 +284,7 @@ class HyperGAug(object):
                     break
         # get final test result without early stop
         with torch.no_grad():
-            nc_logits_eval = model.nc_net(adj, features)
+            nc_logits_eval = model.nc_net(features, hg)
         test_acc_final = self.eval_node_cls(nc_logits_eval[self.test_nid], labels[self.test_nid])
         # log both results
         self.logger.info('Final test acc with early stop: {:.4f}, without early stop: {:.4f}'
@@ -428,8 +430,8 @@ class HGAug_model(nn.Module):
                  drop_rate = 0.5,
                 )
         # node classification network
-        print(dropout)
-        print('*'*100)
+        # print(dropout)
+        # print('*'*100)
         
         self.nc_net = HGNN_model(in_channels, hid_channels1, num_classes, use_bn, dropout)
 
@@ -443,7 +445,8 @@ class HGAug_model(nn.Module):
         adj_sampled = adj_sampled + adj_sampled.T
         return adj_sampled
 
-    def sample_adj_add_bernoulli(self, adj_logits, adj_orig, alpha):
+    def sample_adj_add_bernoulli(self, adj_logits, alpha):
+        adj_orig = self.adj_orig
         edge_probs = adj_logits / torch.max(adj_logits)
         edge_probs = alpha*edge_probs + (1-alpha)*adj_orig
         # sampling
@@ -453,7 +456,8 @@ class HGAug_model(nn.Module):
         adj_sampled = adj_sampled + adj_sampled.T
         return adj_sampled
 
-    def sample_adj_add_round(self, adj_logits, adj_orig, alpha):
+    def sample_adj_add_round(self, adj_logits, alpha):
+        adj_orig = self.adj_orig
         edge_probs = adj_logits / torch.max(adj_logits)
         edge_probs = alpha*edge_probs + (1-alpha)*adj_orig
         # sampling
@@ -470,7 +474,8 @@ class HGAug_model(nn.Module):
         adj_rand = adj_rand + adj_rand.T
         return adj_rand
 
-    def sample_adj_edge(self, adj_logits, adj_orig, change_frac):
+    def sample_adj_edge(self, adj_logits, change_frac):
+        adj_orig = self.adj_orig
         adj = adj_orig.to_dense() if adj_orig.is_sparse else adj_orig
         n_edges = adj.nonzero().size(0)
         n_change = int(n_edges * change_frac / 2)
@@ -519,8 +524,10 @@ class HGAug_model(nn.Module):
         #     adj = F.normalize(adj, p=1, dim=1)
         return adj
 
-    def forward(self, adj, adj_orig, features):
-        adj_logits = self.ep_net(adj, features)
+    def forward(self, hg, features):
+        adj_orig = adjacency_matrix(hg, s=1, weight=False)
+        self.adj_orig = adj_orig
+        adj_logits = self.ep_net(features, hg)
         if self.sample_type == 'edge':
             adj_new = self.sample_adj_edge(adj_logits, adj_orig, self.alpha)
         elif self.sample_type == 'add_round':

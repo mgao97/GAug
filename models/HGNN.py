@@ -50,6 +50,8 @@ class HGNNConv(nn.Module):
         self.is_last = is_last
         self.bn = nn.BatchNorm1d(out_channels) if use_bn else None
         self.act = nn.ReLU(inplace=True)
+        # print('53 line:')
+        # print('drop_rate:', drop_rate, type(drop_rate))
         self.drop = nn.Dropout(drop_rate)
         self.theta = nn.Linear(in_channels, out_channels, bias=bias)
 
@@ -92,8 +94,8 @@ class HGNN_model(nn.Module):
     ) -> None:
         super().__init__()
         self.layers = nn.ModuleList()
-        print(drop_rate)
-        print('='*100)
+        # print(drop_rate)
+        # print('='*100)
         self.layers.append(
             HGNNConv(in_channels, hid_channels, use_bn=use_bn, drop_rate=drop_rate)
         )
