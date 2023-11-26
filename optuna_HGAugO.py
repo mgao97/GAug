@@ -137,7 +137,7 @@ def objective(trial):
     pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
     accs = []
     for _ in range(30):
-        model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, args.epochs, args.lr, args.weight_decay, args.beta, args.temperature, False, name='debug', gnnlayer_type=args.gnnlayer_type, alpha=args.alpha, sample_type=args.sample_type)
+        model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, args.epochs, args.seed, args.lr, args.weight_decay, beta, temp, False, name='debug', gnnlayer_type=args.gnnlayer_type, alpha=change_frac, sample_type=args.sample_type)
         acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
         accs.append(acc)
     acc = np.mean(accs)
