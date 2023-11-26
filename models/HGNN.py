@@ -92,6 +92,8 @@ class HGNN_model(nn.Module):
     ) -> None:
         super().__init__()
         self.layers = nn.ModuleList()
+        print(drop_rate)
+        print('='*100)
         self.layers.append(
             HGNNConv(in_channels, hid_channels, use_bn=use_bn, drop_rate=drop_rate)
         )
