@@ -295,11 +295,11 @@ class HyperGAug(object):
 
     def log_parameters(self, all_vars):
         """ log all variables in the input dict excluding the following ones """
-        del all_vars['self']
-        del all_vars['adj_matrix']
-        del all_vars['features']
-        del all_vars['labels']
-        del all_vars['tvt_nids']
+        # del all_vars['self']
+        # del all_vars['adj_matrix']
+        # del all_vars['features']
+        # del all_vars['labels']
+        # del all_vars['tvt_nids']
         self.logger.info(f'Parameters: {all_vars}')
 
     @staticmethod
@@ -428,6 +428,9 @@ class HGAug_model(nn.Module):
                  drop_rate = 0.5,
                 )
         # node classification network
+        print(dropout)
+        print('*'*100)
+        
         self.nc_net = HGNN_model(in_channels, hid_channels1, num_classes, use_bn, dropout)
 
     def sample_adj(self, adj_logits):
