@@ -253,7 +253,7 @@ class HyperGAug(object):
                 optims.update_lr(0, ep_lr_schedule[epoch])
 
             model.train()
-            nc_logits, adj_logits = model(hg, features)
+            nc_logits, adj_logits = model(features, hg)
 
             # losses
             loss = nc_loss = nc_criterion(nc_logits[self.train_nid], labels[self.train_nid])
@@ -405,6 +405,20 @@ def adjacency_matrix(hg, s=1, weight=False):
 
         return csr_matrix(A)
 
+def adjacency_matrix_to_hypergraph(adj_matrix):
+    hyperedge = []
+    num_nodes = adj_matrix.shape[0]
+
+    for i in range(num_nodes):
+        
+        hyperedge_nodes = np.where(adj_matrix[i] != 0)[0].tolist()
+        hyperedge.append(hyperedge_nodes)
+    num_nodes = adj_matrix.shape[0]
+    hyperg = Hypergraph(num_v=num_nodes, e_list=hyperedge)
+
+
+    return hyperg
+
 class HGAug_model(nn.Module):
     def __init__(self,
                  in_channels: int,
@@ -447,6 +461,7 @@ class HGAug_model(nn.Module):
 
     def sample_adj_add_bernoulli(self, adj_logits, alpha):
         adj_orig = self.adj_orig
+        adj_orig = torch.sparse_coo_tensor(adj_orig.nonzero(), adj_orig.data, adj_orig.shape).to_dense()
         edge_probs = adj_logits / torch.max(adj_logits)
         edge_probs = alpha*edge_probs + (1-alpha)*adj_orig
         # sampling
@@ -458,6 +473,7 @@ class HGAug_model(nn.Module):
 
     def sample_adj_add_round(self, adj_logits, alpha):
         adj_orig = self.adj_orig
+        adj_orig = torch.sparse_coo_tensor(adj_orig.nonzero(), adj_orig.data, adj_orig.shape).to_dense()
         edge_probs = adj_logits / torch.max(adj_logits)
         edge_probs = alpha*edge_probs + (1-alpha)*adj_orig
         # sampling
@@ -524,7 +540,7 @@ class HGAug_model(nn.Module):
         #     adj = F.normalize(adj, p=1, dim=1)
         return adj
 
-    def forward(self, hg, features):
+    def forward(self, features, hg):
         adj_orig = adjacency_matrix(hg, s=1, weight=False)
         self.adj_orig = adj_orig
         adj_logits = self.ep_net(features, hg)
@@ -538,9 +554,10 @@ class HGAug_model(nn.Module):
             if self.alpha == 1:
                 adj_new = self.sample_adj(adj_logits)
             else:
-                adj_new = self.sample_adj_add_bernoulli(adj_logits, adj_orig, self.alpha)
+                adj_new = self.sample_adj_add_bernoulli(adj_logits, self.alpha)
         adj_new_normed = self.normalize_adj(adj_new)
-        nc_logits = self.nc_net(adj_new_normed, features)
+        hg_new = adjacency_matrix_to_hypergraph(adj_new_normed)
+        nc_logits = self.nc_net(features, hg_new)
         return nc_logits, adj_logits
 
 
