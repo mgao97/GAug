@@ -25,7 +25,7 @@ from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 from scipy.sparse import csr_matrix
 
 parser = argparse.ArgumentParser(description='single')
-parser.add_argument('--dataset', type=str, default='cooking200')
+parser.add_argument('--dataset', type=str, default='cora')
 parser.add_argument('--gnn', type=str, default='gcn')
 parser.add_argument('--gpu', type=str, default='-1')
 # parser.add_argument('--layers', type=int, default=-1)
@@ -56,10 +56,9 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu = 0
 
-# data = Cooking200()
-data = CocitationCora()
+data = Cooking200()
 args.dataset = data
-
+print(data['labels'])
 gnn = args.gnn
 layer_type = args.gnn
 # jk = False
@@ -73,6 +72,7 @@ elif args.dataset in ('blogcatalog', 'flickr'):
     feat_norm = 'none'
 lr = 0.005 if layer_type == 'gat' else 0.01
 n_layers = 1
+
 
 def adjacency_matrix(hg, s=1, weight=False):
         r"""
@@ -102,18 +102,8 @@ def adjacency_matrix(hg, s=1, weight=False):
 def objective(trial):
     data = CocitationCora()
     dataname = 'cora'
-    # data = Cooking200()
     # hg = Hypergraph(data["num_vertices"], data["edge_list"])
     # features = torch.eye(data['num_vertices'])
-    # labels = data['labels']
-    # # train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
-
-    # # features (torch.FloatTensor)
-    # if isinstance(features, torch.FloatTensor):
-    #     features = features
-    # else:
-    #     features = torch.FloatTensor(features)
-
     # adj_matrix = adjacency_matrix(hg, s=1, weight=False)
     # train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
     # train_nid = torch.tensor(train_index,dtype=torch.long)
@@ -149,10 +139,13 @@ def objective(trial):
     trial.suggest_categorical('gnn', [gnn])
     trial.suggest_uniform('acc', acc, acc)
     trial.suggest_uniform('std', std, std)
+    
     return acc
 
 if __name__ == "__main__":
-    study = optuna.create_study(direction="maximize")
+    
+    study = optuna.create_study(study_name = 'cocitationcora_study',direction="maximize")
+    
     study.optimize(objective, n_trials=10)
 
     print("Number of finished trials: ", len(study.trials))
@@ -165,3 +158,6 @@ if __name__ == "__main__":
     print("  Params: ")
     for key, value in trial.params.items():
         print("    {}: {}".format(key, value))
+    
+    
+

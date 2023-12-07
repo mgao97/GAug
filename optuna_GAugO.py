@@ -33,7 +33,7 @@ if gnn == 'jknet':
     layer_type = 'gsage'
     jk = True
 
-def objective(trial):
+def objective(trial): 
     tvt_nids = pickle.load(open(f'data/graphs/{ds}_tvt_nids.pkl', 'rb'))
     adj_orig = pickle.load(open(f'data/graphs/{ds}_adj.pkl', 'rb'))
     features = pickle.load(open(f'data/graphs/{ds}_features.pkl', 'rb'))
@@ -78,7 +78,7 @@ def objective(trial):
     acc = np.mean(accs)
     std = np.std(accs)
     trial.suggest_categorical('dataset', [ds])
-    trial.suggest_categorical('gnn', [gnn])
+    trial.suggest_categorical('gnn', [gnn]) 
     trial.suggest_uniform('acc', acc, acc)
     trial.suggest_uniform('std', std, std)
     return acc

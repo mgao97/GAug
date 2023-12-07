@@ -461,7 +461,11 @@ class HGAug_model(nn.Module):
 
     def sample_adj_add_bernoulli(self, adj_logits, alpha):
         adj_orig = self.adj_orig
-        adj_orig = torch.sparse_coo_tensor(adj_orig.nonzero(), adj_orig.data, adj_orig.shape).to_dense()
+        #adj_orig = torch.sparse_coo_tensor(adj_orig.nonzero(), adj_orig.data, adj_orig.shape).to_dense()
+        coords = np.array(adj_orig.nonzero())
+        data = np.array(adj_orig.data)
+        adj_orig = torch.sparse_coo_tensor(coords, data, adj_orig.shape)
+        
         edge_probs = adj_logits / torch.max(adj_logits)
         edge_probs = alpha*edge_probs + (1-alpha)*adj_orig
         # sampling

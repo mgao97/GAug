@@ -13,7 +13,7 @@ import pickle
 from copy import deepcopy
 import torch.optim as optim
 from dhg import Hypergraph
-from dhg.data import *
+from dhg.data import Cooking200
 from dhg.random import set_seed
 import dhg
 from dhg.metrics import HypergraphVertexClassificationEvaluator as Evaluator
@@ -56,10 +56,9 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu = 0
 
-# data = Cooking200()
-data = CocitationCora()
+data = Cooking200()
 args.dataset = data
-
+print(data['labels'])
 gnn = args.gnn
 layer_type = args.gnn
 # jk = False
@@ -73,6 +72,7 @@ elif args.dataset in ('blogcatalog', 'flickr'):
     feat_norm = 'none'
 lr = 0.005 if layer_type == 'gat' else 0.01
 n_layers = 1
+
 
 def adjacency_matrix(hg, s=1, weight=False):
         r"""
@@ -100,20 +100,9 @@ def adjacency_matrix(hg, s=1, weight=False):
         return csr_matrix(A)
 
 def objective(trial):
-    data = CocitationCora()
-    dataname = 'cora'
-    # data = Cooking200()
+    data = Cooking200()
     # hg = Hypergraph(data["num_vertices"], data["edge_list"])
     # features = torch.eye(data['num_vertices'])
-    # labels = data['labels']
-    # # train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
-
-    # # features (torch.FloatTensor)
-    # if isinstance(features, torch.FloatTensor):
-    #     features = features
-    # else:
-    #     features = torch.FloatTensor(features)
-
     # adj_matrix = adjacency_matrix(hg, s=1, weight=False)
     # train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
     # train_nid = torch.tensor(train_index,dtype=torch.long)
@@ -139,21 +128,25 @@ def objective(trial):
     pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
     pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
     accs = []
-    for _ in range(5):
+    for _ in range(30):
         model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, args.epochs, args.seed, args.lr, args.weight_decay, args.dropout, beta, temp, False, name='debug', warmup=warmup, gnnlayer_type=args.gnnlayer_type, alpha=change_frac, sample_type=args.sample_type)
         acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
         accs.append(acc)
     acc = np.mean(accs)
     std = np.std(accs)
-    trial.suggest_categorical('dataset', [dataname])
+    trial.suggest_categorical('dataset', [data])
     trial.suggest_categorical('gnn', [gnn])
     trial.suggest_uniform('acc', acc, acc)
     trial.suggest_uniform('std', std, std)
+    
     return acc
 
 if __name__ == "__main__":
-    study = optuna.create_study(direction="maximize")
-    study.optimize(objective, n_trials=10)
+    db_url = "sqlite:///Cooking200.db"
+    
+    study = optuna.create_study(study_name = 'cooking200_study', storage = db_url, load_if_exists = True,direction="maximize")
+    
+    study.optimize(objective, n_trials=400)
 
     print("Number of finished trials: ", len(study.trials))
 
@@ -165,3 +158,6 @@ if __name__ == "__main__":
     print("  Params: ")
     for key, value in trial.params.items():
         print("    {}: {}".format(key, value))
+    
+    
+
