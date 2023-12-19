@@ -56,9 +56,9 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu = 0
 
-data = Cooking200()
+data = CocitationCora()
 args.dataset = data
-print(data['labels'])
+#print(data['labels'])
 gnn = args.gnn
 layer_type = args.gnn
 # jk = False
@@ -129,7 +129,7 @@ def objective(trial):
     pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
     pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
     accs = []
-    for _ in range(5):
+    for _ in range(30):
         model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, args.epochs, args.seed, args.lr, args.weight_decay, args.dropout, beta, temp, False, name='debug', warmup=warmup, gnnlayer_type=args.gnnlayer_type, alpha=change_frac, sample_type=args.sample_type)
         acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
         accs.append(acc)

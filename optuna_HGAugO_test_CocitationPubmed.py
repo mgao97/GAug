@@ -57,7 +57,7 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu = 0
 
-data = CoauthorshipCora()
+data = CocitationPubmed()
 args.dataset = data
 print(data['labels'])
 gnn = args.gnn
@@ -101,8 +101,8 @@ def adjacency_matrix(hg, s=1, weight=False):
         return csr_matrix(A)
 
 def objective(trial):
-    data = CoauthorshipCora()
-    dataname = 'cora'
+    data = CocitationPubmed()
+    dataname = 'CocitationPubmed'
     # hg = Hypergraph(data["num_vertices"], data["edge_list"])
     # features = torch.eye(data['num_vertices'])
     # adj_matrix = adjacency_matrix(hg, s=1, weight=False)
@@ -145,7 +145,7 @@ def objective(trial):
 
 if __name__ == "__main__":
     
-    study = optuna.create_study(study_name = 'coauthorship_study',direction="maximize")
+    study = optuna.create_study(study_name = 'CocitationPubmed_study',direction="maximize")
     
     study.optimize(objective, n_trials=5)
 

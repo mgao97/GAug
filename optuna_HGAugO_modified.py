@@ -134,7 +134,7 @@ def objective(trial):
         accs.append(acc)
     acc = np.mean(accs)
     std = np.std(accs)
-    trial.suggest_categorical('dataset', [data])
+    trial.suggest_categorical('dataset', [dataname])
     trial.suggest_categorical('gnn', [gnn])
     trial.suggest_uniform('acc', acc, acc)
     trial.suggest_uniform('std', std, std)

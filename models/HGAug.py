@@ -71,6 +71,7 @@ class HyperGAug(object):
     def load_data(self, data, gnnlayer_type):
         """ preprocess data """
         hg = Hypergraph(data["num_vertices"], data["edge_list"])
+        #print("ddddd", hg)
         features = torch.eye(data['num_vertices'])
         labels = data['labels']
         train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
@@ -91,7 +92,16 @@ class HyperGAug(object):
         assert sp.issparse(adj_matrix)
         if not isinstance(adj_matrix, sp.coo_matrix):
             adj_matrix = sp.coo_matrix(adj_matrix)
+        #print("tttt", adj_matrix)
+        #print(data["edge_list"],adjacency_matrix[163][0])
         adj_matrix.setdiag(1)
+
+        '''rows, cols = adj_matrix.shape
+        I = np.identity(min(rows, cols))
+        adj_matrix += I
+        print(adj_matrix)'''
+        
+        #print("tttt", adj_matrix)
         self.adj_orig = scipysp_to_pytorchsp(adj_matrix).to_dense()
         # normalized adj_matrix used as input for ep_net (torch.sparse.FloatTensor)
         degrees = np.array(adj_matrix.sum(1))
@@ -99,6 +109,7 @@ class HyperGAug(object):
         adj_norm = degree_mat_inv_sqrt @ adj_matrix @ degree_mat_inv_sqrt
         self.adj_norm = scipysp_to_pytorchsp(adj_norm)
         # adj_matrix used as input for nc_net (torch.sparse.FloatTensor)
+        
         if gnnlayer_type == 'gcn':
             self.adj = scipysp_to_pytorchsp(adj_norm)
         elif gnnlayer_type == 'gsage':
@@ -111,6 +122,7 @@ class HyperGAug(object):
             # self.adj = scipysp_to_pytorchsp(adj_matrix)
             self.adj = torch.FloatTensor(adj_matrix.todense())
         # labels (torch.LongTensor) and train/validation/test nids (np.ndarray)
+        
         if len(labels.shape) == 2:
             labels = torch.FloatTensor(labels)
         else:
@@ -130,6 +142,7 @@ class HyperGAug(object):
             edge_frac = 0.01
         else:
             edge_frac = 0.1
+        
         adj_matrix = sp.csr_matrix(adj_matrix)
         n_edges_sample = int(edge_frac * adj_matrix.nnz / 2)
         # sample negative edges
@@ -219,17 +232,19 @@ class HyperGAug(object):
         labels = self.labels.to(self.device)
         adj_orig = self.adj_orig.to(self.device)
         model = self.model.to(self.device)
-        # weights for log_lik loss when training EP net
+        # weights for log_lik loss when training EP net 
         adj_t = self.adj_orig
         norm_w = adj_t.shape[0]**2 / float((adj_t.shape[0]**2 - adj_t.sum()) * 2)
         pos_weight = torch.FloatTensor([float(adj_t.shape[0]**2 - adj_t.sum()) / adj_t.sum()]).to(self.device)
         # pretrain VGAE if needed
+        
         if pretrain_ep:
             self.pretrain_ep_net(model, hg, features, adj_orig, norm_w, pos_weight, pretrain_ep)
         # pretrain GCN if needed
         if pretrain_nc:
             self.pretrain_nc_net(model, hg, features, labels, pretrain_nc)
         # optimizers
+        
         optims = MultipleOptimizer(torch.optim.Adam(model.ep_net.parameters(),
                                                     lr=self.lr),
                                 torch.optim.Adam(model.nc_net.parameters(),
@@ -294,7 +309,7 @@ class HyperGAug(object):
         torch.cuda.empty_cache()
         gc.collect()
         return test_acc
-
+        
     def log_parameters(self, all_vars):
         """ log all variables in the input dict excluding the following ones """
         # del all_vars['self']
