@@ -130,10 +130,11 @@ def objective(trial):
     pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
     pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
     accs = []
-    for _ in tqdm(range(30)):
+    for _ in tqdm(range(1)):
         model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, args.epochs, args.seed, args.lr, args.weight_decay, args.dropout, beta, temp, False, name='debug', warmup=warmup, gnnlayer_type=args.gnnlayer_type, alpha=change_frac, sample_type=args.sample_type)
         acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
         accs.append(acc)
+    
     acc = np.mean(accs)
     std = np.std(accs)
     trial.suggest_categorical('dataset', [dataname])
@@ -142,12 +143,13 @@ def objective(trial):
     trial.suggest_uniform('std', std, std)
     
     return acc
+    
 
 if __name__ == "__main__":
     
     study = optuna.create_study(study_name = 'coauthorship_study',direction="maximize")
     
-    study.optimize(objective, n_trials=5)
+    study.optimize(objective, n_trials=1)
 
     print("Number of finished trials: ", len(study.trials))
 
