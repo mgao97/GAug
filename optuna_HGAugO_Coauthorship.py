@@ -24,7 +24,6 @@ import gc
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
-
 parser = argparse.ArgumentParser(description='single')
 parser.add_argument('--dataset', type=str, default='cora')
 parser.add_argument('--gnn', type=str, default='gcn')
@@ -57,9 +56,9 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu = 0
 
-data = CocitationPubmed()
+data = CocitationCora()
 args.dataset = data
-print(data['labels'])
+#print(data['labels'])
 gnn = args.gnn
 layer_type = args.gnn
 # jk = False
@@ -101,8 +100,8 @@ def adjacency_matrix(hg, s=1, weight=False):
         return csr_matrix(A)
 
 def objective(trial):
-    data = CocitationPubmed()
-    dataname = 'CocitationPubmed'
+    data = CoauthorshipCora()
+    dataname = 'cora'
     # hg = Hypergraph(data["num_vertices"], data["edge_list"])
     # features = torch.eye(data['num_vertices'])
     # adj_matrix = adjacency_matrix(hg, s=1, weight=False)
@@ -130,10 +129,14 @@ def objective(trial):
     pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
     pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
     accs = []
-    for _ in tqdm(range(30)):
+    for _ in tqdm(range(10)):
+        '''****'''
+        #print("ttt", _)
         model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, args.epochs, args.seed, args.lr, args.weight_decay, args.dropout, beta, temp, False, name='debug', warmup=warmup, gnnlayer_type=args.gnnlayer_type, alpha=change_frac, sample_type=args.sample_type)
+        #model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, 1500, args.seed, args.lr, args.weight_decay, args.dropout, 0.6, temp, False, name='debug', warmup=warmup, gnnlayer_type=args.gnnlayer_type, alpha=change_frac, sample_type=args.sample_type)
         acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
         accs.append(acc)
+    
     acc = np.mean(accs)
     std = np.std(accs)
     trial.suggest_categorical('dataset', [dataname])
@@ -142,12 +145,13 @@ def objective(trial):
     trial.suggest_uniform('std', std, std)
     
     return acc
+    
 
 if __name__ == "__main__":
     
-    study = optuna.create_study(study_name = 'CocitationPubmed_study',direction="maximize")
+    study = optuna.create_study(study_name = 'cocauthorshipcora_study',direction="maximize")
     
-    study.optimize(objective, n_trials=5)
+    study.optimize(objective, n_trials=1)
 
     print("Number of finished trials: ", len(study.trials))
 
@@ -160,3 +164,5 @@ if __name__ == "__main__":
     for key, value in trial.params.items():
         print("    {}: {}".format(key, value))
     
+    
+

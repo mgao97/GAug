@@ -23,6 +23,8 @@ from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 from scipy.sparse import csr_matrix
 from models.HGNN import HGNN_model
 from models.VHGAE import VHGAE_model
+import random
+from tqdm import tqdm
 
 class HyperGAug(object):
     def __init__(self, data, use_bn, cuda=-1, hidden_size=128, emb_size=32, epochs=200, seed=42, lr=1e-2, weight_decay=5e-4, dropout=0.5, beta=0.5, temperature=0.2, log=True, name='debug', warmup=3, gnnlayer_type='gcn', alpha=1, sample_type='add_sample'):
@@ -68,6 +70,8 @@ class HyperGAug(object):
                                 alpha=alpha,
                                 sample_type=sample_type)
 
+        
+    
     def load_data(self, data, gnnlayer_type):
         """ preprocess data """
         hg = Hypergraph(data["num_vertices"], data["edge_list"])
@@ -95,7 +99,7 @@ class HyperGAug(object):
         #print("tttt", adj_matrix)
         #print(data["edge_list"],adjacency_matrix[163][0])
         adj_matrix.setdiag(1)
-
+        #print("adj_matrix", adj_matrix(0,384))
         '''rows, cols = adj_matrix.shape
         I = np.identity(min(rows, cols))
         adj_matrix += I
@@ -144,28 +148,29 @@ class HyperGAug(object):
             edge_frac = 0.1
         
         adj_matrix = sp.csr_matrix(adj_matrix)
-        n_edges_sample = int(edge_frac * adj_matrix.nnz / 2)
+        #n_edges_sample = int(edge_frac * adj_matrix.nnz / 2)
+        n_edges_sample = int(edge_frac * len(data['edge_list']) / 2)
         # sample negative edges
+        hyperedges = []
+        for x in data['edge_list']:
+            hyperedges.append(frozenset(x))
+        nodes_to_neighbors = csr_to_nodes_to_neighbors(adj_matrix)
+        list_hyperedges = list(hyperedges)
+        node_set = set(range(0,data['num_vertices']))
         neg_edges = []
-        added_edges = set()
-        while len(neg_edges) < n_edges_sample:
-            i = np.random.randint(0, adj_matrix.shape[0])
-            j = np.random.randint(0, adj_matrix.shape[0])
-            if i == j:
-                continue
-            if adj_matrix[i, j] > 0:
-                continue
-            if (i, j) in added_edges:
-                continue
-            neg_edges.append([i, j])
-            added_edges.add((i, j))
-            added_edges.add((j, i))
-        neg_edges = np.asarray(neg_edges)
+        for i in tqdm(range(n_edges_sample)):
+            sampled_edge = clique_negative_sampling(
+                hyperedges, nodes_to_neighbors, list_hyperedges,
+                node_set)
+            neg_edges.append(sampled_edge)
         # sample positive edges
-        nz_upper = np.array(sp.triu(adj_matrix, k=1).nonzero()).T
-        np.random.shuffle(nz_upper)
-        pos_edges = nz_upper[:n_edges_sample]
-        self.val_edges = np.concatenate((pos_edges, neg_edges), axis=0)
+        
+        selected_edges = random.sample(data['edge_list'], n_edges_sample)
+        pos_edges = [list(edge) for edge in selected_edges]
+        #print(edge_array)
+        #pos_edges = np.array(selected_edges, dtype = object)
+        
+        self.val_edges = pos_edges + neg_edges
         self.edge_labels = np.array([1]*n_edges_sample + [0]*n_edges_sample)
         self.hg = hg
 
@@ -176,10 +181,13 @@ class HyperGAug(object):
         model.train()
         for epoch in range(n_epochs):
             adj_logits = model.ep_net(features, hg)
+
             loss = norm_w * F.binary_cross_entropy_with_logits(adj_logits, adj_orig, pos_weight=pos_weight)
+            print('Epoch: {:04d}'.format(epoch+1),'ep_loss_pretrain: {:.4f}'.format(loss.item()))
             # if not self.gae:
             mu = model.ep_net.mean
             lgstd = model.ep_net.logstd
+            
             kl_divergence = 0.5/adj_logits.size(0) * (1 + 2*lgstd - mu**2 - torch.exp(2*lgstd)).sum(1).mean()
             loss -= kl_divergence
             optimizer.zero_grad()
@@ -206,9 +214,10 @@ class HyperGAug(object):
             nc_logits = model.nc_net(features, hg)
             # losses
             loss = nc_criterion(nc_logits[self.train_nid], labels[self.train_nid])
+            #print('Epoch: {:04d}'.format(epoch+1),'nc_loss_pretrain: {:.4f}'.format(loss.item()))
             optimizer.zero_grad()
             loss.backward()
-            optimizer.step()
+            optimizer.step()    
             model.eval()
             with torch.no_grad():
                 nc_logits_eval = model.nc_net(features, hg)
@@ -241,6 +250,8 @@ class HyperGAug(object):
         if pretrain_ep:
             self.pretrain_ep_net(model, hg, features, adj_orig, norm_w, pos_weight, pretrain_ep)
         # pretrain GCN if needed
+
+        
         if pretrain_nc:
             self.pretrain_nc_net(model, hg, features, labels, pretrain_nc)
         # optimizers
@@ -248,7 +259,8 @@ class HyperGAug(object):
         optims = MultipleOptimizer(torch.optim.Adam(model.ep_net.parameters(),
                                                     lr=self.lr),
                                 torch.optim.Adam(model.nc_net.parameters(),
-                                                    lr=self.lr,
+                                                    #lr=self.lr,
+                                                    lr = 1e-5,
                                                     weight_decay=self.weight_decay))
         # get the learning rate schedule for the optimizer of ep_net if needed
         if self.warmup:
@@ -277,6 +289,7 @@ class HyperGAug(object):
             optims.zero_grad()
             loss.backward()
             optims.step()
+            
             # validate (without dropout)
             model.eval()
             with torch.no_grad():
@@ -284,6 +297,7 @@ class HyperGAug(object):
             val_acc = self.eval_node_cls(nc_logits_eval[self.val_nid], labels[self.val_nid])
             adj_pred = torch.sigmoid(adj_logits.detach()).cpu()
             ep_auc, ep_ap = self.eval_edge_pred(adj_pred, self.val_edges, self.edge_labels)
+            print('Epoch: {:04d}'.format(epoch+1),'ep_loss_val: {:.4f}'.format(ep_loss.item()),'nc_loss_val: {:.4f}'.format(nc_loss.item()))
             if val_acc > best_val_acc:
                 best_val_acc = val_acc
                 test_acc = self.eval_node_cls(nc_logits_eval[self.test_nid], labels[self.test_nid])
@@ -310,6 +324,7 @@ class HyperGAug(object):
         gc.collect()
         return test_acc
         
+        
     def log_parameters(self, all_vars):
         """ log all variables in the input dict excluding the following ones """
         # del all_vars['self']
@@ -321,8 +336,19 @@ class HyperGAug(object):
 
     @staticmethod
     def eval_edge_pred(adj_pred, val_edges, edge_labels):
-        logits = adj_pred[val_edges.T]
+        logits = []
+        for x in val_edges:
+            #print(x)
+            combinations_list = list(combinations(x, 2))
+            val_edge_T = list(map(list, zip(*combinations_list)))
+            logits.append(adj_pred[val_edge_T].mean().item())
+            #print(adj_pred[val_edge_T].mean().item())
+        #print(len(val_edges))
+        logits = np.array(logits)
+        #print(logits)
+        #logits = adj_pred[val_edges.T]
         logits = np.nan_to_num(logits)
+        #print(len(logits),logits)
         roc_auc = roc_auc_score(edge_labels, logits)
         ap_score = average_precision_score(edge_labels, logits)
         return roc_auc, ap_score
@@ -637,3 +663,40 @@ def scipysp_to_pytorchsp(sp_mx):
 
 
 
+def clique_negative_sampling(hyperedges, nodes_to_neighbors,list_hyperedges, node_set):
+    edgeidx = np.random.choice(len(hyperedges), size=1)[0]
+    neg = list_hyperedges[edgeidx]
+
+    while neg in hyperedges:
+        edgeidx = np.random.choice(len(hyperedges), size=1)[0]
+        edge = list(list_hyperedges[edgeidx])
+        node_to_remove = np.random.choice(len(edge), size=1)[0]
+        nodes_to_keep = edge[:node_to_remove] + edge[node_to_remove+1:]
+        probable_neighbors = node_set
+        for node in nodes_to_keep:
+            probable_neighbors = probable_neighbors.intersection(
+                nodes_to_neighbors[node])
+        
+        if len(probable_neighbors) == 0:
+            continue
+        probable_neighbors = list(probable_neighbors)
+        neighbor_node = np.random.choice(probable_neighbors, size=1)[0]
+        
+        nodes_to_keep.append(neighbor_node)
+        neg = list(nodes_to_keep)
+    '''
+    edges = {
+        frozenset([node1, node2])
+        for node1 in neg for node2 in neg if node1 < node2
+    }
+    '''
+    return neg
+
+
+def csr_to_nodes_to_neighbors(csr_matrix):
+    nodes_to_neighbors = {}
+    for i in range(csr_matrix.shape[0]):
+        neighbors = set(csr_matrix.getrow(i).nonzero()[1]) - {i}
+        nodes_to_neighbors[i] = neighbors
+
+    return nodes_to_neighbors

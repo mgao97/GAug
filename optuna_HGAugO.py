@@ -24,9 +24,10 @@ import gc
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
+from sklearn.model_selection import train_test_split
 
 parser = argparse.ArgumentParser(description='single')
-parser.add_argument('--dataset', type=str, default='cora')
+#parser.add_argument('--dataset', type=str, default='cora')
 parser.add_argument('--gnn', type=str, default='gcn')
 parser.add_argument('--gpu', type=str, default='-1')
 # parser.add_argument('--layers', type=int, default=-1)
@@ -41,7 +42,7 @@ parser.add_argument('--weight_decay', default=5e-4)
 parser.add_argument('--dropout', default=0.5)
 parser.add_argument('--beta', default=0.5)
 parser.add_argument('--temperature', default=0.2)
-
+parser.add_argument('--dataset',default='highschool')
 parser.add_argument('--warmup', default=3)
 parser.add_argument('--gnnlayer_type', default='gcn')
 parser.add_argument('--alpha', default=1)
@@ -57,9 +58,7 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu = 0
 
-data = CoauthorshipCora()
-args.dataset = data
-print(data['labels'])
+
 gnn = args.gnn
 layer_type = args.gnn
 # jk = False
@@ -101,15 +100,49 @@ def adjacency_matrix(hg, s=1, weight=False):
         return csr_matrix(A)
 
 def objective(trial):
-    data = CoauthorshipCora()
-    dataname = 'cora'
-    # hg = Hypergraph(data["num_vertices"], data["edge_list"])
-    # features = torch.eye(data['num_vertices'])
-    # adj_matrix = adjacency_matrix(hg, s=1, weight=False)
-    # train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
-    # train_nid = torch.tensor(train_index,dtype=torch.long)
-    # val_nid = torch.tensor(val_index,dtype=torch.long)
-    # test_nid = torch.tensor(test_index,dtype=torch.long)
+    # load data
+    with open('data/graphs/contact-high-school/hyperedges-contact-high-school.txt', 'r') as file:
+        edge_list = [tuple(map(lambda x: int(x) - 1, line.strip().split(','))) for line in file]
+
+    num_vertices = len(set(item for sublist in edge_list for item in sublist))
+
+    # print(len(edge_list), num_vertices)
+    hg = Hypergraph(num_vertices, edge_list)
+    print(hg)
+
+    labels = []
+    with open ('data/graphs/contact-high-school/node-labels-contact-high-school.txt', 'r') as file:
+        for line in file:
+            labels.append(int(line))
+    labels = torch.LongTensor(labels)
+
+    # 设置随机种子，以确保结果可复现
+    random_seed = 42
+
+    node_idx = [i for i in range(num_vertices)]
+    # 将idx_test划分为训练（50%）、验证（25%）和测试（25%）集
+    idx_train, idx_temp = train_test_split(node_idx, test_size=0.5, random_state=random_seed)
+    idx_val, idx_test = train_test_split(idx_temp, test_size=0.5, random_state=random_seed)
+
+    # 确保划分后的集合没有重叠
+    assert len(set(idx_train) & set(idx_val)) == 0
+    assert len(set(idx_train) & set(idx_test)) == 0
+    assert len(set(idx_val) & set(idx_test)) == 0
+
+    train_nid = torch.LongTensor(idx_train)
+    val_nid = torch.LongTensor(idx_val)
+    test_nid = torch.LongTensor(idx_test)
+
+
+    train_mask = torch.zeros(num_vertices, dtype=torch.bool)
+    val_mask = torch.zeros(num_vertices, dtype=torch.bool)
+    test_mask = torch.zeros(num_vertices, dtype=torch.bool)
+    train_mask[train_nid] = True
+    val_mask[val_nid] = True
+    test_mask[test_nid] = True
+
+    features = torch.eye(num_vertices)
+    adj_matrix = adjacency_matrix(hg, s=1, weight=False)
 
     lr = 0.005 if layer_type == 'gat' else 0.01
     # if args.layers > 0:
@@ -137,7 +170,7 @@ def objective(trial):
     
     acc = np.mean(accs)
     std = np.std(accs)
-    trial.suggest_categorical('dataset', [dataname])
+    trial.suggest_categorical('dataset', [args.dataset])
     trial.suggest_categorical('gnn', [gnn])
     trial.suggest_uniform('acc', acc, acc)
     trial.suggest_uniform('std', std, std)
@@ -147,7 +180,7 @@ def objective(trial):
 
 if __name__ == "__main__":
     
-    study = optuna.create_study(study_name = 'coauthorship_study',direction="maximize")
+    study = optuna.create_study(study_name = 'highschool_study',direction="maximize")
     
     study.optimize(objective, n_trials=1)
 
