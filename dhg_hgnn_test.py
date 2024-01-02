@@ -40,7 +40,8 @@ if __name__ == "__main__":
     set_seed(42)
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     evaluator = Evaluator(["accuracy", "f1_score", {"f1_score": {"average": "micro"}}])
-    data = CocitationPubmed()
+    # data = CocitationPubmed()
+    data = CoauthorshipCora()
 
     X, lbl = data["features"], data["labels"]
     HG = Hypergraph(data["num_vertices"],data["edge_list"])
@@ -48,7 +49,7 @@ if __name__ == "__main__":
     train_mask = data["train_mask"]
     val_mask = data["val_mask"]
     test_mask = data["test_mask"]
-    net = HGNN(data["dim_features"], 7, data["num_classes"])
+    net = HGNN(data["dim_features"], 128, data["num_classes"])
     optimizer = optim.Adam(net.parameters(), lr=0.01, weight_decay=5e-4)
     '''
     '''
@@ -58,7 +59,7 @@ if __name__ == "__main__":
 
     best_state = None
     best_epoch, best_val = 0, 0
-    for epoch in range(50):
+    for epoch in range(30):
         # train
         train(net, X, HG, lbl, train_mask, optimizer, epoch)
         # validation

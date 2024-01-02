@@ -24,6 +24,7 @@ import gc
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 from scipy.sparse import csr_matrix
 from tqdm import tqdm
+from sklearn.model_selection import train_test_split
 
 parser = argparse.ArgumentParser(description='single')
 parser.add_argument('--dataset', type=str, default='cora')
@@ -41,7 +42,7 @@ parser.add_argument('--weight_decay', default=5e-4)
 parser.add_argument('--dropout', default=0.5)
 parser.add_argument('--beta', default=0.5)
 parser.add_argument('--temperature', default=0.2)
-
+parser.add_argument('--dataset',default='highschool')
 parser.add_argument('--warmup', default=3)
 parser.add_argument('--gnnlayer_type', default='gcn')
 parser.add_argument('--alpha', default=1)
@@ -57,9 +58,7 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu = 0
 
-data = CocitationPubmed()
-args.dataset = data
-print(data['labels'])
+
 gnn = args.gnn
 layer_type = args.gnn
 # jk = False
@@ -101,15 +100,15 @@ def adjacency_matrix(hg, s=1, weight=False):
         return csr_matrix(A)
 
 def objective(trial):
-    data = CocitationPubmed()
-    dataname = 'CocitationPubmed'
-    # hg = Hypergraph(data["num_vertices"], data["edge_list"])
-    # features = torch.eye(data['num_vertices'])
-    # adj_matrix = adjacency_matrix(hg, s=1, weight=False)
-    # train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
-    # train_nid = torch.tensor(train_index,dtype=torch.long)
-    # val_nid = torch.tensor(val_index,dtype=torch.long)
-    # test_nid = torch.tensor(test_index,dtype=torch.long)
+    
+    dataname = 'cora'
+    hg = Hypergraph(data["num_vertices"], data["edge_list"])
+    features = torch.eye(data['num_vertices'])
+    adj_matrix = adjacency_matrix(hg, s=1, weight=False)
+    train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
+    train_nid = torch.tensor(train_index,dtype=torch.long)
+    val_nid = torch.tensor(val_index,dtype=torch.long)
+    test_nid = torch.tensor(test_index,dtype=torch.long)
 
     lr = 0.005 if layer_type == 'gat' else 0.01
     # if args.layers > 0:
@@ -130,10 +129,11 @@ def objective(trial):
     pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
     pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
     accs = []
-    for _ in tqdm(range(30)):
+    for _ in tqdm(range(1)):
         model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, args.epochs, args.seed, args.lr, args.weight_decay, args.dropout, beta, temp, False, name='debug', warmup=warmup, gnnlayer_type=args.gnnlayer_type, alpha=change_frac, sample_type=args.sample_type)
-        acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
-        accs.append(acc)
+        #acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
+        #accs.append(acc)
+    '''
     acc = np.mean(accs)
     std = np.std(accs)
     trial.suggest_categorical('dataset', [dataname])
@@ -142,12 +142,13 @@ def objective(trial):
     trial.suggest_uniform('std', std, std)
     
     return acc
+    '''
 
 if __name__ == "__main__":
     
-    study = optuna.create_study(study_name = 'CocitationPubmed_study',direction="maximize")
+    study = optuna.create_study(study_name = 'cora_study',direction="maximize")
     
-    study.optimize(objective, n_trials=5)
+    study.optimize(objective, n_trials=1)
 
     print("Number of finished trials: ", len(study.trials))
 
@@ -160,3 +161,5 @@ if __name__ == "__main__":
     for key, value in trial.params.items():
         print("    {}: {}".format(key, value))
     
+    
+
