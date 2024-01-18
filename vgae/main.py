@@ -21,7 +21,7 @@ def get_args():
     parser.add_argument('--lr', type=float, default=0.01, help="learning rate")
     parser.add_argument('--val_frac', type=float, default=0.05)
     parser.add_argument('--test_frac', type=float, default=0.1)
-    parser.add_argument('--dataset', type=str, default='cora')
+    parser.add_argument('--dataset', type=str, default='zkc')
     parser.add_argument('--criterion', type=str, default='roc')
     parser.add_argument('--no_mask', action='store_true')
     parser.add_argument('--gae', action='store_true')
@@ -49,7 +49,7 @@ def main(args):
     vgae = VGAE(dl.adj_norm.to(args.device), dl.features.size(1), args.hidden_size, args.emb_size, args.gae)
     vgae.to(args.device)
     vgae = train_model(args, dl, vgae)
-
+    
     if args.gen_graphs > 0:
         gen_graphs(args, dl, vgae)
 

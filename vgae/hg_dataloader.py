@@ -12,104 +12,40 @@ import torch
 from collections import defaultdict
 from sklearn.preprocessing import normalize
 
-from utils import sparse_to_tuple
+from vgae.utils import sparse_to_tuple
 
 CUR_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(CUR_DIR)
 
 class DataLoader():
-    def __init__(self, args):
+    def __init__(self, args, data):
         self.args = args
-        self.dataset = args.dataset
 
-        if self.dataset == 'zkc':
-            self.load_data_zkc()
-        elif self.dataset in ('cora', 'citeseer', 'pubmed'):
-            self.load_data(self.dataset)
-        else:
-            self.load_data_binary(self.dataset)
+        
+
+        self.load_data(data)
+        
         self.mask_test_edges(args.val_frac, args.test_frac, args.no_mask)
         self.normalize_adj()
         self.to_pyt_sp()
-
-    def load_data_zkc(self):
-        edges = [[1, 0], [2, 0], [2, 1], [3, 0], [3, 1], [3, 2], [4, 0],
-                [5, 0], [6, 0], [6, 4], [6, 5], [7, 0], [7, 1], [7, 2],
-                [7, 3], [8, 0], [8, 2], [9, 2], [10, 0], [10, 4], [10, 5],
-                [11, 0], [12, 0], [12, 3], [13, 0], [13, 1], [13, 2], [13, 3],
-                [16, 5], [16, 6], [17, 0], [17, 1], [19, 0], [19, 1], [21, 0],
-                [21, 1], [25, 23], [25, 24], [27, 2], [27, 23], [27, 24], [28, 2],
-                [29, 23], [29, 26], [30, 1], [30, 8], [31, 0], [31, 24], [31, 25],
-                [31, 28], [32, 2], [32, 8], [32, 14], [32, 15], [32, 18], [32, 20],
-                [32, 22], [32, 23], [32, 29], [32, 30], [32, 31], [33, 8], [33, 9],
-                [33, 13], [33, 14], [33, 15], [33, 18], [33, 19], [33, 20], [33, 22],
-                [33, 23], [33, 26], [33, 27], [33, 28], [33, 29], [33, 30], [33, 31], [33, 32]]
+        
+    def load_data(self,data):
+        n = data['num_vertices']
+        m = len(data['edge_list'])
+        edges = []
+        for i in range(m):
+            for x in data['edge_list'][i]:
+                edges.append([x,i+n])
         edges = np.asarray(edges)
         row = edges.T[0]
         col = edges.T[1]
-        adj_mat = sp.csr_matrix((np.ones_like(row), (row, col)), shape=(34, 34))
+        adj_mat = sp.csr_matrix((np.ones_like(row), (row, col)), shape=(n+m, n+m))
         adj_mat = adj_mat + adj_mat.T
-        features = torch.eye(34)
+        features = torch.eye(n+m)
         features = sp.coo_matrix(features.numpy())
         self.adj_orig = adj_mat
         self.features_orig = features
-        print(self.adj_orig)
-
-    def load_data(self, dataset):
-        # load the data: x, tx, allx, graph
-        names = ['x', 'tx', 'allx', 'graph']
-        objects = []
-        for n in names:
-            with open(f'{BASE_DIR}/data/citation_networks/ind.{dataset}.{n}', 'rb') as f:
-                objects.append(pickle.load(f, encoding='latin1'))
-        x, tx, allx, graph = tuple(objects)
-        test_idx_reorder = []
-        for line in open(f'{BASE_DIR}/data/citation_networks/ind.{dataset}.test.index'):
-            test_idx_reorder.append(int(line.strip()))
-        test_idx_range = np.sort(test_idx_reorder)
-
-        if dataset == 'citeseer':
-            # Fix citeseer dataset (there are some isolated nodes in the graph)
-            # Find isolated nodes, add them as zero-vecs into the right position
-            test_idx_range_full = range(min(test_idx_reorder), max(test_idx_reorder)+1)
-            tx_extended = sp.lil_matrix((len(test_idx_range_full), x.shape[1]))
-            tx_extended[test_idx_range-min(test_idx_range), :] = tx
-            tx = tx_extended
-
-        features = sp.vstack((allx, tx)).tolil()
-        features[test_idx_reorder, :] = features[test_idx_range, :]
-        adj = nx.adjacency_matrix(nx.from_dict_of_lists(graph))
-        if adj.diagonal().sum() > 0:
-            adj = sp.coo_matrix(adj)
-            adj.setdiag(0)
-            adj.eliminate_zeros()
-            adj = sp.csr_matrix(adj)
-        self.adj_orig = adj
-        self.features_orig = normalize(features, norm='l1', axis=1)
-        
-
-    def load_data_binary(self, dataset):
-        adj = pickle.load(open(f'{BASE_DIR}/graphs/{dataset}_adj.pkl', 'rb'))
-        if adj.diagonal().sum() > 0:
-            adj = sp.coo_matrix(adj)
-            adj.setdiag(0)
-            adj.eliminate_zeros()
-            adj = sp.csr_matrix(adj)
-        features = pickle.load(open(f'{BASE_DIR}/graphs/{dataset}_features.pkl', 'rb'))
-        if isinstance(features, torch.Tensor):
-            features = features.numpy()
-        features = sp.csr_matrix(features)
-        self.adj_orig = adj
-        if dataset == 'ppi':
-            features = features.toarray()
-            m = features.mean(axis=0)
-            s = features.std(axis=0, ddof=0, keepdims=True) + 1e-12
-            features -= m
-            features /= s
-            self.features_orig = sp.csr_matrix(features)
-        else:
-            self.features_orig = normalize(features, norm='l1', axis=1)
-
+    
     def mask_test_edges(self, val_frac, test_frac, no_mask):
         adj = self.adj_orig
         assert adj.diagonal().sum() == 0

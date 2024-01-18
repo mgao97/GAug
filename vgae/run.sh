@@ -16,3 +16,6 @@ python main.py --no_mask --val_frac 1 --dataset zkc --epochs 200
 
 python main.py --cuda 0 --no_mask --val_frac 0.05 --dataset flickr --gen_graphs 1 --epochs 200 --gae
 python main.py --cuda 0 --no_mask --val_frac 0.99 --dataset airport --gen_graphs 1 --epochs 200 --gae
+
+python main.py --cuda 0 --no_mask --val_frac 1 --dataset zkc --gen_graphs 5 --epochs 200
+

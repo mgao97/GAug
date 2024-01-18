@@ -22,9 +22,11 @@ import time
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler
 from scipy.sparse import csr_matrix
 from models.HGNN import HGNN_model
-from models.VHGAE import VHGAE_model
+from models.VHGAE_H import VHGAE_model
 import random
 from tqdm import tqdm
+import scipy.sparse as sp
+
 
 class HyperGAug(object):
     def __init__(self, data, use_bn, cuda=-1, hidden_size=128, emb_size=32, epochs=200, seed=42, lr=1e-2, weight_decay=5e-4, dropout=0.5, beta=0.5, temperature=0.2, log=True, name='debug', warmup=3, gnnlayer_type='gcn', alpha=1, sample_type='add_sample'):
@@ -69,13 +71,17 @@ class HyperGAug(object):
                                 temperature=temperature,
                                 alpha=alpha,
                                 sample_type=sample_type)
+
         
     
-
     def load_data(self, data, gnnlayer_type):
         """ preprocess data """
         hg = Hypergraph(data["num_vertices"], data["edge_list"])
-        print("hypergraph:\n", hg)
+
+        print('\n')
+        print("hypergraph:\n", hg) # Hypergraph(num_v=327, num_e=7818)
+        print('\n')
+
         features = torch.eye(data['num_vertices'])
         labels = data['labels']
         train_index, val_index, test_index = np.where(data['train_mask'])[0], np.where(data['val_mask'])[0], np.where(data['test_mask'])[0]
@@ -85,47 +91,51 @@ class HyperGAug(object):
             self.features = features
         else:
             self.features = torch.FloatTensor(features)
-        # # normalize feature matrix if needed
-        # if self.feat_norm == 'row':
-        #     self.features = F.normalize(self.features, p=1, dim=1)
-        # elif self.feat_norm == 'col':
-        #     self.features = self.col_normalization(self.features)
-        # original adj_matrix for training vgae (torch.FloatTensor)
+        
 
-        adj_matrix = adjacency_matrix(hg, s=1, weight=False)
+        adj_matrix = hg.H
+        adj_matrix = adj_matrix.coalesce()  # Ensure that indices are unique
+        adj_matrix = sp.coo_matrix((adj_matrix.values(), (adj_matrix.indices()[0], adj_matrix.indices()[1])), shape=adj_matrix.shape)
+
+        
+
         assert sp.issparse(adj_matrix)
         if not isinstance(adj_matrix, sp.coo_matrix):
             adj_matrix = sp.coo_matrix(adj_matrix)
         
-        adj_matrix.setdiag(1)
-        #print('adj_matrix:\n',adj_matrix)
-        #print("adj_matrix", adj_matrix(0,384))
-        '''rows, cols = adj_matrix.shape
-        I = np.identity(min(rows, cols))
-        adj_matrix += I
-        print(adj_matrix)'''
         
-        #print("tttt", adj_matrix)
-        self.adj_orig = scipysp_to_pytorchsp(adj_matrix).to_dense()
-        # normalized adj_matrix used as input for ep_net (torch.sparse.FloatTensor)
-        degrees = np.array(adj_matrix.sum(1))
-        degree_mat_inv_sqrt = sp.diags(np.power(degrees, -0.5).flatten())
-        adj_norm = degree_mat_inv_sqrt @ adj_matrix @ degree_mat_inv_sqrt
-        self.adj_norm = scipysp_to_pytorchsp(adj_norm)
+        # self.adj_orig = scipysp_to_pytorchsp(adj_matrix).to_dense()
+
+        
+        self.adj_orig = adj_matrix
+
+        adj_matrix1 = torch.sparse_coo_tensor(torch.LongTensor([adj_matrix.row, adj_matrix.col]),
+                                     torch.FloatTensor(adj_matrix.data),
+                                     torch.Size(adj_matrix.shape))
+        self.adj_norm = adj_matrix1
+        
+
+        # print('self adj_orig:\n', self.adj_orig, self.adj_orig.shape)
+
+        # H = hg.H.coalesce()
+        # # normalized adj_matrix used as input for ep_net (torch.sparse.FloatTensor)
+        # # adj_norm = torch.mm(H, torch.diag(torch.pow(hg.D_e.sum(dim=1), -1)))
+        # H_cpu = H.cpu()
+        # adj_norm = torch.mm(H_cpu, torch.diag(torch.pow(hg.D_e.sum(dim=1).cpu(), -1)))
+        # print('adj_norm:\n',adj_norm)
+
+        # self.adj_norm = scipysp_to_pytorchsp(adj_norm)
         # adj_matrix used as input for nc_net (torch.sparse.FloatTensor)
         
         if gnnlayer_type == 'gcn':
-            self.adj = scipysp_to_pytorchsp(adj_norm)
-        elif gnnlayer_type == 'gsage':
-            adj_matrix_noselfloop = sp.coo_matrix(adj_matrix)
-            # adj_matrix_noselfloop.setdiag(0)
-            # adj_matrix_noselfloop.eliminate_zeros()
-            adj_matrix_noselfloop = sp.coo_matrix(adj_matrix_noselfloop / adj_matrix_noselfloop.sum(1))
-            self.adj = scipysp_to_pytorchsp(adj_matrix_noselfloop)
-        elif gnnlayer_type == 'gat':
-            # self.adj = scipysp_to_pytorchsp(adj_matrix)
-            self.adj = torch.FloatTensor(adj_matrix.todense())
-        # labels (torch.LongTensor) and train/validation/test nids (np.ndarray)
+            # self.adj = scipysp_to_pytorchsp(self.adj_orig)
+            self.adj = self.adj_orig
+        # elif gnnlayer_type == 'gsage':
+        #     adj_matrix_noselfloop = sp.coo_matrix(adj_matrix)
+        #     adj_matrix_noselfloop = sp.coo_matrix(adj_matrix_noselfloop / adj_matrix_noselfloop.sum(1))
+        #     self.adj = scipysp_to_pytorchsp(adj_matrix_noselfloop)
+        # elif gnnlayer_type == 'gat':
+        #     self.adj = torch.FloatTensor(adj_matrix.todense())
         
         if len(labels.shape) == 2:
             labels = torch.FloatTensor(labels)
@@ -150,6 +160,7 @@ class HyperGAug(object):
         adj_matrix = sp.csr_matrix(adj_matrix)
         #n_edges_sample = int(edge_frac * adj_matrix.nnz / 2)
         n_edges_sample = int(edge_frac * len(data['edge_list']) / 2)
+
         # sample negative edges
         hyperedges = []
         for x in data['edge_list']:
@@ -163,7 +174,7 @@ class HyperGAug(object):
                 hyperedges, nodes_to_neighbors, list_hyperedges,
                 node_set)
             neg_edges.append(sampled_edge)
-        #print(len(neg_edges))
+        print('len of neg edges:\n',len(neg_edges), neg_edges[:5])
         # sample positive edges
         
         selected_edges = random.sample(data['edge_list'], n_edges_sample)
@@ -198,7 +209,7 @@ class HyperGAug(object):
             ep_auc, ep_ap = self.eval_edge_pred(adj_pred, self.val_edges, self.edge_labels)
             self.logger.info('EPNet pretrain, Epoch [{:3}/{}]: loss {:.4f}, auc {:.4f}, ap {:.4f}'
                         .format(epoch+1, n_epochs, loss.item(), ep_auc, ep_ap))
-    '''
+
     def train_ep_net_HGAugM(self, model, hg, features, adj_orig, norm_w, pos_weight, n_epochs):
         """ pretrain the edge prediction network """
         optimizer = torch.optim.Adam(model.ep_net.parameters(),
@@ -224,7 +235,7 @@ class HyperGAug(object):
             self.logger.info('GAugM EPNet train, Epoch [{:3}/{}]: loss {:.4f}, auc {:.4f}, ap {:.4f}'
                         .format(epoch+1, n_epochs, loss.item(), ep_auc, ep_ap))
         return ep_auc, ep_ap
-    '''
+
     def pretrain_nc_net(self, model, hg, features, labels, n_epochs):
         """ pretrain the node classification network """
         optimizer = torch.optim.Adam(model.nc_net.parameters(),
@@ -263,7 +274,7 @@ class HyperGAug(object):
         # move data to device
         hg = self.hg.to(self.device)
         adj_norm = self.adj_norm.to(self.device)
-        adj = self.adj.to(self.device)
+        # adj = self.adj.to(self.device)
         features = self.features.to(self.device)
         labels = self.labels.to(self.device)
         adj_orig = self.adj_orig.to(self.device)
@@ -276,6 +287,106 @@ class HyperGAug(object):
         
         if pretrain_ep:
             self.pretrain_ep_net(model, hg, features, adj_orig, norm_w, pos_weight, pretrain_ep)
+        # pretrain GCN if needed
+
+        
+        if pretrain_nc:
+            self.pretrain_nc_net(model, hg, features, labels, pretrain_nc)
+        # optimizers
+        
+        optims = MultipleOptimizer(torch.optim.Adam(model.ep_net.parameters(),
+                                                    lr=self.lr),
+                                torch.optim.Adam(model.nc_net.parameters(),
+                                                    #lr=self.lr,
+                                                    lr = 1e-5,
+                                                    weight_decay=self.weight_decay))
+        # get the learning rate schedule for the optimizer of ep_net if needed
+        if self.warmup:
+            ep_lr_schedule = self.get_lr_schedule_by_sigmoid(self.n_epochs, self.lr, self.warmup)
+        # loss function for node classification
+        if len(self.labels.size()) == 2:
+            nc_criterion = nn.BCEWithLogitsLoss()
+        else:
+            nc_criterion = nn.CrossEntropyLoss()
+        # keep record of the best validation accuracy for early stopping
+        best_val_acc = 0.
+        patience_step = 0
+        # train model
+        for epoch in range(self.n_epochs):
+            # update the learning rate for ep_net if needed
+            if self.warmup:
+                optims.update_lr(0, ep_lr_schedule[epoch])
+
+            model.train()
+            nc_logits, adj_logits = model(features, hg)
+
+            # losses
+            loss = nc_loss = nc_criterion(nc_logits[self.train_nid], labels[self.train_nid])
+            ep_loss = norm_w * F.binary_cross_entropy_with_logits(adj_logits, adj_orig, pos_weight=pos_weight)
+            loss += self.beta * ep_loss
+            optims.zero_grad()
+            loss.backward()
+            optims.step()
+            
+            # validate (without dropout)
+            model.eval()
+            with torch.no_grad():
+                nc_logits_eval = model.nc_net(features, hg)
+            val_acc = self.eval_node_cls(nc_logits_eval[self.val_nid], labels[self.val_nid])
+            adj_pred = torch.sigmoid(adj_logits.detach()).cpu()
+
+            print('*'*100)
+            print('adj_pred:\n',adj_pred)
+            print('*'*100)
+
+            ep_auc, ep_ap = self.eval_edge_pred(adj_pred, self.val_edges, self.edge_labels)
+            print('Epoch: {:04d}'.format(epoch+1),'ep_loss_val: {:.4f}'.format(ep_loss.item()),'nc_loss_val: {:.4f}'.format(nc_loss.item()))
+            if val_acc > best_val_acc:
+                best_val_acc = val_acc
+                test_acc = self.eval_node_cls(nc_logits_eval[self.test_nid], labels[self.test_nid])
+                self.logger.info('Epoch [{:3}/{}]: ep loss {:.4f}, nc loss {:.4f}, ep auc: {:.4f}, ep ap {:.4f}, val acc {:.4f}, test acc {:.4f}'
+                            .format(epoch+1, self.n_epochs, ep_loss.item(), nc_loss.item(), ep_auc, ep_ap, val_acc, test_acc))
+                patience_step = 0
+            else:
+                self.logger.info('Epoch [{:3}/{}]: ep loss {:.4f}, nc loss {:.4f}, ep auc: {:.4f}, ep ap {:.4f}, val acc {:.4f}'
+                            .format(epoch+1, self.n_epochs, ep_loss.item(), nc_loss.item(), ep_auc, ep_ap, val_acc))
+                patience_step += 1
+                if patience_step == 100:
+                    self.logger.info('Early stop!')
+                    break
+        # get final test result without early stop
+        with torch.no_grad():
+            nc_logits_eval = model.nc_net(features, hg)
+        test_acc_final = self.eval_node_cls(nc_logits_eval[self.test_nid], labels[self.test_nid])
+        # log both results
+        self.logger.info('Final test acc with early stop: {:.4f}, without early stop: {:.4f}'
+                    .format(test_acc, test_acc_final))
+        
+        # release RAM and GPU memory
+        del adj, features, labels, adj_orig
+        torch.cuda.empty_cache()
+        gc.collect()
+        return test_acc
+    
+    def HGAugM_fit(self, pretrain_ep=200, pretrain_nc=20):
+        """ train the model """
+        # move data to device
+        hg = self.hg.to(self.device)
+        adj_norm = self.adj_norm.to(self.device)
+        adj = self.adj.to(self.device)
+        features = self.features.to(self.device)
+        labels = self.labels.to(self.device)
+        adj_orig = self.adj_orig.to(self.device)
+        model = self.model.to(self.device)
+        # weights for log_lik loss when training EP net 
+        adj_t = self.adj_orig
+        norm_w = adj_t.shape[0]**2 / float((adj_t.shape[0]**2 - adj_t.sum()) * 2)
+        pos_weight = torch.FloatTensor([float(adj_t.shape[0]**2 - adj_t.sum()) / adj_t.sum()]).to(self.device)
+        # pretrain VGAE if needed
+        
+        
+        acc1, acc2 = self.train_ep_net_HGAugM(model, hg, features, adj_orig, norm_w, pos_weight, pretrain_ep)
+        return acc1
         # pretrain GCN if needed
 
         
@@ -345,34 +456,13 @@ class HyperGAug(object):
         # log both results
         self.logger.info('Final test acc with early stop: {:.4f}, without early stop: {:.4f}'
                     .format(test_acc, test_acc_final))
-        
         # release RAM and GPU memory
         del adj, features, labels, adj_orig
         torch.cuda.empty_cache()
         gc.collect()
         return test_acc
-    '''
-    def HGAugM_fit(self, pretrain_ep=200, pretrain_nc=20):
-        """ train the model """
-        # move data to device
-        hg = self.hg.to(self.device)
-        adj_norm = self.adj_norm.to(self.device)
-        adj = self.adj.to(self.device)
-        features = self.features.to(self.device)
-        labels = self.labels.to(self.device)
-        adj_orig = self.adj_orig.to(self.device)
-        model = self.model.to(self.device)
-        # weights for log_lik loss when training EP net 
-        adj_t = self.adj_orig
-        norm_w = adj_t.shape[0]**2 / float((adj_t.shape[0]**2 - adj_t.sum()) * 2)
-        pos_weight = torch.FloatTensor([float(adj_t.shape[0]**2 - adj_t.sum()) / adj_t.sum()]).to(self.device)
-        # pretrain VGAE if needed
         
         
-        acc1, acc2 = self.train_ep_net_HGAugM(model, hg, features, adj_orig, norm_w, pos_weight, pretrain_ep)
-        return acc1
-        # pretrain GCN if needed
-    '''
     def log_parameters(self, all_vars):
         """ log all variables in the input dict excluding the following ones """
         # del all_vars['self']
@@ -504,12 +594,10 @@ def adjacency_matrix_to_hypergraph(adj_matrix):
         hyperedge.append(hyperedge_nodes)
     num_nodes = adj_matrix.shape[0]
     hyperg = Hypergraph(num_v=num_nodes, e_list=hyperedge)
-
-
     return hyperg
 
-class HGAug_model(nn.Module):
 
+class HGAug_model(nn.Module):
     def __init__(self,
                  in_channels: int,
                  hid_channels1: int,
@@ -533,12 +621,8 @@ class HGAug_model(nn.Module):
                  use_bn= False,
                  drop_rate = 0.5,
                 )
-        # node classification network
-        # print(dropout)
-        # print('*'*100)
         
         self.nc_net = HGNN_model(in_channels, hid_channels1, num_classes, use_bn, dropout)
-        #print("ddddddd", self.nc_net)
 
     def sample_adj(self, adj_logits):
         """ sample an adj from the predicted edge probabilities of ep_net """
@@ -636,9 +720,9 @@ class HGAug_model(nn.Module):
         return adj
 
     def forward(self, features, hg):
-        print('='*100)
-        print('input data:\n', features.shape, hg)
-        print('='*100)
+        # print('='*100)
+        # print('input data:\n', features.shape, hg)
+        # print('='*100)
         adj_orig = adjacency_matrix(hg, s=1, weight=False)
         print('adj_orig:', adj_orig)
         self.adj_orig = adj_orig

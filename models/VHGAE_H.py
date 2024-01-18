@@ -1,20 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from copy import deepcopy
-import torch.optim as optim
 from dhg import Hypergraph
-from dhg.data import Cooking200
-from dhg.random import set_seed
-import dhg
-from dhg.metrics import HypergraphVertexClassificationEvaluator as Evaluator
 from dhg.structure.hypergraphs import Hypergraph
-import gc
-import math
-import time
-import numpy as np
-import scipy.sparse as sp
-from sklearn.metrics import f1_score
 
 
 class HGNNConv(nn.Module):
@@ -91,9 +79,9 @@ class VHGAE_model(nn.Module):
             return mu
 
 
-    def encode(self, features, A):
-        out = self.hgconv1(features, A)
-        self.mean, self.logstd = self.hgconv2(out, A), self.hgconv2(out, A)
+    def encode(self, features, hg):
+        out = self.hgconv1(features, hg)
+        self.mean, self.logstd = self.hgconv2(out, hg), self.hgconv2(out, hg)
         z = self.reparameterize(self.mean, self.logstd)
         print("encode",z)
         return z

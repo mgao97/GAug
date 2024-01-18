@@ -80,6 +80,7 @@ def train_model(args, dl, vgae):
         print('Epoch{:3}: train_loss: {:.4f} recon_acc: {:.4f} val_roc: {:.4f} val_ap: {:.4f} f1: {:.4f} time: {:.4f}'.format(
             epoch+1, loss.item(), r['acc'], r['roc'], r['ap'], r['f1'], time.time()-t))
         if r[args.criterion] > best_vali_criterion:
+            print('cri', args.criterion)
             best_vali_criterion = r[args.criterion]
             best_state_dict = copy.deepcopy(vgae.state_dict())
             # r_test = get_scores(dl.test_edges, dl.test_edges_false, A_pred, dl.adj_label)
@@ -99,12 +100,13 @@ def gen_graphs(args, dl, vgae):
     adj_orig = dl.adj_orig
     assert adj_orig.diagonal().sum() == 0
     # sp.csr_matrix
-    if args.gae:
+    '''if args.gae:
         pickle.dump(adj_orig, open(f'graphs/{args.dataset}_graph_0_gae.pkl', 'wb'))
     else:
         pickle.dump(adj_orig, open(f'graphs/{args.dataset}_graph_0.pkl', 'wb'))
+    '''
     # sp.lil_matrix
-    pickle.dump(dl.features_orig, open(f'graphs/{args.dataset}_features.pkl', 'wb'))
+    #pickle.dump(dl.features_orig, open(f'graphs/{args.dataset}_features.pkl', 'wb'))
     features = dl.features.to(args.device)
     for i in range(args.gen_graphs):
         with torch.no_grad():
@@ -114,8 +116,12 @@ def gen_graphs(args, dl, vgae):
         adj_recon = A_pred.numpy()
         np.fill_diagonal(adj_recon, 0)
         # np.ndarray
+        '''
         if args.gae:
             filename = f'graphs/{args.dataset}_graph_{i+1}_logits_gae.pkl'
         else:
             filename = f'graphs/{args.dataset}_graph_{i+1}_logits.pkl'
         pickle.dump(adj_recon, open(filename, 'wb'))
+
+        '''
+    return A_pred
