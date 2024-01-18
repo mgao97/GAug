@@ -83,6 +83,8 @@ def test_gaugm(trial):
     if sp.issparse(features):
         features = torch.FloatTensor(features.toarray())
     A_pred = pickle.load(open(f'data/edge_probabilities/{ds}_graph_{args.i}_logits.pkl', 'rb'))
+    print(A_pred)
+    '''
     if ds == 'cora' and args.add_train > 0:
         if args.add_train < 20:
             new_trainids = []
@@ -129,6 +131,7 @@ def test_gaugm(trial):
     trial.suggest_categorical('gnn', [gnn])
     trial.suggest_categorical('eval_orig', [eval_orig])
     return acc
+    '''
 
 if __name__ == "__main__":
     logging.info('start')

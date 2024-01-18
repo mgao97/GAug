@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     best_state = None
     best_epoch, best_val = 0, 0
-    for epoch in range(30):
+    for epoch in range(200):
         # train
         train(net, X, HG, lbl, train_mask, optimizer, epoch)
         # validation

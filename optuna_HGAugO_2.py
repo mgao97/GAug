@@ -29,7 +29,7 @@ from sklearn.model_selection import train_test_split
 parser = argparse.ArgumentParser(description='single')
 parser.add_argument('--dataset', type=str, default='cora')
 parser.add_argument('--gnn', type=str, default='gcn')
-parser.add_argument('--gpu', type=str, default='-1')
+parser.add_argument('--gpu', type=str, default='0')
 # parser.add_argument('--layers', type=int, default=-1)
 # parser.add_argument('--add_train', type=int, default=-1)
 # parser.add_argument('--feat_norm', type=str, default='row')
@@ -100,7 +100,7 @@ def adjacency_matrix(hg, s=1, weight=False):
         return csr_matrix(A)
 
 def objective(trial):
-    
+    data = CoauthorshipCora()
     dataname = 'cora'
     hg = Hypergraph(data["num_vertices"], data["edge_list"])
     features = torch.eye(data['num_vertices'])
@@ -146,7 +146,7 @@ def objective(trial):
 
 if __name__ == "__main__":
     
-    study = optuna.create_study(study_name = 'cora_study',direction="maximize")
+    study = optuna.create_study(study_name = 'CoauthorshipCora_study',direction="maximize")
     
     study.optimize(objective, n_trials=1)
 

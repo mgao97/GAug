@@ -12,14 +12,18 @@ from models.GSAGE_dgl import GraphSAGE
 from models.JKNet_dgl import JKNet
 
 def sample_graph_det(adj_orig, A_pred, remove_pct, add_pct):
+    
     if remove_pct == 0 and add_pct == 0:
         return copy.deepcopy(adj_orig)
+
+    print(remove_pct, add_pct)
     orig_upper = sp.triu(adj_orig, 1)
     n_edges = orig_upper.nnz
     edges = np.asarray(orig_upper.nonzero()).T
     if remove_pct:
         n_remove = int(n_edges * remove_pct / 100)
         pos_probs = A_pred[edges.T[0], edges.T[1]]
+        print(pos_probs)
         e_index_2b_remove = np.argpartition(pos_probs, n_remove)[:n_remove]
         mask = np.ones(len(edges), dtype=bool)
         mask[e_index_2b_remove] = False
@@ -72,8 +76,10 @@ if __name__ == "__main__":
     params = params_all['GAugM'][args.dataset][args.gnn]
     i = params['i']
     A_pred = pickle.load(open(f'data/edge_probabilities/{args.dataset}_graph_{i}_logits.pkl', 'rb'))
+    
+    
     adj_pred = sample_graph_det(adj_orig, A_pred, params['rm_pct'], params['add_pct'])
-
+    '''
     gnn = args.gnn
     if gnn == 'gcn':
         GNN = GCN
@@ -90,3 +96,4 @@ if __name__ == "__main__":
         acc, _, _ = gnn.fit()
         accs.append(acc)
     print(f'Micro F1: {np.mean(accs):.6f}, std: {np.std(accs):.6f}')
+    '''

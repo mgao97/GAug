@@ -3,7 +3,7 @@ import pickle
 import argparse
 import numpy as np
 from collections import Counter
-from models.HGAug import HyperGAug
+from models.HGAug_H import HyperGAug
 import torch
 import optuna
 import scipy.sparse as sp
@@ -27,7 +27,7 @@ from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 
 parser = argparse.ArgumentParser(description='single')
-#parser.add_argument('--dataset', type=str, default='cora')
+# parser.add_argument('--dataset', type=str, default='highschool')
 parser.add_argument('--gnn', type=str, default='gcn')
 parser.add_argument('--gpu', type=str, default='-1')
 # parser.add_argument('--layers', type=int, default=-1)
@@ -35,7 +35,7 @@ parser.add_argument('--gpu', type=str, default='-1')
 # parser.add_argument('--feat_norm', type=str, default='row')
 parser.add_argument('--hidden_size',  default=128)
 parser.add_argument('--emb_size', default=32)
-parser.add_argument('--epochs', default=200)
+parser.add_argument('--epochs', default=10)
 parser.add_argument('--seed', default=42)
 parser.add_argument('--lr', default=1e-2)
 parser.add_argument('--weight_decay', default=5e-4)
@@ -113,7 +113,7 @@ def objective(trial):
     labels = []
     with open ('data/graphs/contact-high-school/node-labels-contact-high-school.txt', 'r') as file:
         for line in file:
-            labels.append(int(line))
+            labels.append(int(line)-1)
     labels = torch.LongTensor(labels)
 
     # 设置随机种子，以确保结果可复现
@@ -121,7 +121,7 @@ def objective(trial):
 
     node_idx = [i for i in range(num_vertices)]
     # 将idx_test划分为训练（50%）、验证（25%）和测试（25%）集
-    idx_train, idx_temp = train_test_split(node_idx, test_size=0.5, random_state=random_seed)
+    idx_train, idx_temp = train_test_split(node_idx, test_size=0.1, random_state=random_seed)
     idx_val, idx_test = train_test_split(idx_temp, test_size=0.5, random_state=random_seed)
 
     # 确保划分后的集合没有重叠
@@ -144,7 +144,15 @@ def objective(trial):
     features = torch.eye(num_vertices)
     adj_matrix = adjacency_matrix(hg, s=1, weight=False)
 
-    lr = 0.005 if layer_type == 'gat' else 0.01
+    data = {}
+    data['num_vertices'] = len(node_idx)
+    data['edge_list'] = edge_list
+    data['labels'] = labels
+    data['train_mask'] = train_mask
+    data['val_mask'] = val_mask
+    data['test_mask'] = test_mask
+
+    # lr = 0.005 if layer_type == 'gat' else 0.01
     # if args.layers > 0:
     #     n_layers = args.layers
     # else:
@@ -165,6 +173,7 @@ def objective(trial):
     accs = []
     for _ in tqdm(range(1)):
         model = HyperGAug(data, args.use_bn, gpu, args.hidden_size, args.emb_size, args.epochs, args.seed, args.lr, args.weight_decay, args.dropout, beta, temp, False, name='debug', warmup=warmup, gnnlayer_type=args.gnnlayer_type, alpha=change_frac, sample_type=args.sample_type)
+        print('model:\n', model.model)
         acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
         accs.append(acc)
     

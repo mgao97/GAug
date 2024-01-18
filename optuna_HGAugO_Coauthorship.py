@@ -56,7 +56,7 @@ else:
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu = 0
 
-data = CocitationCora()
+data = CoauthorshipCora()
 args.dataset = data
 #print(data['labels'])
 gnn = args.gnn
