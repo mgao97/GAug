@@ -1,0 +1,11 @@
+[I 2023-12-03 05:57:12,128] Using an existing study with name 'cooking200_study' instead of creating a new one.
+/users/Min/GAug/optuna_HGAugO.py:124: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:125: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:126: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:128: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:129: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)

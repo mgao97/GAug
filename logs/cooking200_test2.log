@@ -1,0 +1,104 @@
+[I 2023-12-06 06:11:37,778] Using an existing study with name 'cooking200_study' instead of creating a new one.
+/users/Min/GAug/optuna_HGAugO.py:124: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:125: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:126: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:128: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:129: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/miniconda/lib/python3.11/site-packages/optuna/distributions.py:524: UserWarning: Choices for a categorical distribution should be a tuple of None, bool, int, float and str for persistent storage but contains This is cooking_200 dataset:
+  ->  num_classes
+  ->  num_vertices
+  ->  num_edges
+  ->  edge_list
+  ->  labels
+  ->  train_mask
+  ->  val_mask
+  ->  test_mask
+Please try `data['name']` to get the specified data. which is of type Cooking200.
+  warnings.warn(message)
+[W 2023-12-13 19:12:39,638] Trial 9 failed with parameters: {'alpha': 0.59, 'beta': 0.9, 'temp': 1.7000000000000002, 'warmup': 7, 'pretrain_ep': 265.0, 'pretrain_nc': 45.0} because of the following error: TypeError('Object of type Cooking200 is not JSON serializable').
+Traceback (most recent call last):
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 200, in _run_trial
+    value_or_values = func(trial)
+                      ^^^^^^^^^^^
+  File "/users/Min/GAug/optuna_HGAugO.py", line 137, in objective
+    temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/trial/_trial.py", line 405, in suggest_categorical
+    return self._suggest(name, CategoricalDistribution(choices=choices))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/trial/_trial.py", line 636, in _suggest
+    storage.set_trial_param(trial_id, name, param_value_in_internal_repr, distribution)
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/storages/_cached_storage.py", line 171, in set_trial_param
+    self._backend.set_trial_param(trial_id, param_name, param_value_internal, distribution)
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/storages/_rdb/storage.py", line 569, in set_trial_param
+    self._set_trial_param_without_commit(
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/storages/_rdb/storage.py", line 601, in _set_trial_param_without_commit
+    distribution_json=distributions.distribution_to_json(distribution),
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/distributions.py", line 634, in distribution_to_json
+    return json.dumps({"name": dist.__class__.__name__, "attributes": dist._asdict()})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Cooking200 is not JSON serializable
+[W 2023-12-13 19:12:39,639] Trial 9 failed with value None.
+tensor([ 5, 12,  6,  ..., 15, 12, 12])
+Traceback (most recent call last):
+  File "/users/Min/GAug/optuna_HGAugO.py", line 149, in <module>
+    trial.suggest_categorical('gnn', [gnn])
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/study.py", line 451, in optimize
+    _optimize(
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 66, in _optimize
+    _optimize_sequential(
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 163, in _optimize_sequential
+    frozen_trial = _run_trial(study, func, catch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 251, in _run_trial
+    raise func_err
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 200, in _run_trial
+    value_or_values = func(trial)
+                      ^^^^^^^^^^^
+  File "/users/Min/GAug/optuna_HGAugO.py", line 137, in objective
+    temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/trial/_trial.py", line 405, in suggest_categorical
+    return self._suggest(name, CategoricalDistribution(choices=choices))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/trial/_trial.py", line 636, in _suggest
+    storage.set_trial_param(trial_id, name, param_value_in_internal_repr, distribution)
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/storages/_cached_storage.py", line 171, in set_trial_param
+    self._backend.set_trial_param(trial_id, param_name, param_value_internal, distribution)
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/storages/_rdb/storage.py", line 569, in set_trial_param
+    self._set_trial_param_without_commit(
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/storages/_rdb/storage.py", line 601, in _set_trial_param_without_commit
+    distribution_json=distributions.distribution_to_json(distribution),
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/distributions.py", line 634, in distribution_to_json
+    return json.dumps({"name": dist.__class__.__name__, "attributes": dist._asdict()})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Cooking200 is not JSON serializable

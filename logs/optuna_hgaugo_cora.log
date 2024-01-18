@@ -1,0 +1,165 @@
+[I 2023-12-07 02:16:47,533] A new study created in memory with name: no-name-1eddfc71-d0c2-43d0-81d8-37acac418c74
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 02:46:25,556] Trial 0 finished with value: 0.41160436137071643 and parameters: {'alpha': 0.21, 'beta': 0.2, 'temp': 1.9000000000000001, 'warmup': 7, 'pretrain_ep': 75.0, 'pretrain_nc': 150.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.41160436137071643, 'std': 5.551115123125783e-17}. Best is trial 0 with value: 0.41160436137071643.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 04:09:20,468] Trial 1 finished with value: 0.4010903426791278 and parameters: {'alpha': 0.53, 'beta': 0.9, 'temp': 2.0, 'warmup': 3, 'pretrain_ep': 25.0, 'pretrain_nc': 70.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.4010903426791278, 'std': 5.551115123125783e-17}. Best is trial 0 with value: 0.41160436137071643.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 07:07:58,257] Trial 2 finished with value: 0.4139408099688474 and parameters: {'alpha': 0.84, 'beta': 0.5, 'temp': 2.0, 'warmup': 7, 'pretrain_ep': 285.0, 'pretrain_nc': 115.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.4139408099688474, 'std': 5.551115123125783e-17}. Best is trial 2 with value: 0.4139408099688474.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 09:47:19,280] Trial 3 finished with value: 0.3808411214953271 and parameters: {'alpha': 0.79, 'beta': 0.30000000000000004, 'temp': 1.3000000000000003, 'warmup': 10, 'pretrain_ep': 120.0, 'pretrain_nc': 80.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.3808411214953271, 'std': 0.0}. Best is trial 2 with value: 0.4139408099688474.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 10:27:46,001] Trial 4 finished with value: 0.3703271028037383 and parameters: {'alpha': 0.28, 'beta': 0.1, 'temp': 1.5000000000000002, 'warmup': 6, 'pretrain_ep': 280.0, 'pretrain_nc': 85.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.3703271028037383, 'std': 0.0}. Best is trial 2 with value: 0.4139408099688474.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 12:50:27,214] Trial 5 finished with value: 0.4205607476635514 and parameters: {'alpha': 0.73, 'beta': 3.6, 'temp': 0.4, 'warmup': 7, 'pretrain_ep': 250.0, 'pretrain_nc': 160.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.4205607476635514, 'std': 0.0}. Best is trial 5 with value: 0.4205607476635514.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 13:32:47,426] Trial 6 finished with value: 0.41121495327102797 and parameters: {'alpha': 0.3, 'beta': 0.8, 'temp': 1.1, 'warmup': 10, 'pretrain_ep': 70.0, 'pretrain_nc': 220.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.41121495327102797, 'std': 5.551115123125783e-17}. Best is trial 5 with value: 0.4205607476635514.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 14:54:20,864] Trial 7 finished with value: 0.40809968847352024 and parameters: {'alpha': 0.51, 'beta': 1.0, 'temp': 0.30000000000000004, 'warmup': 9, 'pretrain_ep': 240.0, 'pretrain_nc': 170.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.40809968847352024, 'std': 0.0}. Best is trial 5 with value: 0.4205607476635514.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 15:36:17,208] Trial 8 finished with value: 0.37694704049844235 and parameters: {'alpha': 0.3, 'beta': 0.0, 'temp': 1.2000000000000002, 'warmup': 5, 'pretrain_ep': 255.0, 'pretrain_nc': 130.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.37694704049844235, 'std': 0.0}. Best is trial 5 with value: 0.4205607476635514.
+/users/Min/GAug/optuna_HGAugO.py:135: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:136: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:137: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:139: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:140: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:150: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO.py:151: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-07 16:13:55,996] Trial 9 finished with value: 0.4186137071651091 and parameters: {'alpha': 0.26, 'beta': 0.4, 'temp': 1.9000000000000001, 'warmup': 9, 'pretrain_ep': 285.0, 'pretrain_nc': 195.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.4186137071651091, 'std': 5.551115123125783e-17}. Best is trial 5 with value: 0.4205607476635514.
+Number of finished trials:  10
+Best trial:
+  Value:  0.4205607476635514
+  Params: 
+    alpha: 0.73
+    beta: 3.6
+    temp: 0.4
+    warmup: 7
+    pretrain_ep: 250.0
+    pretrain_nc: 160.0
+    dataset: cora
+    gnn: gcn
+    acc: 0.4205607476635514
+    std: 0.0

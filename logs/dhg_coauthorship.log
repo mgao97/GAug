@@ -1,0 +1,61 @@
+Hypergraph(num_v=2708, num_e=970)
+Epoch: 0, Time: 0.02595s, Loss: 1.94641
+update best: 0.12188
+Epoch: 1, Time: 0.01270s, Loss: 1.94033
+update best: 0.34307
+Epoch: 2, Time: 0.01455s, Loss: 1.93312
+Epoch: 3, Time: 0.01133s, Loss: 1.92471
+Epoch: 4, Time: 0.01169s, Loss: 1.91394
+Epoch: 5, Time: 0.01638s, Loss: 1.90033
+Epoch: 6, Time: 0.01501s, Loss: 1.88647
+Epoch: 7, Time: 0.01141s, Loss: 1.87034
+update best: 0.36643
+Epoch: 8, Time: 0.01477s, Loss: 1.85130
+update best: 0.39330
+Epoch: 9, Time: 0.01453s, Loss: 1.82924
+update best: 0.42718
+Epoch: 10, Time: 0.01136s, Loss: 1.81064
+update best: 0.46379
+Epoch: 11, Time: 0.01451s, Loss: 1.78458
+update best: 0.50896
+Epoch: 12, Time: 0.01145s, Loss: 1.75335
+update best: 0.53388
+Epoch: 13, Time: 0.01472s, Loss: 1.72121
+update best: 0.55452
+Epoch: 14, Time: 0.01463s, Loss: 1.69312
+update best: 0.56581
+Epoch: 15, Time: 0.01460s, Loss: 1.65749
+update best: 0.57710
+Epoch: 16, Time: 0.01464s, Loss: 1.61835
+update best: 0.58879
+Epoch: 17, Time: 0.01471s, Loss: 1.58219
+update best: 0.61643
+Epoch: 18, Time: 0.01462s, Loss: 1.54515
+update best: 0.63435
+Epoch: 19, Time: 0.01452s, Loss: 1.50626
+update best: 0.64681
+Epoch: 20, Time: 0.01469s, Loss: 1.45349
+update best: 0.65927
+Epoch: 21, Time: 0.01653s, Loss: 1.41288
+Epoch: 22, Time: 0.01465s, Loss: 1.37024
+update best: 0.66160
+Epoch: 23, Time: 0.01465s, Loss: 1.32470
+update best: 0.66628
+Epoch: 24, Time: 0.01456s, Loss: 1.28567
+update best: 0.67484
+Epoch: 25, Time: 0.01461s, Loss: 1.23676
+update best: 0.67796
+Epoch: 26, Time: 0.01469s, Loss: 1.19497
+update best: 0.67874
+Epoch: 27, Time: 0.01140s, Loss: 1.15239
+update best: 0.68146
+Epoch: 28, Time: 0.01127s, Loss: 1.11260
+update best: 0.68263
+Epoch: 29, Time: 0.01464s, Loss: 1.08225
+update best: 0.68614
+
+train finished!
+best val: 0.68614
+test...
+final result: epoch: 29
+{'accuracy': 0.6861370801925659, 'f1_score': 0.6645933831713843, 'f1_score -> average@micro': 0.6861370716510904}

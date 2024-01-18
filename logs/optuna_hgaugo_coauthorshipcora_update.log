@@ -1,0 +1,2741 @@
+[I 2024-01-10 03:29:16,844] A new study created in memory with name: cocauthorshipcora_study
+/users/Min/GAug/optuna_HGAugO_Coauthorship.py:125: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO_Coauthorship.py:126: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO_Coauthorship.py:127: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO_Coauthorship.py:129: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO_Coauthorship.py:130: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+  0%|          | 0/10 [00:00<?, ?it/s]
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7393.67it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  10%|█         | 1/10 [18:28<2:46:16, 1108.50s/it]nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7160.51it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  20%|██        | 2/10 [36:53<2:27:29, 1106.17s/it]nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 6279.08it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  30%|███       | 3/10 [55:18<2:09:00, 1105.85s/it]nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7203.91it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  40%|████      | 4/10 [1:13:37<1:50:19, 1103.32s/it]nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7292.05it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  50%|█████     | 5/10 [1:31:57<1:31:49, 1101.90s/it]nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7288.46it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  60%|██████    | 6/10 [1:50:18<1:13:27, 1101.81s/it]nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7013.22it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  70%|███████   | 7/10 [2:08:37<55:02, 1100.68s/it]  nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7094.92it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  80%|████████  | 8/10 [2:26:51<36:36, 1098.48s/it]nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7205.31it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209  90%|█████████ | 9/10 [2:45:11<18:19, 1099.03s/it]nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+
+  0%|          | 0/53 [00:00<?, ?it/s][A100%|██████████| 53/53 [00:00<00:00, 7337.06it/s]
+Epoch: 0001 ep_loss_pretrain: 0.7209
+Epoch: 0002 ep_loss_pretrain: 0.7210
+Epoch: 0003 ep_loss_pretrain: 0.7209
+Epoch: 0004 ep_loss_pretrain: 0.7209
+Epoch: 0005 ep_loss_pretrain: 0.7209
+Epoch: 0006 ep_loss_pretrain: 0.7209
+Epoch: 0007 ep_loss_pretrain: 0.7209
+Epoch: 0008 ep_loss_pretrain: 0.7210
+Epoch: 0009 ep_loss_pretrain: 0.7209
+Epoch: 0010 ep_loss_pretrain: 0.7208
+Epoch: 0011 ep_loss_pretrain: 0.7209
+Epoch: 0012 ep_loss_pretrain: 0.7210
+Epoch: 0013 ep_loss_pretrain: 0.7209
+Epoch: 0014 ep_loss_pretrain: 0.7209
+Epoch: 0015 ep_loss_pretrain: 0.7210
+Epoch: 0016 ep_loss_pretrain: 0.7209
+Epoch: 0017 ep_loss_pretrain: 0.7210
+Epoch: 0018 ep_loss_pretrain: 0.7210
+Epoch: 0019 ep_loss_pretrain: 0.7209
+Epoch: 0020 ep_loss_pretrain: 0.7210
+Epoch: 0021 ep_loss_pretrain: 0.7209
+Epoch: 0022 ep_loss_pretrain: 0.7210
+Epoch: 0023 ep_loss_pretrain: 0.7208
+Epoch: 0024 ep_loss_pretrain: 0.7209
+Epoch: 0025 ep_loss_pretrain: 0.7209
+Epoch: 0026 ep_loss_pretrain: 0.7210
+Epoch: 0027 ep_loss_pretrain: 0.7209
+Epoch: 0028 ep_loss_pretrain: 0.7209
+Epoch: 0029 ep_loss_pretrain: 0.7210
+Epoch: 0030 ep_loss_pretrain: 0.7208
+Epoch: 0031 ep_loss_pretrain: 0.7208
+Epoch: 0032 ep_loss_pretrain: 0.7209
+Epoch: 0033 ep_loss_pretrain: 0.7209
+Epoch: 0034 ep_loss_pretrain: 0.7209
+Epoch: 0035 ep_loss_pretrain: 0.7209
+Epoch: 0036 ep_loss_pretrain: 0.7209
+Epoch: 0037 ep_loss_pretrain: 0.7208
+Epoch: 0038 ep_loss_pretrain: 0.7209
+Epoch: 0039 ep_loss_pretrain: 0.7208
+Epoch: 0040 ep_loss_pretrain: 0.7210
+Epoch: 0041 ep_loss_pretrain: 0.7209
+Epoch: 0042 ep_loss_pretrain: 0.7209
+Epoch: 0043 ep_loss_pretrain: 0.7208
+Epoch: 0044 ep_loss_pretrain: 0.7208
+Epoch: 0045 ep_loss_pretrain: 0.7209
+Epoch: 0046 ep_loss_pretrain: 0.7209
+Epoch: 0047 ep_loss_pretrain: 0.7210
+Epoch: 0048 ep_loss_pretrain: 0.7209
+Epoch: 0049 ep_loss_pretrain: 0.7209
+Epoch: 0050 ep_loss_pretrain: 0.7209
+Epoch: 0051 ep_loss_pretrain: 0.7210
+Epoch: 0052 ep_loss_pretrain: 0.7208
+Epoch: 0053 ep_loss_pretrain: 0.7209
+Epoch: 0054 ep_loss_pretrain: 0.7211
+Epoch: 0055 ep_loss_pretrain: 0.7209
+Epoch: 0056 ep_loss_pretrain: 0.7208
+Epoch: 0057 ep_loss_pretrain: 0.7209
+Epoch: 0058 ep_loss_pretrain: 0.7210
+Epoch: 0059 ep_loss_pretrain: 0.7211
+Epoch: 0060 ep_loss_pretrain: 0.7210
+Epoch: 0061 ep_loss_pretrain: 0.7209
+Epoch: 0062 ep_loss_pretrain: 0.7210
+Epoch: 0063 ep_loss_pretrain: 0.7208
+Epoch: 0064 ep_loss_pretrain: 0.7208
+Epoch: 0065 ep_loss_pretrain: 0.7208
+Epoch: 0066 ep_loss_pretrain: 0.7209
+Epoch: 0067 ep_loss_pretrain: 0.7209
+Epoch: 0068 ep_loss_pretrain: 0.7209
+Epoch: 0069 ep_loss_pretrain: 0.7210
+Epoch: 0070 ep_loss_pretrain: 0.7210
+Epoch: 0071 ep_loss_pretrain: 0.7209
+Epoch: 0072 ep_loss_pretrain: 0.7209
+Epoch: 0073 ep_loss_pretrain: 0.7209
+Epoch: 0074 ep_loss_pretrain: 0.7209
+Epoch: 0075 ep_loss_pretrain: 0.7210
+Epoch: 0076 ep_loss_pretrain: 0.7209
+Epoch: 0077 ep_loss_pretrain: 0.7208
+Epoch: 0078 ep_loss_pretrain: 0.7209
+Epoch: 0079 ep_loss_pretrain: 0.7208
+Epoch: 0080 ep_loss_pretrain: 0.7209
+Epoch: 0081 ep_loss_pretrain: 0.7209
+Epoch: 0082 ep_loss_pretrain: 0.7209
+Epoch: 0083 ep_loss_pretrain: 0.7209
+Epoch: 0084 ep_loss_pretrain: 0.7209
+Epoch: 0085 ep_loss_pretrain: 0.7209
+Epoch: 0086 ep_loss_pretrain: 0.7208
+Epoch: 0087 ep_loss_pretrain: 0.7209
+Epoch: 0088 ep_loss_pretrain: 0.7210
+Epoch: 0089 ep_loss_pretrain: 0.7210
+Epoch: 0090 ep_loss_pretrain: 0.7209
+Epoch: 0091 ep_loss_pretrain: 0.7208
+Epoch: 0092 ep_loss_pretrain: 0.7209
+Epoch: 0093 ep_loss_pretrain: 0.7209
+Epoch: 0094 ep_loss_pretrain: 0.7210
+Epoch: 0095 ep_loss_pretrain: 0.7210
+Epoch: 0096 ep_loss_pretrain: 0.7209
+Epoch: 0097 ep_loss_pretrain: 0.7209
+Epoch: 0098 ep_loss_pretrain: 0.7209
+Epoch: 0099 ep_loss_pretrain: 0.7209
+Epoch: 0100 ep_loss_pretrain: 0.7210
+Epoch: 0101 ep_loss_pretrain: 0.7210
+Epoch: 0102 ep_loss_pretrain: 0.7209
+Epoch: 0103 ep_loss_pretrain: 0.7209
+Epoch: 0104 ep_loss_pretrain: 0.7209
+Epoch: 0105 ep_loss_pretrain: 0.7209
+Epoch: 0001 ep_loss_val: 0.7209 nc_loss_val: 3.9915
+Epoch: 0002 ep_loss_val: 0.7210 nc_loss_val: 3.9937
+Epoch: 0003 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0004 ep_loss_val: 0.7209 nc_loss_val: 3.9907
+Epoch: 0005 ep_loss_val: 0.7208 nc_loss_val: 3.9901
+Epoch: 0006 ep_loss_val: 0.7210 nc_loss_val: 3.9919
+Epoch: 0007 ep_loss_val: 0.7210 nc_loss_val: 3.9942
+Epoch: 0008 ep_loss_val: 0.7210 nc_loss_val: 3.9940
+Epoch: 0009 ep_loss_val: 0.7208 nc_loss_val: 3.9912
+Epoch: 0010 ep_loss_val: 0.7209 nc_loss_val: 3.9929
+Epoch: 0011 ep_loss_val: 0.7208 nc_loss_val: 3.9924
+Epoch: 0012 ep_loss_val: 0.7209 nc_loss_val: 3.9890
+Epoch: 0013 ep_loss_val: 0.7209 nc_loss_val: 3.9908
+Epoch: 0014 ep_loss_val: 0.7210 nc_loss_val: 3.9878
+Epoch: 0015 ep_loss_val: 0.7209 nc_loss_val: 3.9895
+Epoch: 0016 ep_loss_val: 0.7209 nc_loss_val: 3.9910
+Epoch: 0017 ep_loss_val: 0.7209 nc_loss_val: 3.9918
+Epoch: 0018 ep_loss_val: 0.7210 nc_loss_val: 3.9892
+Epoch: 0019 ep_loss_val: 0.7208 nc_loss_val: 3.9893
+Epoch: 0020 ep_loss_val: 0.7208 nc_loss_val: 3.9887
+Epoch: 0021 ep_loss_val: 0.7209 nc_loss_val: 3.9881
+Epoch: 0022 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0023 ep_loss_val: 0.7209 nc_loss_val: 3.9893
+Epoch: 0024 ep_loss_val: 0.7210 nc_loss_val: 3.9888
+Epoch: 0025 ep_loss_val: 0.7209 nc_loss_val: 3.9889
+Epoch: 0026 ep_loss_val: 0.7210 nc_loss_val: 3.9886
+Epoch: 0027 ep_loss_val: 0.7209 nc_loss_val: 3.9888
+Epoch: 0028 ep_loss_val: 0.7209 nc_loss_val: 3.9869
+Epoch: 0029 ep_loss_val: 0.7208 nc_loss_val: 3.9869
+Epoch: 0030 ep_loss_val: 0.7208 nc_loss_val: 3.9881
+Epoch: 0031 ep_loss_val: 0.7208 nc_loss_val: 3.9884
+Epoch: 0032 ep_loss_val: 0.7210 nc_loss_val: 3.9882
+Epoch: 0033 ep_loss_val: 0.7210 nc_loss_val: 3.9870
+Epoch: 0034 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0035 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0036 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0037 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0038 ep_loss_val: 0.7209 nc_loss_val: 3.9870
+Epoch: 0039 ep_loss_val: 0.7209 nc_loss_val: 3.9873
+Epoch: 0040 ep_loss_val: 0.7209 nc_loss_val: 3.9875
+Epoch: 0041 ep_loss_val: 0.7208 nc_loss_val: 3.9865
+Epoch: 0042 ep_loss_val: 0.7209 nc_loss_val: 3.9883
+Epoch: 0043 ep_loss_val: 0.7209 nc_loss_val: 3.9872
+Epoch: 0044 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0045 ep_loss_val: 0.7209 nc_loss_val: 3.9861
+Epoch: 0046 ep_loss_val: 0.7210 nc_loss_val: 3.9863
+Epoch: 0047 ep_loss_val: 0.7210 nc_loss_val: 3.9869
+Epoch: 0048 ep_loss_val: 0.7208 nc_loss_val: 3.9849
+Epoch: 0049 ep_loss_val: 0.7209 nc_loss_val: 3.9842
+Epoch: 0050 ep_loss_val: 0.7210 nc_loss_val: 3.9862
+Epoch: 0051 ep_loss_val: 0.7209 nc_loss_val: 3.9862
+Epoch: 0052 ep_loss_val: 0.7210 nc_loss_val: 3.9852
+Epoch: 0053 ep_loss_val: 0.7209 nc_loss_val: 3.9860
+Epoch: 0054 ep_loss_val: 0.7208 nc_loss_val: 3.9864
+Epoch: 0055 ep_loss_val: 0.7208 nc_loss_val: 3.9828
+Epoch: 0056 ep_loss_val: 0.7209 nc_loss_val: 3.9852
+Epoch: 0057 ep_loss_val: 0.7210 nc_loss_val: 3.9861
+Epoch: 0058 ep_loss_val: 0.7210 nc_loss_val: 3.9860
+Epoch: 0059 ep_loss_val: 0.7208 nc_loss_val: 3.9843
+Epoch: 0060 ep_loss_val: 0.7209 nc_loss_val: 3.9865
+Epoch: 0061 ep_loss_val: 0.7210 nc_loss_val: 3.9855
+Epoch: 0062 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0063 ep_loss_val: 0.7208 nc_loss_val: 3.9846
+Epoch: 0064 ep_loss_val: 0.7209 nc_loss_val: 3.9866
+Epoch: 0065 ep_loss_val: 0.7208 nc_loss_val: 3.9850
+Epoch: 0066 ep_loss_val: 0.7209 nc_loss_val: 3.9856
+Epoch: 0067 ep_loss_val: 0.7210 nc_loss_val: 3.9865
+Epoch: 0068 ep_loss_val: 0.7208 nc_loss_val: 3.9845
+Epoch: 0069 ep_loss_val: 0.7209 nc_loss_val: 3.9813
+Epoch: 0070 ep_loss_val: 0.7209 nc_loss_val: 3.9827
+Epoch: 0071 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0072 ep_loss_val: 0.7209 nc_loss_val: 3.9843
+Epoch: 0073 ep_loss_val: 0.7208 nc_loss_val: 3.9853
+Epoch: 0074 ep_loss_val: 0.7209 nc_loss_val: 3.9838
+Epoch: 0075 ep_loss_val: 0.7208 nc_loss_val: 3.9833
+Epoch: 0076 ep_loss_val: 0.7209 nc_loss_val: 3.9829
+Epoch: 0077 ep_loss_val: 0.7210 nc_loss_val: 3.9840
+Epoch: 0078 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0079 ep_loss_val: 0.7209 nc_loss_val: 3.9826
+Epoch: 0080 ep_loss_val: 0.7209 nc_loss_val: 3.9831
+Epoch: 0081 ep_loss_val: 0.7209 nc_loss_val: 3.9832
+Epoch: 0082 ep_loss_val: 0.7209 nc_loss_val: 3.9818
+Epoch: 0083 ep_loss_val: 0.7209 100%|██████████| 10/10 [3:03:27<00:00, 1098.04s/it]100%|██████████| 10/10 [3:03:27<00:00, 1100.72s/it]
+/users/Min/GAug/optuna_HGAugO_Coauthorship.py:144: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO_Coauthorship.py:145: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2024-01-10 06:32:44,005] Trial 0 finished with value: 0.5537383177570093 and parameters: {'alpha': 0.36, 'beta': 2.8000000000000003, 'temp': 1.4000000000000001, 'warmup': 5, 'pretrain_ep': 105.0, 'pretrain_nc': 230.0, 'dataset': 'cora', 'gnn': 'gcn', 'acc': 0.5537383177570093, 'std': 0.0}. Best is trial 0 with value: 0.5537383177570093.
+nc_loss_val: 3.9848
+Epoch: 0084 ep_loss_val: 0.7210 nc_loss_val: 3.9836
+Epoch: 0085 ep_loss_val: 0.7208 nc_loss_val: 3.9831
+Epoch: 0086 ep_loss_val: 0.7210 nc_loss_val: 3.9816
+Epoch: 0087 ep_loss_val: 0.7209 nc_loss_val: 3.9809
+Epoch: 0088 ep_loss_val: 0.7208 nc_loss_val: 3.9816
+Epoch: 0089 ep_loss_val: 0.7207 nc_loss_val: 3.9795
+Epoch: 0090 ep_loss_val: 0.7208 nc_loss_val: 3.9819
+Epoch: 0091 ep_loss_val: 0.7207 nc_loss_val: 3.9813
+Epoch: 0092 ep_loss_val: 0.7207 nc_loss_val: 3.9802
+Epoch: 0093 ep_loss_val: 0.7207 nc_loss_val: 3.9806
+Epoch: 0094 ep_loss_val: 0.7209 nc_loss_val: 3.9812
+Epoch: 0095 ep_loss_val: 0.7208 nc_loss_val: 3.9821
+Epoch: 0096 ep_loss_val: 0.7208 nc_loss_val: 3.9825
+Epoch: 0097 ep_loss_val: 0.7208 nc_loss_val: 3.9805
+Epoch: 0098 ep_loss_val: 0.7210 nc_loss_val: 3.9814
+Epoch: 0099 ep_loss_val: 0.7209 nc_loss_val: 3.9798
+Epoch: 0100 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0101 ep_loss_val: 0.7207 nc_loss_val: 3.9808
+Epoch: 0102 ep_loss_val: 0.7208 nc_loss_val: 3.9808
+Epoch: 0103 ep_loss_val: 0.7210 nc_loss_val: 3.9810
+Epoch: 0104 ep_loss_val: 0.7206 nc_loss_val: 3.9800
+Epoch: 0105 ep_loss_val: 0.7210 nc_loss_val: 3.9811
+Epoch: 0106 ep_loss_val: 0.7206 nc_loss_val: 3.9807
+Epoch: 0107 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0108 ep_loss_val: 0.7209 nc_loss_val: 3.9821
+Epoch: 0109 ep_loss_val: 0.7208 nc_loss_val: 3.9803
+Epoch: 0110 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0111 ep_loss_val: 0.7208 nc_loss_val: 3.9789
+Epoch: 0112 ep_loss_val: 0.7209 nc_loss_val: 3.9793
+Epoch: 0113 ep_loss_val: 0.7207 nc_loss_val: 3.9798
+Epoch: 0114 ep_loss_val: 0.7207 nc_loss_val: 3.9805
+Epoch: 0115 ep_loss_val: 0.7209 nc_loss_val: 3.9802
+Epoch: 0116 ep_loss_val: 0.7207 nc_loss_val: 3.9800
+Epoch: 0117 ep_loss_val: 0.7207 nc_loss_val: 3.9787
+Epoch: 0118 ep_loss_val: 0.7209 nc_loss_val: 3.9810
+Epoch: 0119 ep_loss_val: 0.7208 nc_loss_val: 3.9776
+Epoch: 0120 ep_loss_val: 0.7209 nc_loss_val: 3.9779
+Epoch: 0121 ep_loss_val: 0.7207 nc_loss_val: 3.9776
+Epoch: 0122 ep_loss_val: 0.7208 nc_loss_val: 3.9800
+Epoch: 0123 ep_loss_val: 0.7210 nc_loss_val: 3.9806
+Epoch: 0124 ep_loss_val: 0.7208 nc_loss_val: 3.9790
+Epoch: 0125 ep_loss_val: 0.7207 nc_loss_val: 3.9784
+Epoch: 0126 ep_loss_val: 0.7208 nc_loss_val: 3.9795
+Epoch: 0127 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0128 ep_loss_val: 0.7208 nc_loss_val: 3.9794
+Epoch: 0129 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0130 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0131 ep_loss_val: 0.7208 nc_loss_val: 3.9775
+Epoch: 0132 ep_loss_val: 0.7208 nc_loss_val: 3.9782
+Epoch: 0133 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0134 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0135 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0136 ep_loss_val: 0.7209 nc_loss_val: 3.9803
+Epoch: 0137 ep_loss_val: 0.7208 nc_loss_val: 3.9781
+Epoch: 0138 ep_loss_val: 0.7208 nc_loss_val: 3.9772
+Epoch: 0139 ep_loss_val: 0.7208 nc_loss_val: 3.9786
+Epoch: 0140 ep_loss_val: 0.7208 nc_loss_val: 3.9774
+Epoch: 0141 ep_loss_val: 0.7209 nc_loss_val: 3.9792
+Epoch: 0142 ep_loss_val: 0.7208 nc_loss_val: 3.9787
+Epoch: 0143 ep_loss_val: 0.7210 nc_loss_val: 3.9768
+Epoch: 0144 ep_loss_val: 0.7207 nc_loss_val: 3.9779
+Epoch: 0145 ep_loss_val: 0.7209 nc_loss_val: 3.9774
+Epoch: 0146 ep_loss_val: 0.7209 nc_loss_val: 3.9769
+Epoch: 0147 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0148 ep_loss_val: 0.7211 nc_loss_val: 3.9780
+Epoch: 0149 ep_loss_val: 0.7208 nc_loss_val: 3.9765
+Epoch: 0150 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0151 ep_loss_val: 0.7208 nc_loss_val: 3.9761
+Epoch: 0152 ep_loss_val: 0.7206 nc_loss_val: 3.9755
+Epoch: 0153 ep_loss_val: 0.7207 nc_loss_val: 3.9775
+Epoch: 0154 ep_loss_val: 0.7208 nc_loss_val: 3.9756
+Epoch: 0155 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0156 ep_loss_val: 0.7209 nc_loss_val: 3.9778
+Epoch: 0157 ep_loss_val: 0.7205 nc_loss_val: 3.9769
+Epoch: 0158 ep_loss_val: 0.7207 nc_loss_val: 3.9764
+Epoch: 0159 ep_loss_val: 0.7207 nc_loss_val: 3.9756
+Epoch: 0160 ep_loss_val: 0.7207 nc_loss_val: 3.9755
+Epoch: 0161 ep_loss_val: 0.7209 nc_loss_val: 3.9760
+Epoch: 0162 ep_loss_val: 0.7208 nc_loss_val: 3.9757
+Epoch: 0163 ep_loss_val: 0.7208 nc_loss_val: 3.9755
+Epoch: 0164 ep_loss_val: 0.7208 nc_loss_val: 3.9749
+Number of finished trials:  1
+Best trial:
+  Value:  0.5537383177570093
+  Params: 
+    alpha: 0.36
+    beta: 2.8000000000000003
+    temp: 1.4000000000000001
+    warmup: 5
+    pretrain_ep: 105.0
+    pretrain_nc: 230.0
+    dataset: cora
+    gnn: gcn
+    acc: 0.5537383177570093
+    std: 0.0

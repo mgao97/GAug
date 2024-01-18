@@ -1,0 +1,103 @@
+[I 2023-12-05 03:04:16,826] A new study created in memory with name: cooking200_study
+/users/Min/GAug/optuna_HGAugO_test.py:124: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO_test.py:125: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO_test.py:126: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO_test.py:128: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO_test.py:129: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/miniconda/lib/python3.11/site-packages/optuna/distributions.py:524: UserWarning: Choices for a categorical distribution should be a tuple of None, bool, int, float and str for persistent storage but contains This is cooking_200 dataset:
+  ->  num_classes
+  ->  num_vertices
+  ->  num_edges
+  ->  edge_list
+  ->  labels
+  ->  train_mask
+  ->  val_mask
+  ->  test_mask
+Please try `data['name']` to get the specified data. which is of type Cooking200.
+  warnings.warn(message)
+/users/Min/GAug/optuna_HGAugO_test.py:139: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('acc', acc, acc)
+/users/Min/GAug/optuna_HGAugO_test.py:140: FutureWarning: suggest_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float instead.
+  trial.suggest_uniform('std', std, std)
+[I 2023-12-05 14:46:50,859] Trial 0 finished with value: 0.19405968870484078 and parameters: {'alpha': 0.93, 'beta': 3.1, 'temp': 1.5000000000000002, 'warmup': 3, 'pretrain_ep': 230.0, 'pretrain_nc': 245.0, 'dataset': This is cooking_200 dataset:
+  ->  num_classes
+  ->  num_vertices
+  ->  num_edges
+  ->  edge_list
+  ->  labels
+  ->  train_mask
+  ->  val_mask
+  ->  test_mask
+Please try `data['name']` to get the specified data., 'gnn': 'gcn', 'acc': 0.19405968870484078, 'std': 0.0}. Best is trial 0 with value: 0.19405968870484078.
+/users/Min/GAug/optuna_HGAugO_test.py:124: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO_test.py:125: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO_test.py:126: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO_test.py:128: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO_test.py:129: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+/users/Min/miniconda/lib/python3.11/site-packages/optuna/distributions.py:524: UserWarning: Choices for a categorical distribution should be a tuple of None, bool, int, float and str for persistent storage but contains This is cooking_200 dataset:
+  ->  num_classes
+  ->  num_vertices
+  ->  num_edges
+  ->  edge_list
+  ->  labels
+  ->  train_mask
+  ->  val_mask
+  ->  test_mask
+Please try `data['name']` to get the specified data. which is of type Cooking200.
+  warnings.warn(message)
+[W 2023-12-05 18:35:27,099] Trial 1 failed with parameters: {'alpha': 0.37, 'beta': 3.7, 'temp': 2.1, 'warmup': 8, 'pretrain_ep': 160.0, 'pretrain_nc': 45.0} because of the following error: ValueError('CategoricalDistribution does not support dynamic value space.').
+Traceback (most recent call last):
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 200, in _run_trial
+    value_or_values = func(trial)
+                      ^^^^^^^^^^^
+  File "/users/Min/GAug/optuna_HGAugO_test.py", line 137, in objective
+    trial.suggest_categorical('dataset', [data])
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/trial/_trial.py", line 405, in suggest_categorical
+    return self._suggest(name, CategoricalDistribution(choices=choices))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/trial/_trial.py", line 636, in _suggest
+    storage.set_trial_param(trial_id, name, param_value_in_internal_repr, distribution)
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/storages/_in_memory.py", line 187, in set_trial_param
+    distributions.check_distribution_compatibility(
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/distributions.py", line 670, in check_distribution_compatibility
+    raise ValueError(
+ValueError: CategoricalDistribution does not support dynamic value space.
+[W 2023-12-05 18:35:27,100] Trial 1 failed with value None.
+tensor([ 5, 12,  6,  ..., 15, 12, 12])
+Traceback (most recent call last):
+  File "/users/Min/GAug/optuna_HGAugO_test.py", line 148, in <module>
+    study.optimize(objective, n_trials=400)
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/study.py", line 451, in optimize
+    _optimize(
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 66, in _optimize
+    _optimize_sequential(
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 163, in _optimize_sequential
+    frozen_trial = _run_trial(study, func, catch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 251, in _run_trial
+    raise func_err
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/study/_optimize.py", line 200, in _run_trial
+    value_or_values = func(trial)
+                      ^^^^^^^^^^^
+  File "/users/Min/GAug/optuna_HGAugO_test.py", line 137, in objective
+    trial.suggest_categorical('dataset', [data])
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/trial/_trial.py", line 405, in suggest_categorical
+    return self._suggest(name, CategoricalDistribution(choices=choices))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/trial/_trial.py", line 636, in _suggest
+    storage.set_trial_param(trial_id, name, param_value_in_internal_repr, distribution)
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/storages/_in_memory.py", line 187, in set_trial_param
+    distributions.check_distribution_compatibility(
+  File "/users/Min/miniconda/lib/python3.11/site-packages/optuna/distributions.py", line 670, in check_distribution_compatibility
+    raise ValueError(
+ValueError: CategoricalDistribution does not support dynamic value space.

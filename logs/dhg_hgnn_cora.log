@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/users/Min/GAug/dhg_hgnn_test.py", line 45, in <module>
+    G = Graph(data["num_vertices"], data["edge_list"])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/dhg/structure/graphs/graph.py", line 40, in __init__
+    self.add_edges(e_list, e_weight, merge_op=merge_op)
+  File "/users/Min/miniconda/lib/python3.11/site-packages/dhg/structure/graphs/graph.py", line 322, in add_edges
+    e_list, e_weight = self._format_edges(e_list, e_weight)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/users/Min/miniconda/lib/python3.11/site-packages/dhg/structure/base.py", line 136, in _format_edges
+    assert np.array(e_list).max() < self._num_v, "Vertex index out of range"
+           ^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (1072,) + inhomogeneous part.

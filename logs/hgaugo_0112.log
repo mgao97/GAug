@@ -1,0 +1,83 @@
+[I 2024-01-12 01:54:55,298] A new study created in memory with name: highschool_study
+/users/Min/GAug/optuna_HGAugO.py:167: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  change_frac = trial.suggest_discrete_uniform('alpha', 0, 1, 0.01)
+/users/Min/GAug/optuna_HGAugO.py:168: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  beta = trial.suggest_discrete_uniform('beta', 0.0, 4.0, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:169: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  temp = trial.suggest_discrete_uniform('temp', 0.1, 2.1, 0.1)
+/users/Min/GAug/optuna_HGAugO.py:171: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_ep = trial.suggest_discrete_uniform('pretrain_ep', 5, 300, 5)
+/users/Min/GAug/optuna_HGAugO.py:172: FutureWarning: suggest_discrete_uniform has been deprecated in v3.0.0. This feature will be removed in v6.0.0. See https://github.com/optuna/optuna/releases/tag/v3.0.0. Use suggest_float(..., step=...) instead.
+  pretrain_nc = trial.suggest_discrete_uniform('pretrain_nc', 5, 300, 5)
+Hypergraph(num_v=327, num_e=7818)
+  0%|          | 0/1 [00:00<?, ?it/s]/users/Min/GAug/models/HGAug_H.py:112: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at ../torch/csrc/utils/tensor_new.cpp:230.)
+  adj_matrix1 = torch.sparse_coo_tensor(torch.LongTensor([adj_matrix.row, adj_matrix.col]),
+
+
+hypergraph:
+ Hypergraph(num_v=327, num_e=7818)
+
+
+
+  0%|          | 0/390 [00:00<?, ?it/s][A
+ 68%|██████▊   | 266/390 [00:00<00:00, 2659.50it/s][A100%|██████████| 390/390 [00:00<00:00, 2680.26it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]
+[W 2024-01-12 01:54:55,722] Trial 0 failed with parameters: {'alpha': 0.41000000000000003, 'beta': 2.0, 'temp': 1.7000000000000002, 'warmup': 9, 'pretrain_ep': 125.0, 'pretrain_nc': 155.0} because of the following error: AttributeError("'coo_matrix' object has no attribute 'to'").
+Traceback (most recent call last):
+  File "/users/Min/miniconda/envs/hy/lib/python3.9/site-packages/optuna/study/_optimize.py", line 200, in _run_trial
+    value_or_values = func(trial)
+  File "/users/Min/GAug/optuna_HGAugO.py", line 177, in objective
+    acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
+  File "/users/Min/GAug/models/HGAug_H.py", line 280, in fit
+    adj_orig = self.adj_orig.to(self.device)
+AttributeError: 'coo_matrix' object has no attribute 'to'
+[W 2024-01-12 01:54:55,723] Trial 0 failed with value None.
+len of neg edges:
+ 390 [[313, 50, 9], [35, 196], [75, 141], [201, 140, 130], [139, 247]]
+model:
+ HGAug_model(
+  (ep_net): VHGAE_model(
+    (hgconv1): HGNNConv(
+      (act): ReLU(inplace=True)
+      (drop): Dropout(p=0.5, inplace=False)
+      (theta): Linear(in_features=327, out_features=128, bias=True)
+    )
+    (hgconv2): HGNNConv(
+      (act): ReLU(inplace=True)
+      (drop): Dropout(p=0.5, inplace=False)
+      (theta): Linear(in_features=128, out_features=32, bias=True)
+    )
+  )
+  (nc_net): HGNN_model(
+    (layers): ModuleList(
+      (0): HGNNConv(
+        (act): ReLU(inplace=True)
+        (drop): Dropout(p=0.5, inplace=False)
+        (theta): Linear(in_features=327, out_features=128, bias=True)
+      )
+      (1): HGNNConv(
+        (act): ReLU(inplace=True)
+        (drop): Dropout(p=0.5, inplace=False)
+        (theta): Linear(in_features=128, out_features=9, bias=True)
+      )
+    )
+  )
+)
+Traceback (most recent call last):
+  File "/users/Min/GAug/optuna_HGAugO.py", line 194, in <module>
+    study.optimize(objective, n_trials=1)
+  File "/users/Min/miniconda/envs/hy/lib/python3.9/site-packages/optuna/study/study.py", line 451, in optimize
+    _optimize(
+  File "/users/Min/miniconda/envs/hy/lib/python3.9/site-packages/optuna/study/_optimize.py", line 66, in _optimize
+    _optimize_sequential(
+  File "/users/Min/miniconda/envs/hy/lib/python3.9/site-packages/optuna/study/_optimize.py", line 163, in _optimize_sequential
+    frozen_trial = _run_trial(study, func, catch)
+  File "/users/Min/miniconda/envs/hy/lib/python3.9/site-packages/optuna/study/_optimize.py", line 251, in _run_trial
+    raise func_err
+  File "/users/Min/miniconda/envs/hy/lib/python3.9/site-packages/optuna/study/_optimize.py", line 200, in _run_trial
+    value_or_values = func(trial)
+  File "/users/Min/GAug/optuna_HGAugO.py", line 177, in objective
+    acc = model.fit(pretrain_ep=int(pretrain_ep), pretrain_nc=int(pretrain_nc))
+  File "/users/Min/GAug/models/HGAug_H.py", line 280, in fit
+    adj_orig = self.adj_orig.to(self.device)
+AttributeError: 'coo_matrix' object has no attribute 'to'

@@ -1,0 +1,76 @@
+Hypergraph(num_v=2708, num_e=1483)
+Epoch: 0, Time: 0.02101s, Loss: 1.94446
+update best: 0.15265
+Epoch: 1, Time: 0.00702s, Loss: 1.94291
+Epoch: 2, Time: 0.01604s, Loss: 1.94152
+Epoch: 3, Time: 0.00583s, Loss: 1.93980
+Epoch: 4, Time: 0.00581s, Loss: 1.93736
+Epoch: 5, Time: 0.00597s, Loss: 1.93524
+Epoch: 6, Time: 0.00549s, Loss: 1.93468
+Epoch: 7, Time: 0.00533s, Loss: 1.93243
+Epoch: 8, Time: 0.00501s, Loss: 1.93016
+Epoch: 9, Time: 0.00543s, Loss: 1.92788
+Epoch: 10, Time: 0.00519s, Loss: 1.92438
+Epoch: 11, Time: 0.00730s, Loss: 1.92368
+Epoch: 12, Time: 0.00542s, Loss: 1.92371
+Epoch: 13, Time: 0.00503s, Loss: 1.92023
+Epoch: 14, Time: 0.00586s, Loss: 1.91715
+Epoch: 15, Time: 0.00539s, Loss: 1.91372
+Epoch: 16, Time: 0.00691s, Loss: 1.91783
+Epoch: 17, Time: 0.00516s, Loss: 1.91304
+Epoch: 18, Time: 0.00545s, Loss: 1.91493
+Epoch: 19, Time: 0.00791s, Loss: 1.90844
+Epoch: 20, Time: 0.01260s, Loss: 1.90977
+Epoch: 21, Time: 0.00551s, Loss: 1.90867
+Epoch: 22, Time: 0.01388s, Loss: 1.90351
+Epoch: 23, Time: 0.00408s, Loss: 1.90401
+Epoch: 24, Time: 0.00401s, Loss: 1.89845
+Epoch: 25, Time: 0.00393s, Loss: 1.89015
+Epoch: 26, Time: 0.00441s, Loss: 1.89321
+Epoch: 27, Time: 0.00349s, Loss: 1.88741
+Epoch: 28, Time: 0.00388s, Loss: 1.89269
+Epoch: 29, Time: 0.00479s, Loss: 1.88734
+Epoch: 30, Time: 0.00677s, Loss: 1.89263
+Epoch: 31, Time: 0.00361s, Loss: 1.87993
+Epoch: 32, Time: 0.00519s, Loss: 1.87761
+update best: 0.15382
+Epoch: 33, Time: 0.00378s, Loss: 1.86871
+update best: 0.15615
+Epoch: 34, Time: 0.00403s, Loss: 1.87081
+update best: 0.15927
+Epoch: 35, Time: 0.00434s, Loss: 1.86814
+update best: 0.16316
+Epoch: 36, Time: 0.00368s, Loss: 1.85779
+update best: 0.17173
+Epoch: 37, Time: 0.00634s, Loss: 1.86733
+update best: 0.17757
+Epoch: 38, Time: 0.00439s, Loss: 1.85898
+update best: 0.18146
+Epoch: 39, Time: 0.00426s, Loss: 1.86234
+update best: 0.18458
+Epoch: 40, Time: 0.00772s, Loss: 1.85323
+update best: 0.19042
+Epoch: 41, Time: 0.00742s, Loss: 1.85105
+update best: 0.19626
+Epoch: 42, Time: 0.00486s, Loss: 1.84394
+update best: 0.19899
+Epoch: 43, Time: 0.01310s, Loss: 1.84256
+update best: 0.20327
+Epoch: 44, Time: 0.00474s, Loss: 1.84771
+update best: 0.20678
+Epoch: 45, Time: 0.00410s, Loss: 1.83532
+update best: 0.21028
+Epoch: 46, Time: 0.00404s, Loss: 1.82521
+update best: 0.21301
+Epoch: 47, Time: 0.00425s, Loss: 1.81455
+update best: 0.21495
+Epoch: 48, Time: 0.00433s, Loss: 1.80893
+update best: 0.21651
+Epoch: 49, Time: 0.02553s, Loss: 1.83049
+update best: 0.21768
+
+train finished!
+best val: 0.21768
+test...
+final result: epoch: 49
+{'accuracy': 0.21767912805080414, 'f1_score': 0.19072577618883838, 'f1_score -> average@micro': 0.2176791277258567}
