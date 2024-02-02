@@ -41,7 +41,7 @@ parser.add_argument('--gpu', type=str, default='-1')
 # parser.add_argument('--feat_norm', type=str, default='row')
 parser.add_argument('--hidden_size',  default=128)
 parser.add_argument('--emb_size', default=32)
-parser.add_argument('--epochs', default=200)
+parser.add_argument('--epochs', default=400)
 parser.add_argument('--seed', default=42)
 parser.add_argument('--lr', default=1e-2)
 parser.add_argument('--weight_decay', default=5e-4)
@@ -98,17 +98,20 @@ if args.seed > 0:
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
 
-data = CoauthorshipCora()
-dataname = 'CoauthorshipCora'
+data = CocitationCora()
+dataname = 'CocitationCora'
 dl = DataLoader(args, data)
 
 if args.gae: args.w_kl = 0
 
 vgae = VGAE(dl.adj_norm.to(args.device), dl.features.size(1), args.hidden_size, args.emb_size, args.gae)
+
 vgae.to(args.device)
 vgae = train_model(args, dl, vgae)
 adj_matrix =  gen_graphs(args, dl, vgae)
-    
 
-with open('hypergraph_recon/CoauthorshipCora_probability.pkl', 'wb') as file:
+
+
+with open('hypergraph_recon/CocitationCora_probability_upd.pkl', 'wb') as file:
     pickle.dump(adj_matrix, file)
+
