@@ -66,7 +66,8 @@ def train_model(args, dl, vgae):
     best_vali_criterion = 0.0
     best_state_dict = None
     vgae.train()
-    for epoch in range(args.epochs):
+    #args.epochs
+    for epoch in range(400):
         t = time.time()
         A_pred = vgae(features)
         optimizer.zero_grad()
