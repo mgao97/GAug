@@ -10,9 +10,10 @@ import dgl
 import dgl.function as fn
 from dgl import DGLGraph
 from sklearn.metrics import f1_score
-
+import dgl
+from scipy.sparse import csr_matrix
 class GCN(object):
-    def __init__(self, adj, adj_eval, features, labels, tvt_nids, cuda=-1, hidden_size=128, n_layers=1, epochs=200, seed=-1, lr=1e-2, weight_decay=5e-4, dropout=0.5, print_progress=True, dropedge=0):
+    def __init__(self, adj, adj_eval, features, labels, tvt_nids, cuda=-1, hidden_size=128, n_layers=1, epochs=200, seed=42, lr=1e-2, weight_decay=5e-4, dropout=0.5, print_progress=True, dropedge=0):
         self.t = time.time()
         self.lr = lr
         self.weight_decay = weight_decay
@@ -66,7 +67,9 @@ class GCN(object):
         adj.setdiag(1)
         self.adj = adj
         adj = sp.csr_matrix(adj)
-        self.G = DGLGraph(self.adj)
+        #self.G = dgl.graph(self.adj)
+        self.G = dgl.from_scipy(csr_matrix(self.adj))
+
         # normalization (D^{-1/2})
         degs = self.G.in_degrees().float()
         norm = torch.pow(degs, -0.5)
@@ -80,7 +83,9 @@ class GCN(object):
         adj_eval.setdiag(1)
         adj_eval = sp.csr_matrix(adj_eval)
         self.adj_eval = adj_eval
-        self.G_eval = DGLGraph(self.adj_eval)
+        #self.G_eval = dgl.graph(self.adj_eval)
+        self.G_eval = dgl.from_scipy(csr_matrix(self.adj_eval))
+
         # normalization (D^{-1/2})
         degs_eval = self.G_eval.in_degrees().float()
         norm_eval = torch.pow(degs_eval, -0.5)
@@ -99,7 +104,8 @@ class GCN(object):
         adj = sp.coo_matrix((data, (row, col)), shape=self.adj.shape)
         adj = adj + adj.T # 将稀疏矩阵 adj 与其转置相加，得到对称的邻接矩阵
         adj.setdiag(1) # 将邻接矩阵的对角线元素设置为 1，表示每个节点与自身存在连接
-        self.G = DGLGraph(adj)
+        #self.G = dgl.graph(adj)
+        self.G = dgl.from_scipy(csr_matrix(adj))
         # normalization (D^{-1/2})
         degs = self.G.in_degrees().float()
         norm = torch.pow(degs, -0.5)
@@ -203,7 +209,7 @@ class GCNLayer(nn.Module):
         # normalization by square root of src degree
         h = h * g.ndata['norm']
         g.ndata['h'] = h
-        g.update_all(fn.copy_src(src='h', out='m'),
+        g.update_all(fn.copy_u('h', 'm'),
                      fn.sum(msg='m', out='h'))
         h = g.ndata.pop('h')
         # normalization by square root of dst degree
