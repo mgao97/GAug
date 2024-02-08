@@ -134,12 +134,24 @@ def test_gaugm(trial):
     gnn = args.gnn
     eval_orig = args.eval_orig
     t = time.time()
-    tvt_nids = [torch.nonzero(data['train_mask']).squeeze().numpy(), torch.nonzero(data['val_mask']).squeeze().numpy(), torch.nonzero(data['test_mask']).squeeze().numpy()]
+    #tvt_nids = [torch.nonzero(data['train_mask']).squeeze().numpy(), torch.nonzero(data['val_mask']).squeeze().numpy(), torch.nonzero(data['test_mask']).squeeze().numpy()]
     
-
     n = data['num_vertices']
     m = len(data['edge_list'])
+    num_train = int(0.8 * n)
+    num_val = int(0.1 * n)
+    num_test = n - num_train - num_val
+
+    # 创建训练、验证和测试节点列表
+    train_nids = np.arange(num_train)
+    val_nids = np.arange(num_train, num_train + num_val)
+    test_nids = np.arange(num_train + num_val, n)
+
+
+    # 组合成tvt_nids列表
+    tvt_nids = [train_nids, val_nids, test_nids]
     
+
     
     edges = []
     features = data['features']
@@ -212,7 +224,6 @@ def test_gaugm(trial):
     trial.suggest_categorical('gnn', [gnn])
     trial.suggest_categorical('eval_orig', [eval_orig])
     return acc
-    
     
 
 if __name__ == "__main__":
