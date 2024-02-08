@@ -13,7 +13,7 @@ from sklearn.metrics import f1_score
 import dgl
 from scipy.sparse import csr_matrix
 class GCN(object):
-    def __init__(self, adj, adj_eval, features, labels, tvt_nids, cuda=-1, hidden_size=128, n_layers=1, epochs=200, seed=42, lr=1e-2, weight_decay=5e-4, dropout=0.5, print_progress=True, dropedge=0):
+    def __init__(self, adj, adj_eval, features, labels, tvt_nids, cuda=-1, hidden_size=256, n_layers=1, epochs=400, seed=42, lr=1e-3, weight_decay=5e-4, dropout=0.5, print_progress=True, dropedge=0):
         self.t = time.time()
         self.lr = lr
         self.weight_decay = weight_decay
@@ -237,7 +237,8 @@ class GCN_model(nn.Module):
         for i in range(n_layers - 1):
             self.layers.append(GCNLayer(n_hidden, n_hidden, activation, dropout))
         # output layer
-        self.layers.append(GCNLayer(n_hidden, n_classes, None, dropout))
+        #self.layers.append(GCNLayer(n_hidden, n_classes, None, dropout))
+        self.layers.append(GCNLayer(n_hidden, 32, None, dropout))
 
     def forward(self, g, features):
         h = features
