@@ -237,8 +237,8 @@ class GCN_model(nn.Module):
         for i in range(n_layers - 1):
             self.layers.append(GCNLayer(n_hidden, n_hidden, activation, dropout))
         # output layer
-        #self.layers.append(GCNLayer(n_hidden, n_classes, None, dropout))
-        self.layers.append(GCNLayer(n_hidden, 32, None, dropout))
+        self.layers.append(GCNLayer(n_hidden, n_classes, None, dropout))
+        #self.layers.append(GCNLayer(n_hidden, 32, None, dropout))
 
     def forward(self, g, features):
         h = features
