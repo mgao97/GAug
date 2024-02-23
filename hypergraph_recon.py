@@ -54,7 +54,7 @@ parser.add_argument('--alpha', default=1)
 parser.add_argument('--sample_type', default='add_sample')
 
 parser.add_argument('--use_bn', default=False)
-parser.add_argument('--val_frac', type=float, default=0.1)
+parser.add_argument('--val_frac', type=float, default=0.05)
 parser.add_argument('--test_frac', type=float, default=0.1)
 #parser.add_argument('--dataset', type=str, default='zkc')
 parser.add_argument('--criterion', type=str, default='roc')
